@@ -33,20 +33,20 @@ class Window:public QMainWindow
 		QComboBox *Terminal;
 		QComboBox *nodeBox;
 		QLabel *valueTime;
-        QLabel * Node[8];
+        	QLabel * Node[8];
 		QPushButton *Open_Close;
 		QPushButton *Quit;
-        QMap<qint16 , QVector<Data*>> data;
+        	QMap<qint16 , QVector<Data*>> data;
 		QSerialPort *serial;
-        QDataStream *Buffer;
+        	QDataStream *Buffer;
 
 		QChart *chart;
-        QValueAxis *axisX;
-        QValueAxis *axisY;
+        	QValueAxis *axisX;
+       		QValueAxis *axisY;
 		QLineSeries *line;
 		QChartView *view;
 		void sleep(unsigned ms);
-		void addInValue();
+		bool addInValue();
 
 	public:
 		Window();

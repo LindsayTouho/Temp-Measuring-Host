@@ -73,6 +73,8 @@ Window::Window()
 	mainWidget->setLayout(mainLayout);
 	this->setCentralWidget(mainWidget);
 
+	Buffer=new  QDataStream;
+
 	connect(Open_Close,SIGNAL(clicked()),this,SLOT(on_Open_Close_clicked()));
     	connect(Terminal,SIGNAL(currentTextChanged(QString)),this,SLOT(refresh()));
     	connect(nodeBox,SIGNAL(currentTextChanged(QString)),this,SLOT(refresh()));
@@ -92,13 +94,15 @@ Window::~Window()                       //need addition
 	delete Quit;
 	delete serial;
 }
-void Window::addInValue()                //temp add in data if it is useful
+bool Window::addInValue(QDataStream& stream)                //temp add in data if it is useful
 {
-    	Data *temp=new Data(*Buffer);
+    	Data *temp=new Data(stream);
 	if(temp->isCompleted())
 	{
 		data[temp->Id()].append(temp);
+		return true;
 	}
+	return false;
 }
 void Window::refresh()
 {
@@ -173,10 +177,10 @@ void Window::on_Open_Close_clicked()
 	   	serial->setParity(QSerialPort::NoParity);
 		serial->setDataBits(QSerialPort::Data8);
 		serial->setStopBits(QSerialPort::OneStop);
-        if(serial->open(QIODevice::ReadWrite))
+		if(serial->open(QIODevice::ReadWrite))
 		{
 			serial->setDataTerminalReady(true);
-            connect(serial,SIGNAL(readyRead()),this,SLOT(on_serial_readyRead()));
+			connect(serial,SIGNAL(readyRead()),this,SLOT(on_serial_readyRead()));
 			Open_Close->setText(tr("&Close"));
 		}
 	}
@@ -188,12 +192,11 @@ void Window::on_Open_Close_clicked()
 }
 void Window::on_serial_readyRead()
 {
-	QByteArray b;
-    	sleep(100);
-	b=serial->readAll();
-    	serial->write(b);
-    	Buffer= new QDataStream(b);
-	addInValue();
-	refresh();
-    	delete Buffer;
+	*Buffer+=(serial->readAll());
+	QDataStream temp=(*Buffer);
+	for(addinValue(temp))
+	{
+		delete Buffer;
+		Buffer=temp;
+	}
 }
