@@ -57,7 +57,7 @@ Window::Window()
     	view->setChart(chart);
     	view->setRenderHint(QPainter::Antialiasing);
 
-	layout3= new QHBoxLayout;
+	layout3= new QHBoxLayout; 					//布局
 	layout3->addLayout(layout2);
 	layout3->addWidget(view);
 	layout4=new QHBoxLayout;
@@ -161,13 +161,13 @@ void Window::on_Open_Close_clicked()
 	if(serial==nullptr||!(serial->isOpen()))
 	{
 		const auto infos=QSerialPortInfo::availablePorts();
-        if(infos.count()==0)
+		if(infos.count()==0)
         {
             return ;
         }
         const auto &current=infos[0];
 		if(infos.count()!=1)
-		{
+		{								//根据设置面板更改
 			//
 			//
 			//
@@ -191,12 +191,12 @@ void Window::on_Open_Close_clicked()
 	}
 }
 void Window::on_serial_readyRead()
-{
+{										//新版
 	*Buffer+=(serial->readAll());
 	QDataStream temp=(*Buffer);
 	for(addinValue(temp))
 	{
 		delete Buffer;
-		Buffer=temp;
+		Buffer=new QDataStream (temp);
 	}
 }
