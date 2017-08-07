@@ -13,6 +13,8 @@
 #include<QSerialPortInfo>
 #include<QPushButton>
 #include<QLabel>
+#include<QHBoxLayout>
+#include<QVBoxLayout>
 
 class SettingWindow : public QDialog
 {
@@ -23,27 +25,36 @@ public:
 	~SettingWindow();
 
 private:
+	QHBoxLayout *layout1;
 	QLabel *chartRange;
 	QSpinBox *timeRange;               	//统计图范围
 	QComboBox *timeUnit;
 
+	QHBoxLayout *layout2;
 	QLabel *dataNum
 	QSlider *numSlider			//本地保存数据个数
 
+	QHBoxLayout *layout3;
 	QLabel *serialName;
 	QComboBox *serialPort;			//打开串口名
 
+	QVBoxLayout *layout4;
 	QLabel *database;
 	QLineEdit *hostname;			//数据库设置
 	QLineEdit *username;
 	QLineEdit *passwd;
 	QLineEdit *databasename;
 
+	QHBoxLayout *layout5;
 	QPushButton *OK;
 	QPushButton *Cancle;
 
-	QSetting *setting;
+	QVBoxLayout *mainLayout;
 
+public solts:
+	void Change();
 
+signal:
+	void settingChanged();
 };
 
