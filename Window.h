@@ -1,3 +1,6 @@
+//窗口布局还需要调整，保证lable和chart以同样的比例缩放
+
+
 #include<QMainWindow>
 #include<QDataStream>
 #include<QSerialPort>
@@ -54,5 +57,5 @@ class Window:public QMainWindow
 	public slots:
 		void on_Open_Close_clicked();
 		void on_serial_readyRead();
-        void refresh();
+        	void refresh();
 };
