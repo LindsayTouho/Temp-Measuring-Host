@@ -4,11 +4,12 @@
 
 
 
+#include<QString>
 #include<QDialog>
 #include<QSpinBox>
 #include<QComboBox>
 #include<QLineEdit>
-#include<QSetting>
+#include<QSettings>
 #include<QWidget>
 #include<QSerialPortInfo>
 #include<QPushButton>
@@ -31,8 +32,8 @@ private:
 	QComboBox *timeUnit;
 
 	QHBoxLayout *layout2;
-	QLabel *dataNum
-	QSlider *numSlider			//本地保存数据个数
+	QLabel *dataNum;
+	QSpinBox *numSlider;			//本地保存数据个数
 
 	QHBoxLayout *layout3;
 	QLabel *serialName;
@@ -40,9 +41,17 @@ private:
 
 	QVBoxLayout *layout4;
 	QLabel *database;
+	QHBoxLayout *layout6;
+	QLabel *host;
 	QLineEdit *hostname;			//数据库设置
+	QHBoxLayout *layout7;
+	QLabel *user;
 	QLineEdit *username;
+	QHBoxLayout *layout8;
+	QLabel *pass;
 	QLineEdit *passwd;
+	QHBoxLayout *layout9;
+	QLabel *dataname;
 	QLineEdit *databasename;
 
 	QHBoxLayout *layout5;
@@ -51,10 +60,10 @@ private:
 
 	QVBoxLayout *mainLayout;
 
-public solts:
+public slots:
 	void Change();
 
-signal:
+signals:
 	void settingChanged();
 };
 
