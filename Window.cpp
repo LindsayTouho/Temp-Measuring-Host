@@ -57,9 +57,12 @@ Window::Window()
     	view->setChart(chart);
     	view->setRenderHint(QPainter::Antialiasing);
 
-	layout3= new QHBoxLayout; 					//布局
+	layout3= new QHBoxLayout;
 	layout3->addLayout(layout2);
 	layout3->addWidget(view);
+	layout3->setStretchFactor(layout2,1);
+	layout3->setStretchFactor(view,4);
+	
 	layout4=new QHBoxLayout;
 	layout4->addWidget(Terminal);
 	layout4->addWidget(nodeBox);
@@ -72,8 +75,6 @@ Window::Window()
 	mainWidget=new QWidget;
 	mainWidget->setLayout(mainLayout);
 	this->setCentralWidget(mainWidget);
-
-	Buffer=new  QDataStream;
 
 	connect(Open_Close,SIGNAL(clicked()),this,SLOT(on_Open_Close_clicked()));
     	connect(Terminal,SIGNAL(currentTextChanged(QString)),this,SLOT(refresh()));
@@ -94,15 +95,13 @@ Window::~Window()                       //need addition
 	delete Quit;
 	delete serial;
 }
-bool Window::addInValue(QDataStream& stream)                //temp add in data if it is useful
+void Window::addInValue(QDataStream& stream)                //temp add in data if it is useful
 {
     	Data *temp=new Data(stream);
 	if(temp->isCompleted())
 	{
 		data[temp->Id()].append(temp);
-		return true;
 	}
-	return false;
 }
 void Window::refresh()
 {
@@ -161,13 +160,13 @@ void Window::on_Open_Close_clicked()
 	if(serial==nullptr||!(serial->isOpen()))
 	{
 		const auto infos=QSerialPortInfo::availablePorts();
-		if(infos.count()==0)
+        if(infos.count()==0)
         {
             return ;
         }
         const auto &current=infos[0];
 		if(infos.count()!=1)
-		{								//根据设置面板更改
+		{
 			//
 			//
 			//
@@ -177,10 +176,10 @@ void Window::on_Open_Close_clicked()
 	   	serial->setParity(QSerialPort::NoParity);
 		serial->setDataBits(QSerialPort::Data8);
 		serial->setStopBits(QSerialPort::OneStop);
-		if(serial->open(QIODevice::ReadWrite))
+        if(serial->open(QIODevice::ReadWrite))
 		{
 			serial->setDataTerminalReady(true);
-			connect(serial,SIGNAL(readyRead()),this,SLOT(on_serial_readyRead()));
+            connect(serial,SIGNAL(readyRead()),this,SLOT(on_serial_readyRead()));
 			Open_Close->setText(tr("&Close"));
 		}
 	}
@@ -191,12 +190,13 @@ void Window::on_Open_Close_clicked()
 	}
 }
 void Window::on_serial_readyRead()
-{										//新版
-	*Buffer+=(serial->readAll());
-	QDataStream temp=(*Buffer);
-	for(addinValue(temp))
-	{
-		delete Buffer;
-		Buffer=new QDataStream (temp);
-	}
+{
+	QByteArray b;
+    	sleep(100);
+	b=serial->readAll();
+    	serial->write(b);
+    	Buffer= new QDataStream(b);
+	addInValue(*Buffer);
+	refresh();
+    	delete Buffer;
 }
