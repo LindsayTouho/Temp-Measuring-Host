@@ -129,10 +129,6 @@ SettingWindow::~SettingWindow()
 
 void SettingWindow::Change()
 {
-<<<<<<< HEAD
 	emit settingChanged();                //这里需要新建一个QSettings，然后再用信号将QSetting传送到主窗口
-=======
-	emit settingChanged();
->>>>>>> df534ad582f977723f893981c8965f8fd9a70947
 	this -> close();
 }
