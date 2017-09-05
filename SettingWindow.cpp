@@ -108,12 +108,12 @@ SettingWindow::SettingWindow(QDialog *parent,QSettings *oldSetting) : QDialog(pa
 	connect(OK,SIGNAL(clicked()),this,SLOT(Change()));
 	connect(Cancle,SIGNAL(clicked()),this,SLOT(close()));
 
-	if(oldSetting && oldSetting->value("chartRange"))
+	if(oldSetting!= nullptr && oldSetting->value("chartRange") != QVariant())
 	{
 		timeRange -> setValue(oldSetting -> value("chartRange").toInt());
 		timeUnit ->  setCurrentIndex(oldSetting -> value("timeUnit").toInt());
 		numSlider -> setValue(oldSetting -> value("numSlider").toInt());
-		serialPort -> setCurrentText(oldSetting->value("serialName"));
+		serialPort -> setCurrentText(oldSetting->value("serialName").toString());
 		hostname ->  setText(oldSetting-> value("hostname").toString());
 		username -> setText(oldSetting -> value("username").toString());
 		passwd -> setText(oldSetting -> value("passWord").toString());
@@ -148,7 +148,7 @@ void SettingWindow::Change()
 {
 	QSettings *newSetting=new QSettings;
 	newSetting -> setValue("chartRange",timeRange->value());                       //设置1：表格范围
-	newSetting -> setValue("timeUnit",timeUnit -> index());                        //设置2：表格范围的单位
+	newSetting -> setValue("timeUnit",timeUnit -> currentIndex());                        //设置2：表格范围的单位
 	newSetting -> setValue("dataNum",numSlider -> value());                        //设置3：本地保存数据个数
 	newSetting -> setValue("serialName",serialPort -> currentText());		//设置4：串口名
 	newSetting -> setValue("hostName",hostname -> text());  			//设置5:主机名

@@ -64,6 +64,6 @@ public slots:
 	void Change();
 
 signals:
-	void settingChanged(QSettings newSetting);
+	void settingChanged(QSettings *newSetting);
 };
 

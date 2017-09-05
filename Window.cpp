@@ -244,7 +244,7 @@ void Window::showSetting();
 		subWindow2 -> raise();
 		sunWindow2 -> activateWindow();
 }
-void Window::showSend();
+void Window::showSend()
 {
 	if(!subWindow1)
 	{

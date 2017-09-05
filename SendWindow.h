@@ -1,4 +1,4 @@
-#include<Qlabel>
+#include<QLabel>
 #include<QPushButton>
 #include<QDialog>
 #include<QHBoxLayout>
@@ -8,14 +8,15 @@ class SendWindow : public QDialog
 {
 	Q_OBJECT;
 private:
-	QLabel * layout[4];
+	QVBoxLayout *mainLayout;
+	QLayout * layout[4];
 	QPushButton * button [4];
-
+        QLabel *lable[4];
 public:
 	SendWindow(QDialog *parent = nullptr); 
 	~SendWindow();
 	enum message{shakeHands = 0xFE002100,gateway = 0xFE002300,closeAlarm = 0xFE002800,manualAlarm = 0xFE002900};
-signal:
+signals:
 	void sendding(message);
 public slots:
 	void button1(){emit sendding(shakeHands);};
