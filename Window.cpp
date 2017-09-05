@@ -166,9 +166,11 @@ void Window::creatMenu()
 {
 	auto menu = this->menuBar();
 	sendAction = new QAction(tr("Send Window"),this);
-	connect(sendAction,SIGNAL(triggered()),this,
+	connect(sendAction,SIGNAL(triggered()),this,SLOT(showSend()));
 	settingAction = new QAction(tr("Setting"),this);
-
+	connect(settingAction,SIGNAL(triggered()),this,SLOT(showSetting()));
+	menu -> addAction(sendAction);
+	menu -> addAction(settingAction);
 }
 
 
@@ -223,3 +225,6 @@ void Window::on_serial_readyRead()
 	refresh();
     	delete Buffer;
 }
+void Window::serialSend(SendWindow::message m)
+{
+	serial -> 	

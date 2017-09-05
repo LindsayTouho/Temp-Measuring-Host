@@ -75,4 +75,7 @@ class Window:public QMainWindow
 
 		void serialSend(SendWindow::message m);
 		void saveSetting(QSettings *newSetting);
+
+		void showSetting();
+		void showSend();
 };
