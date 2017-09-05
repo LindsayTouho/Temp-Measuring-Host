@@ -227,4 +227,19 @@ void Window::on_serial_readyRead()
 }
 void Window::serialSend(SendWindow::message m)
 {
-	serial -> 	
+	serial ->write(QByteArray(m));
+}
+void Window::saveSetting(QSettings *newSetting)
+{
+	setting = newSetting;
+}
+void Window::showSetting();
+{
+	if(!subWindow2)
+	{
+		subWindow2 = new SettingWindow(this,setting);
+		connect(subWindow2,SIGNAL(settingChanged(QSettings)),this,SLOT(saveSetting(QSettings)));
+		subWindow2 -> show();
+		subWindow2 -> raise();
+		sunWindow2 -> activateWindow();
+}
