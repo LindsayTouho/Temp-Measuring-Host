@@ -1,6 +1,7 @@
 //窗口布局还需要调整，保证lable和chart以同样的比例缩放
 
 
+#include<QSettings>
 #include<QMainWindow>
 #include<QDataStream>
 #include<QSerialPort>
@@ -21,6 +22,9 @@
 #include<QLineSeries>
 #include<QString>
 #include"data.h"
+#include"SettingWindow.h"
+#include"SendWindow.h"
+#include<QAction>
 using namespace QtCharts;
 
 class Window:public QMainWindow
@@ -35,10 +39,13 @@ class Window:public QMainWindow
 		QVBoxLayout *mainLayout;
 		QComboBox *Terminal;
 		QComboBox *nodeBox;
-		QLabel *valueTime;
         	QLabel * Node[8];
 		QPushButton *Open_Close;
 		QPushButton *Quit;
+
+		SendWindow *subWindow1;
+		SettingWindow *subWindow2;
+
         	QMap<qint16 , QVector<Data*>> data;
 		QSerialPort *serial;
         	QDataStream *Buffer;
@@ -48,8 +55,15 @@ class Window:public QMainWindow
        		QValueAxis *axisY;
 		QLineSeries *line;
 		QChartView *view;
+
+		QSettings *setting;
+
+		QAction *sendAction;
+		QAction *settingAction;
+
 		void sleep(unsigned ms);
 		bool addInValue();
+		void creatMenu();
 
 	public:
 		Window();
@@ -58,4 +72,7 @@ class Window:public QMainWindow
 		void on_Open_Close_clicked();
 		void on_serial_readyRead();
         	void refresh();
+
+		void serialSend(SendWindow::message m);
+		void saveSetting(QSettings *newSetting);
 };

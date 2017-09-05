@@ -1,6 +1,6 @@
 #include"SettingWindow.h"
 
-SettingWindow::SettingWindow(QDialog *parent) : QDialog(parent)
+SettingWindow::SettingWindow(QDialog *parent,QSettings *oldSetting) : QDialog(parent)
 {
 	chartRange = new QLabel(this);
 	chartRange -> setText("Chart Range");
@@ -14,6 +14,7 @@ SettingWindow::SettingWindow(QDialog *parent) : QDialog(parent)
 	dataNum -> setText("Lacol Data Number");
 	numSlider = new QSpinBox(this);
 	numSlider -> setRange(0,1000);
+	numSlider -> setValue(100);
 
 	serialName = new QLabel(this);
 	serialName -> setText("Serial Port");
@@ -29,15 +30,19 @@ SettingWindow::SettingWindow(QDialog *parent) : QDialog(parent)
 	host 	     = new QLabel(this);
 	host	     -> setText("Hostname");
 	hostname     = new QLineEdit(this);
+	hostname     -> setText("47.93.191.3");
 	user	     = new QLabel(this);
 	user	     -> setText("Username");
 	username     = new QLineEdit(this);
+	username     -> setText("servant");
 	pass 	     = new QLabel(this);
 	pass         -> setText("Password");
 	passwd       = new QLineEdit(this);
+	passwd       -> setText("Changli");
 	dataname     = new QLabel(this);
 	dataname     -> setText("Database Name");
 	databasename = new QLineEdit(this);
+	databasename -> setText("new");
 
 	OK = new QPushButton(this);
 	Cancle = new QPushButton(this);
@@ -102,6 +107,18 @@ SettingWindow::SettingWindow(QDialog *parent) : QDialog(parent)
 
 	connect(OK,SIGNAL(clicked()),this,SLOT(Change()));
 	connect(Cancle,SIGNAL(clicked()),this,SLOT(close()));
+
+	if(oldSetting && oldSetting->value("chartRange"))
+	{
+		timeRange -> setValue(oldSetting -> value("chartRange").toInt());
+		timeUnit ->  setCurrentIndex(oldSetting -> value("timeUnit").toInt());
+		numSlider -> setValue(oldSetting -> value("numSlider").toInt());
+		serialPort -> setCurrentText(oldSetting->value("serialName"));
+		hostname ->  setText(oldSetting-> value("hostname").toString());
+		username -> setText(oldSetting -> value("username").toString());
+		passwd -> setText(oldSetting -> value("passWord").toString());
+		databasename -> setText(oldSetting -> value("databaseName").toString());
+	}	
 }
 
 SettingWindow::~SettingWindow()
@@ -129,6 +146,15 @@ SettingWindow::~SettingWindow()
 
 void SettingWindow::Change()
 {
-	emit settingChanged();                //这里需要新建一个QSettings，然后再用信号将QSetting传送到主窗口
+	QSettings *newSetting=new QSettings;
+	newSetting -> setValue("chartRange",timeRange->value());                       //设置1：表格范围
+	newSetting -> setValue("timeUnit",timeUnit -> index());                        //设置2：表格范围的单位
+	newSetting -> setValue("dataNum",numSlider -> value());                        //设置3：本地保存数据个数
+	newSetting -> setValue("serialName",serialPort -> currentText());		//设置4：串口名
+	newSetting -> setValue("hostName",hostname -> text());  			//设置5:主机名
+	newSetting -> setValue("userName",username -> text());                         //设置6：用户名
+	newSetting -> setValue("passWord",passwd -> text()); 				//设置6:密码
+	newSetting -> setValue("databaseName",databasename -> text());			//设置7:数据库名
+	emit settingChanged(newSetting);                //这里需要新建一个QSettings，然后再用信号将QSetting传送到主窗口
 	this -> close();
 }

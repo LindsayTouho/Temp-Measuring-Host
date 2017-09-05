@@ -1,17 +1,16 @@
 #include"Window.h"
-#include<iostream>
-using namespace std;
 
 Window::Window()
 {
 	this->resize(700,400);
     	this->setObjectName(tr("this"));
+
+
     	for(int i=0;i!=8;++i)
 	{
         	Node[i]=new QLabel(this);                                    //label for show temperature use numbers
         	Node[i]->setText("<h3><font color=red>None</font></h3>");
 	}
-    	menuBar()->addAction(tr("setting"));                                //menubar uncompleted
 	
 	Terminal=new QComboBox(this);                                      //every terminal contain 8 nodes
     	Terminal->addItem("None");
@@ -20,10 +19,14 @@ Window::Window()
 	{
 		nodeBox->addItem(tr("Node")+QString::number(i+1));        //all nodes set as "Node" first
 	}
+
+
 	Open_Close=new QPushButton(this);                                //add buttons
 	Open_Close->setText(tr("&Open"));
 	Quit=new QPushButton(this);
 	Quit->setText(tr("&Quit"));
+
+
 
 	layout2=new QVBoxLayout;
 	for(int i=0;i!=4;++i)                                            //arrange label for temperature
@@ -35,6 +38,9 @@ Window::Window()
 	}
 
 	serial=new QSerialPort;
+
+
+
 
 	line=new QLineSeries;                                          //prepare for chart
     	line->setPen(QPen(Qt::blue,2,Qt::SolidLine));
@@ -57,6 +63,9 @@ Window::Window()
     	view->setChart(chart);
     	view->setRenderHint(QPainter::Antialiasing);
 
+
+
+
 	layout3= new QHBoxLayout;
 	layout3->addLayout(layout2);
 	layout3->addWidget(view);
@@ -76,6 +85,9 @@ Window::Window()
 	mainWidget->setLayout(mainLayout);
 	this->setCentralWidget(mainWidget);
 
+
+
+
 	connect(Open_Close,SIGNAL(clicked()),this,SLOT(on_Open_Close_clicked()));
     	connect(Terminal,SIGNAL(currentTextChanged(QString)),this,SLOT(refresh()));
     	connect(nodeBox,SIGNAL(currentTextChanged(QString)),this,SLOT(refresh()));
@@ -90,7 +102,6 @@ Window::~Window()                       //need addition
 	delete layout2;
 	delete Terminal;
 	delete nodeBox;
-	delete valueTime;
 	delete Open_Close;
 	delete Quit;
 	delete serial;
@@ -138,16 +149,28 @@ void Window::refresh()
 	y=nodeBox->currentIndex();
 	while(x<=60)
 	{
-        if((lastData-i)==data[temp].begin())
+		if((lastData-i)==data[temp].begin())
 				break;
-        x=(*(lastData-i))->time().secsTo(QTime::currentTime());
-        line->append(-x,(*(lastData-i))->Temper(y));
-        ++i;
+		x=(*(lastData-i))->time().secsTo(QTime::currentTime());
+		line->append(-x,(*(lastData-i))->Temper(y));
+		++i;
 	}
     	chart->addSeries(line);
     	chart->createDefaultAxes();
     	chart->setAxisX(axisX,line);
+
+	creatMenu();
 }
+
+void Window::creatMenu()
+{
+	auto menu = this->menuBar();
+	sendAction = new QAction(tr("Send Window"),this);
+	connect(sendAction,SIGNAL(triggered()),this,
+	settingAction = new QAction(tr("Setting"),this);
+
+}
+
 
 void Window::sleep(unsigned ms)
 {

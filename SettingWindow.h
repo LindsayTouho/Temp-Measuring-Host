@@ -22,7 +22,7 @@ class SettingWindow : public QDialog
 	Q_OBJECT;
 public:
 
-	SettingWindow(QDialog *parent = nullptr);
+	SettingWindow(QDialog *parent = nullptr,QSettings *oldsetting=nullptr);
 	~SettingWindow();
 
 private:
@@ -64,6 +64,6 @@ public slots:
 	void Change();
 
 signals:
-	void settingChanged();
+	void settingChanged(QSettings newSetting);
 };
 
