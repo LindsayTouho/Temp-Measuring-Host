@@ -239,7 +239,19 @@ void Window::showSetting();
 	{
 		subWindow2 = new SettingWindow(this,setting);
 		connect(subWindow2,SIGNAL(settingChanged(QSettings)),this,SLOT(saveSetting(QSettings)));
+	}
 		subWindow2 -> show();
 		subWindow2 -> raise();
 		sunWindow2 -> activateWindow();
+}
+void Window::showSend();
+{
+	if(!subWindow1)
+	{
+		subWindow1 = new SendWindow(this);
+		connect(subWindow1,SIGNAL(sending(SendWindow::message)),this,SLOT(serialSend(SendWindow::message)));
+	}
+	subWindow1 -> show ();
+	subWindow1 -> raise();
+	subWindow1 -> activateWindow();
 }
