@@ -217,13 +217,19 @@ void Window::on_Open_Close_clicked()
 void Window::on_serial_readyRead()
 {
 	QByteArray b;
-    	sleep(100);
 	b=serial->readAll();
-    	serial->write(b);
-    	Buffer= new QDataStream(b);
-	addInValue(*Buffer);
+	if(Buffer == nullptr)
+		Buffer = new QDataStream(b,QIODevice::ReadWrite);
+	else
+		Buffer << b;
+	QDataStream *temp = new QDataStream(*Buffer);
+	addInValue(temp);
+	if(*temp != *Buffer)
+	{
+		delete Buffer;
+		Buffer = temp;
+	}
 	refresh();
-    	delete Buffer;
 }
 void Window::serialSend(SendWindow::message m)
 {
