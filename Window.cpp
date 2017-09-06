@@ -219,15 +219,15 @@ void Window::on_serial_readyRead()
 	QByteArray b;
 	b=serial->readAll();
 	if(Buffer == nullptr)
-		Buffer = new QDataStream(b,QIODevice::ReadWrite);
+		Buffer = new QByteArray(b);
 	else
-		Buffer << b;
-	QDataStream *temp = new QDataStream(*Buffer);
+		Buffer-> append(b);
+	b=*Buffer;
+	QDataStream *temp = new QDataStream(b);
 	addInValue(temp);
-	if(*temp != *Buffer)
+	if(b != *Buffer)
 	{
-		delete Buffer;
-		Buffer = temp;
+		*Buffer = b;
 	}
 	refresh();
 }

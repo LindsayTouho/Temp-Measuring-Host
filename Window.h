@@ -4,6 +4,7 @@
 #include<QSettings>
 #include<QMainWindow>
 #include<QDataStream>
+#include<QByteArray>
 #include<QSerialPort>
 #include<QMenuBar>
 #include<QLabel>
@@ -48,7 +49,7 @@ class Window:public QMainWindow
 
         	QMap<qint16 , QVector<Data*>> data;
 		QSerialPort *serial;
-        	QDataStream *Buffer;
+        	QByteArray *Buffer;
 
 		QChart *chart;
         	QValueAxis *axisX;
