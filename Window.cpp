@@ -233,7 +233,7 @@ void Window::saveSetting(QSettings *newSetting)
 {
 	setting = newSetting;
 }
-void Window::showSetting();
+void Window::showSetting()
 {
 	if(!subWindow2)
 	{

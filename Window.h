@@ -62,7 +62,7 @@ class Window:public QMainWindow
 		QAction *settingAction;
 
 		void sleep(unsigned ms);
-		bool addInValue();
+		bool addInValue(QDatastream& stream);
 		void creatMenu();
 
 	public:
