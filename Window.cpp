@@ -11,9 +11,9 @@ Window::Window()
         	Node[i]=new QLabel(this);                                    //label for show temperature use numbers
         	Node[i]->setText("<h3><font color=red>None</font></h3>");
 	}
-	
+
 	Terminal=new QComboBox(this);                                      //every terminal contain 8 nodes
-    	Terminal->addItem("None");
+  	Terminal->addItem("None");
 	nodeBox=new QComboBox(this);
 	for(int i=0;i!=8;++i)
 	{
@@ -43,25 +43,26 @@ Window::Window()
 
 
 	line=new QLineSeries;                                          //prepare for chart
-    	line->setPen(QPen(Qt::blue,2,Qt::SolidLine));
+	line->setPen(QPen(Qt::blue,2,Qt::SolidLine));
 
 	chart=new QChart;
 	chart->setTitle(tr("Temperature"));
 	chart->legend()->setAlignment(Qt::AlignBottom);
-    	chart->createDefaultAxes();
+	chart->createDefaultAxes();
 
-    	axisX=new QValueAxis;
-    	axisX->setRange(-60,0);
-    	axisX->setLabelFormat("%d");
-    	axisX->setGridLineVisible(true);
-    	axisX->setTickCount(6);
-    	axisX->setMinorTickCount(4);
+	axisX=new QValueAxis;
+	axisX->setRange(-(setting -> value("chartRange").toInt()),0);
+  	axisX->setLabelFormat("%d");
+  	axisX->setGridLineVisible(true);
+  	axisX->setTickCount(6);
+  	axisX->setMinorTickCount(4);
+	axisX->setTitleText("Time/"+((setting->value("timeUnit").toInt())?QString("mintus"):QString("hours")));
 
-    	chart->setAnimationOptions(QChart::SeriesAnimations);
-    	chart->setAxisX(axisX,line);
-    	view=new QChartView(this);
-    	view->setChart(chart);
-    	view->setRenderHint(QPainter::Antialiasing);
+  	chart->setAnimationOptions(QChart::SeriesAnimations);
+  	chart->setAxisX(axisX,line);
+  	view=new QChartView(this);
+  	view->setChart(chart);
+  	view->setRenderHint(QPainter::Antialiasing);
 
 
 
@@ -71,7 +72,7 @@ Window::Window()
 	layout3->addWidget(view);
 	layout3->setStretchFactor(layout2,1);
 	layout3->setStretchFactor(view,4);
-	
+
 	layout4=new QHBoxLayout;
 	layout4->addWidget(Terminal);
 	layout4->addWidget(nodeBox);
@@ -87,11 +88,12 @@ Window::Window()
 
 
 
-
 	connect(Open_Close,SIGNAL(clicked()),this,SLOT(on_Open_Close_clicked()));
-    	connect(Terminal,SIGNAL(currentTextChanged(QString)),this,SLOT(refresh()));
-    	connect(nodeBox,SIGNAL(currentTextChanged(QString)),this,SLOT(refresh()));
-    	connect(Quit,SIGNAL(clicked()),this,SLOT(close()));
+	connect(Terminal,SIGNAL(currentTextChanged(QString)),this,SLOT(refresh()));
+	connect(nodeBox,SIGNAL(currentTextChanged(QString)),this,SLOT(refresh()));
+	connect(Quit,SIGNAL(clicked()),this,SLOT(close()));
+
+	creatMenu();
 };
 Window::~Window()                       //need addition
 {
@@ -106,20 +108,44 @@ Window::~Window()                       //need addition
 	delete Quit;
 	delete serial;
 }
-void Window::addInValue(QDataStream& stream)                //temp add in data if it is useful
+void Window::showSetting()
 {
-    	Data *temp=new Data(stream);
+	if(!subWindow2)
+	{
+		subWindow2 = new SettingWindow(this,setting);
+		connect(subWindow2,SIGNAL(settingChanged(QSettings)),this,SLOT(saveSetting(QSettings)));
+	}
+		subWindow2 -> show();
+		subWindow2 -> raise();
+		subWindow2 -> activateWindow();
+}
+void Window::showSend()
+{
+	if(!subWindow1)
+	{
+		subWindow1 = new SendWindow(this);
+		connect(subWindow1,SIGNAL(sending(SendWindow::message)),this,SLOT(serialSend(SendWindow::message)));
+	}
+	subWindow1 -> show ();
+	subWindow1 -> raise();
+	subWindow1 -> activateWindow();
+}
+
+bool Window::addInValue(QDataStream& stream)                //temp add in data if it is useful
+{
+  	Data *temp=new Data(stream);
 	if(temp->isCompleted())
 	{
 		data[temp->Id()].append(temp);
 	}
+	return true;
 }
 void Window::refresh()
 {
 	auto keys=data.keys();
     	for(qint16 i:keys)                                                   //refresh terminal box
     	{
-        if(Terminal->findText(QString::number(i,16).right(4).toUpper())==-1)
+       		if(Terminal->findText(QString::number(i,16).right(4).toUpper())==-1)
             	Terminal->addItem(QString::number(i,16).right(4).toUpper());
 	}
 	bool ok;
@@ -159,7 +185,19 @@ void Window::refresh()
     	chart->createDefaultAxes();
     	chart->setAxisX(axisX,line);
 
-	creatMenu();
+ 	//清除过多的本地数据
+	int num = setting -> value("dataNum").toInt();
+	for(auto temp:data)
+	{
+		if (temp.size()>=num)
+		{
+			for(auto i = temp.begin()+num;i != temp.end();++i)
+			{
+				delete *i;
+			}
+			temp.erase(temp.begin()+num,temp.end());
+		}
+	}
 }
 
 void Window::creatMenu()
@@ -185,26 +223,22 @@ void Window::on_Open_Close_clicked()
 	if(serial==nullptr||!(serial->isOpen()))
 	{
 		const auto infos=QSerialPortInfo::availablePorts();
-        if(infos.count()==0)
-        {
-            return ;
-        }
-        const auto &current=infos[0];
-		if(infos.count()!=1)
+		if(infos.count()==0)
 		{
-			//
-			//
-			//
+		    return ;
 		}
-		serial->setPort(current);
-	   	serial->setBaudRate(QSerialPort::Baud38400);
-	   	serial->setParity(QSerialPort::NoParity);
+		if(infos.count()!=1)
+			serial -> setPort(infos[(setting -> value("serialName") . toInt())]);
+		else
+			serial->setPort(infos[0]);
+		serial->setBaudRate(QSerialPort::Baud38400);
+		serial->setParity(QSerialPort::NoParity);
 		serial->setDataBits(QSerialPort::Data8);
 		serial->setStopBits(QSerialPort::OneStop);
-        if(serial->open(QIODevice::ReadWrite))
+		if(serial->open(QIODevice::ReadWrite))
 		{
 			serial->setDataTerminalReady(true);
-            connect(serial,SIGNAL(readyRead()),this,SLOT(on_serial_readyRead()));
+			connect(serial,SIGNAL(readyRead()),this,SLOT(on_serial_readyRead()));
 			Open_Close->setText(tr("&Close"));
 		}
 	}
@@ -224,40 +258,22 @@ void Window::on_serial_readyRead()
 		Buffer-> append(b);
 	b=*Buffer;
 	QDataStream *temp = new QDataStream(b);
-	addInValue(temp);
+	addInValue(*temp);
 	if(b != *Buffer)
 	{
 		*Buffer = b;
 	}
 	refresh();
 }
-void Window::serialSend(SendWindow::message m)
+void Window::serialSend(unsigned m)
 {
-	serial ->write(QByteArray(m));
+	QByteArray byte;
+	byte.resize(sizeof(unsigned));
+	memcpy(byte.data(),&m,sizeof(m));
+	serial ->write(byte);
 }
 void Window::saveSetting(QSettings *newSetting)
 {
+	delete setting;
 	setting = newSetting;
-}
-void Window::showSetting()
-{
-	if(!subWindow2)
-	{
-		subWindow2 = new SettingWindow(this,setting);
-		connect(subWindow2,SIGNAL(settingChanged(QSettings)),this,SLOT(saveSetting(QSettings)));
-	}
-		subWindow2 -> show();
-		subWindow2 -> raise();
-		sunWindow2 -> activateWindow();
-}
-void Window::showSend()
-{
-	if(!subWindow1)
-	{
-		subWindow1 = new SendWindow(this);
-		connect(subWindow1,SIGNAL(sending(SendWindow::message)),this,SLOT(serialSend(SendWindow::message)));
-	}
-	subWindow1 -> show ();
-	subWindow1 -> raise();
-	subWindow1 -> activateWindow();
 }

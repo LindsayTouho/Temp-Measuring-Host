@@ -1,6 +1,6 @@
 #include"SendWindow.h"
 
-SendWindow::SendWindow(QDialog *parent) : QDialog(parent)
+SendWindow::SendWindow(QWidget *parent) : QDialog(parent)
 {
 	mainLayout = new QVBoxLayout;
 	for(int i = 0 ; i<4 ; ++i)

@@ -13,11 +13,14 @@ private:
 	QPushButton * button [4];
         QLabel *lable[4];
 public:
-	SendWindow(QDialog *parent = nullptr); 
+	SendWindow(QWidget *parent = nullptr); 
 	~SendWindow();
-	enum message{shakeHands = 0xFE002100,gateway = 0xFE002300,closeAlarm = 0xFE002800,manualAlarm = 0xFE002900};
+	unsigned shakeHands=0xFE002100;
+	unsigned gateway = 0xFE002300;
+	unsigned closeAlarm = 0xFE002800;
+	unsigned manualAlarm = (0xFE002900);
 signals:
-	void sendding(message);
+	void sendding(unsigned);
 public slots:
 	void button1(){emit sendding(shakeHands);};
 	void button2(){emit sendding(gateway);};

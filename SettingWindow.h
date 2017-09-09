@@ -22,7 +22,7 @@ class SettingWindow : public QDialog
 	Q_OBJECT;
 public:
 
-	SettingWindow(QDialog *parent = nullptr,QSettings *oldsetting=nullptr);
+	SettingWindow(QWidget *parent = nullptr,QSettings *oldsetting = nullptr);
 	~SettingWindow();
 
 private:

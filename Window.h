@@ -40,20 +40,20 @@ class Window:public QMainWindow
 		QVBoxLayout *mainLayout;
 		QComboBox *Terminal;
 		QComboBox *nodeBox;
-        	QLabel * Node[8];
+    		QLabel * Node[8];
 		QPushButton *Open_Close;
 		QPushButton *Quit;
 
 		SendWindow *subWindow1;
 		SettingWindow *subWindow2;
 
-        	QMap<qint16 , QVector<Data*>> data;
+    		QMap<qint16 , QVector<Data*>> data;
 		QSerialPort *serial;
-        	QByteArray *Buffer;
+  		QByteArray *Buffer;
 
 		QChart *chart;
-        	QValueAxis *axisX;
-       		QValueAxis *axisY;
+  		QValueAxis *axisX;
+    		QValueAxis *axisY;
 		QLineSeries *line;
 		QChartView *view;
 
@@ -63,7 +63,7 @@ class Window:public QMainWindow
 		QAction *settingAction;
 
 		void sleep(unsigned ms);
-		bool addInValue(QDatastream& stream);
+		bool addInValue(QDataStream& stream);
 		void creatMenu();
 
 	public:
@@ -74,7 +74,7 @@ class Window:public QMainWindow
 		void on_serial_readyRead();
         	void refresh();
 
-		void serialSend(SendWindow::message m);
+		void serialSend(unsigned m);
 		void saveSetting(QSettings *newSetting);
 
 		void showSetting();

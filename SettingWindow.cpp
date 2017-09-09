@@ -1,6 +1,6 @@
 #include"SettingWindow.h"
 
-SettingWindow::SettingWindow(QDialog *parent,QSettings *oldSetting) : QDialog(parent)
+SettingWindow::SettingWindow(QWidget *parent,QSettings *oldSetting) : QDialog(parent)
 {
 	chartRange = new QLabel(this);
 	chartRange -> setText("Chart Range");
@@ -146,15 +146,15 @@ SettingWindow::~SettingWindow()
 
 void SettingWindow::Change()
 {
-	QSettings *newSetting=new QSettings;
+	QSettings *newSetting = new QSettings;
 	newSetting -> setValue("chartRange",timeRange->value());                       //设置1：表格范围
 	newSetting -> setValue("timeUnit",timeUnit -> currentIndex());                        //设置2：表格范围的单位
 	newSetting -> setValue("dataNum",numSlider -> value());                        //设置3：本地保存数据个数
-	newSetting -> setValue("serialName",serialPort -> currentText());		//设置4：串口名
+	newSetting -> setValue("serialName",serialPort -> currentIndex());		//设置4：串口名
 	newSetting -> setValue("hostName",hostname -> text());  			//设置5:主机名
 	newSetting -> setValue("userName",username -> text());                         //设置6：用户名
 	newSetting -> setValue("passWord",passwd -> text()); 				//设置6:密码
 	newSetting -> setValue("databaseName",databasename -> text());			//设置7:数据库名
-	emit settingChanged(newSetting);                //这里需要新建一个QSettings，然后再用信号将QSetting传送到主窗口
+	emit settingChanged(newSetting);
 	this -> close();
 }
