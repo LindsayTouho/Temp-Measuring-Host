@@ -1,4 +1,6 @@
 #include"SettingWindow.h"
+#include<iostream>
+using namespace std;
 
 SettingWindow::SettingWindow(QWidget *parent,QSettings *oldSetting) : QDialog(parent)
 {

@@ -65,6 +65,9 @@ class Window:public QMainWindow
 		void sleep(unsigned ms);
 		bool addInValue(QDataStream& stream);
 		void creatMenu();
+		bool readSettings();
+
+		int localNum;
 
 	public:
 		Window();

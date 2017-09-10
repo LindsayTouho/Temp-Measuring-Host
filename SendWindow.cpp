@@ -21,6 +21,7 @@ SendWindow::SendWindow(QWidget *parent) : QDialog(parent)
 	connect(button[1],SIGNAL(clicked()),this,SLOT(button2()));
 	connect(button[2],SIGNAL(clicked()),this,SLOT(button3()));
 	connect(button[3],SIGNAL(clicked()),this,SLOT(button4()));
+	setLayout(mainLayout);
 }
 SendWindow::~SendWindow()
 {

@@ -1,4 +1,6 @@
 #include"Window.h"
+#include<iostream>
+using namespace std;
 
 Window::Window()
 {
@@ -41,7 +43,6 @@ Window::Window()
 
 
 
-
 	line=new QLineSeries;                                          //prepare for chart
 	line->setPen(QPen(Qt::blue,2,Qt::SolidLine));
 
@@ -51,12 +52,14 @@ Window::Window()
 	chart->createDefaultAxes();
 
 	axisX=new QValueAxis;
-	axisX->setRange(-(setting -> value("chartRange").toInt()),0);
+
+	axisX->setRange(-60,0);
   	axisX->setLabelFormat("%d");
   	axisX->setGridLineVisible(true);
   	axisX->setTickCount(6);
   	axisX->setMinorTickCount(4);
-	axisX->setTitleText("Time/"+((setting->value("timeUnit").toInt())?QString("mintus"):QString("hours")));
+	axisX->setTitleText("Time/mintus");
+
 
   	chart->setAnimationOptions(QChart::SeriesAnimations);
   	chart->setAxisX(axisX,line);
@@ -64,6 +67,7 @@ Window::Window()
   	view->setChart(chart);
   	view->setRenderHint(QPainter::Antialiasing);
 
+	localNum = 100;
 
 
 
@@ -94,6 +98,7 @@ Window::Window()
 	connect(Quit,SIGNAL(clicked()),this,SLOT(close()));
 
 	creatMenu();
+	//readSettings
 };
 Window::~Window()                       //need addition
 {
@@ -110,7 +115,7 @@ Window::~Window()                       //need addition
 }
 void Window::showSetting()
 {
-	if(!subWindow2)
+	if(subWindow2)
 	{
 		subWindow2 = new SettingWindow(this,setting);
 		connect(subWindow2,SIGNAL(settingChanged(QSettings)),this,SLOT(saveSetting(QSettings)));
@@ -121,10 +126,10 @@ void Window::showSetting()
 }
 void Window::showSend()
 {
-	if(!subWindow1)
+	if(subWindow1)
 	{
 		subWindow1 = new SendWindow(this);
-		connect(subWindow1,SIGNAL(sending(SendWindow::message)),this,SLOT(serialSend(SendWindow::message)));
+		connect(subWindow1,SIGNAL(sendding(unsigned)),this,SLOT(serialSend(unsigned)));
 	}
 	subWindow1 -> show ();
 	subWindow1 -> raise();
@@ -186,16 +191,15 @@ void Window::refresh()
     	chart->setAxisX(axisX,line);
 
  	//清除过多的本地数据
-	int num = setting -> value("dataNum").toInt();
 	for(auto temp:data)
 	{
-		if (temp.size()>=num)
+		if (temp.size()>=localNum)
 		{
-			for(auto i = temp.begin()+num;i != temp.end();++i)
+			for(auto i = temp.begin()+localNum;i != temp.end();++i)
 			{
 				delete *i;
 			}
-			temp.erase(temp.begin()+num,temp.end());
+			temp.erase(temp.begin()+localNum,temp.end());
 		}
 	}
 }
@@ -211,6 +215,20 @@ void Window::creatMenu()
 	menu -> addAction(settingAction);
 }
 
+bool Window::readSettings()
+{
+	if(setting != nullptr && setting -> value("chartRange") !=QVariant())
+	{
+		axisX -> setRange(-(setting -> value("chartRange").toInt()),0);
+
+		axisX -> setTitleText(QString("Time/")+((setting -> value("timeUnit").toInt())?QString("Minutes"):QString("Hours")));
+		localNum = setting -> value("dataNum").toInt();
+		return true;
+	}
+	return false;
+}
+
+	
 
 void Window::sleep(unsigned ms)
 {
