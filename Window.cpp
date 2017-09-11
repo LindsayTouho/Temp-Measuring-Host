@@ -115,10 +115,15 @@ Window::~Window()                       //need addition
 }
 void Window::showSetting()
 {
-	if(subWindow2)
+		cout<<"j"<<endl;
+    if(!subWindow2)                                  //这里 有问题，多半是内存管理上的毛病
 	{
+		cout<<"i"<<endl;
+		sleep(50);
 		subWindow2 = new SettingWindow(this,setting);
-		connect(subWindow2,SIGNAL(settingChanged(QSettings)),this,SLOT(saveSetting(QSettings)));
+		sleep(1000);
+		connect(subWindow2,SIGNAL(settingChanged(QSettings*)),this,SLOT(saveSetting(QSettings*)));
+		cout<<"K"<<endl;
 	}
 		subWindow2 -> show();
 		subWindow2 -> raise();
@@ -126,7 +131,7 @@ void Window::showSetting()
 }
 void Window::showSend()
 {
-	if(subWindow1)
+    if(subWindow1)
 	{
 		subWindow1 = new SendWindow(this);
 		connect(subWindow1,SIGNAL(sendding(unsigned)),this,SLOT(serialSend(unsigned)));
@@ -142,7 +147,7 @@ bool Window::addInValue(QDataStream& stream)                //temp add in data i
 	if(temp->isCompleted())
 	{
 		data[temp->Id()].append(temp);
-	}
+    }
 	return true;
 }
 void Window::refresh()

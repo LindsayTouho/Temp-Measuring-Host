@@ -4,6 +4,7 @@ using namespace std;
 
 SettingWindow::SettingWindow(QWidget *parent,QSettings *oldSetting) : QDialog(parent)
 {
+	cout<<1<<endl;
 	chartRange = new QLabel(this);
 	chartRange -> setText("Chart Range");
 	timeRange = new QSpinBox(this);
@@ -26,7 +27,6 @@ SettingWindow::SettingWindow(QWidget *parent,QSettings *oldSetting) : QDialog(pa
 	{
 		serialPort->addItem(i.portName());
 	}
-
 	database     = new QLabel(this);
 	database     ->setText("Database");
 	host 	     = new QLabel(this);
@@ -45,6 +45,7 @@ SettingWindow::SettingWindow(QWidget *parent,QSettings *oldSetting) : QDialog(pa
 	dataname     -> setText("Database Name");
 	databasename = new QLineEdit(this);
 	databasename -> setText("new");
+
 
 	OK = new QPushButton(this);
 	Cancle = new QPushButton(this);
@@ -107,11 +108,13 @@ SettingWindow::SettingWindow(QWidget *parent,QSettings *oldSetting) : QDialog(pa
 
 	this -> setLayout(mainLayout);
 
-	connect(OK,SIGNAL(clicked()),this,SLOT(Change()));
+	connect(OK,SIGNAL(clicked()),this,SLOT(Change()));			//change也会崩溃
 	connect(Cancle,SIGNAL(clicked()),this,SLOT(close()));
+	cout<<2<<endl;
 
-	if(oldSetting!= nullptr && oldSetting->value("chartRange") != QVariant())
+	if(oldSetting== nullptr )                                            //这里有问题
 	{
+	cout<<3<<endl;
 		timeRange -> setValue(oldSetting -> value("chartRange").toInt());
 		timeUnit ->  setCurrentIndex(oldSetting -> value("timeUnit").toInt());
 		numSlider -> setValue(oldSetting -> value("numSlider").toInt());
@@ -125,6 +128,7 @@ SettingWindow::SettingWindow(QWidget *parent,QSettings *oldSetting) : QDialog(pa
 
 SettingWindow::~SettingWindow()
 {
+	cout<<"Delete"<<endl;
 	delete layout1;
 	delete chartRange;
 	delete timeRange;
