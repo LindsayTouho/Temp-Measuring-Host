@@ -2,6 +2,7 @@
 
 SendWindow::SendWindow(QWidget *parent) : QDialog(parent)
 {
+	this -> setWindowTitle("Send");
 	mainLayout = new QVBoxLayout;
 	for(int i = 0 ; i<4 ; ++i)
 	{

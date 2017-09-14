@@ -26,6 +26,7 @@ public:
 	~SettingWindow();
 
 private:
+	QSettings *localSetting=0;
 	QHBoxLayout *layout1;
 	QLabel *chartRange;
 	QSpinBox *timeRange;               	//统计图范围

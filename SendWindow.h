@@ -8,10 +8,10 @@ class SendWindow : public QDialog
 {
 	Q_OBJECT;
 private:
-	QVBoxLayout *mainLayout;
+	QVBoxLayout *mainLayout=0;
 	QLayout * layout[4];
 	QPushButton * button [4];
-	QPushButton * close;
+	QPushButton * close=0;
         QLabel *lable[4];
 public:
 	SendWindow(QWidget *parent = nullptr); 

@@ -44,8 +44,8 @@ class Window:public QMainWindow
 		QPushButton *Open_Close;
 		QPushButton *Quit;
 
-		SendWindow *subWindow1=0;
-		SettingWindow *subWindow2=0;
+		SendWindow *subWindow1 = 0;
+		SettingWindow *subWindow2 = 0;
 
     		QMap<qint16 , QVector<Data*>> data;
 		QSerialPort *serial;
@@ -57,7 +57,7 @@ class Window:public QMainWindow
 		QLineSeries *line;
 		QChartView *view;
 
-		QSettings *setting;
+		QSettings setting;
 
 		QAction *sendAction;
 		QAction *settingAction;
@@ -78,7 +78,6 @@ class Window:public QMainWindow
         	void refresh();
 
 		void serialSend(unsigned m);
-		void saveSetting(QSettings *newSetting);
 
 		void showSetting();
 		void showSend();

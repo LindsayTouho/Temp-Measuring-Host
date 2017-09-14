@@ -6,6 +6,7 @@ Window::Window()
 {
 	this->resize(700,400);
     	this->setObjectName(tr("this"));
+	this -> setWindowTitle("SofeWare");
 
 
     	for(int i=0;i!=8;++i)
@@ -54,7 +55,7 @@ Window::Window()
 	axisX=new QValueAxis;
 
 	axisX->setRange(-60,0);
-  	axisX->setLabelFormat("%d");
+  	axisX->setLabelFormat("%.2f");
   	axisX->setGridLineVisible(true);
   	axisX->setTickCount(6);
   	axisX->setMinorTickCount(4);
@@ -98,6 +99,7 @@ Window::Window()
 	connect(Quit,SIGNAL(clicked()),this,SLOT(close()));
 
 	creatMenu();
+	readSettings();
 	//readSettings
 };
 Window::~Window()                       //need addition
@@ -115,14 +117,16 @@ Window::~Window()                       //need addition
 }
 void Window::showSetting()
 {
-    if(!subWindow2)                                  //要死了，忘了cpp未初始化的指针不为空，会蠢死去：w
+	cout<<"ready"<<endl;
+	if(!subWindow2)                                  //要死了，忘了cpp未初始化的指针不为空，会蠢死去：w
 	{
-		subWindow2 = new SettingWindow(this,setting);
-		connect(subWindow2,SIGNAL(settingChanged(QSettings*)),this,SLOT(saveSetting(QSettings*)));
+		subWindow2 = new SettingWindow(this,&setting);
 	}
-		subWindow2 -> show();
-		subWindow2 -> raise();
-		subWindow2 -> activateWindow();
+	subWindow2 -> show();
+	subWindow2 -> raise();
+	subWindow2 -> activateWindow();
+	cout<<"complete"<<endl;
+		
 }
 void Window::showSend()
 {
@@ -217,12 +221,13 @@ void Window::creatMenu()
 
 bool Window::readSettings()
 {
-	if(setting != nullptr && setting -> value("chartRange") !=QVariant())
+	if(setting. value("chartRange") !=QVariant())
 	{
-		axisX -> setRange(-(setting -> value("chartRange").toInt()),0);
+		cout<<"read oldsetting"<<endl;
+		axisX -> setRange(-(setting . value("chartRange").toInt()),0);
 
-		axisX -> setTitleText(QString("Time/")+((setting -> value("timeUnit").toInt())?QString("Minutes"):QString("Hours")));
-		localNum = setting -> value("dataNum").toInt();
+		axisX -> setTitleText(QString("Time/")+((setting . value("timeUnit").toInt())?QString("Hours"):QString("Minustes")));
+		localNum = setting . value("dataNum").toInt();
 		return true;
 	}
 	return false;
@@ -246,7 +251,7 @@ void Window::on_Open_Close_clicked()
 		    return ;
 		}
 		if(infos.count()!=1)
-			serial -> setPort(infos[(setting -> value("serialName") . toInt())]);
+			serial -> setPort(infos[(setting . value("serialName") . toInt())]);
 		else
 			serial->setPort(infos[0]);
 		serial->setBaudRate(QSerialPort::Baud38400);
@@ -289,9 +294,4 @@ void Window::serialSend(unsigned m)
 	byte.resize(sizeof(unsigned));
 	memcpy(byte.data(),&m,sizeof(m));
 	serial ->write(byte);
-}
-void Window::saveSetting(QSettings *newSetting)
-{
-	delete setting;
-	setting = newSetting;
 }

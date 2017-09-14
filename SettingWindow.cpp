@@ -4,7 +4,8 @@ using namespace std;
 
 SettingWindow::SettingWindow(QWidget *parent,QSettings *oldSetting) : QDialog(parent)
 {
-	cout<<1<<endl;
+	localSetting = oldSetting;
+	this -> setWindowTitle("Settings");
 	chartRange = new QLabel(this);
 	chartRange -> setText("Chart Range");
 	timeRange = new QSpinBox(this);
@@ -110,25 +111,22 @@ SettingWindow::SettingWindow(QWidget *parent,QSettings *oldSetting) : QDialog(pa
 
 	connect(OK,SIGNAL(clicked()),this,SLOT(Change()));			//change也会崩溃
 	connect(Cancle,SIGNAL(clicked()),this,SLOT(reject()));
-	cout<<2<<endl;
 
-	if(oldSetting== nullptr )                                            //这里有问题
+	if(localSetting != nullptr && localSetting -> value("chartRange") != QVariant())                                            //这里有问题
 	{
-	cout<<3<<endl;
-		timeRange -> setValue(oldSetting -> value("chartRange").toInt());
-		timeUnit ->  setCurrentIndex(oldSetting -> value("timeUnit").toInt());
-		numSlider -> setValue(oldSetting -> value("numSlider").toInt());
-		serialPort -> setCurrentText(oldSetting->value("serialName").toString());
-		hostname ->  setText(oldSetting-> value("hostname").toString());
-		username -> setText(oldSetting -> value("username").toString());
-		passwd -> setText(oldSetting -> value("passWord").toString());
-		databasename -> setText(oldSetting -> value("databaseName").toString());
+		timeRange -> setValue(localSetting -> value("chartRange").toInt());
+		timeUnit ->  setCurrentIndex(localSetting -> value("timeUnit").toInt());
+		numSlider -> setValue(localSetting -> value("numSlider").toInt());
+		serialPort -> setCurrentText(localSetting->value("serialName").toString());
+		hostname ->  setText(localSetting-> value("hostName").toString());
+		username -> setText(localSetting -> value("userName").toString());
+		passwd -> setText(localSetting -> value("passWord").toString());
+		databasename -> setText(localSetting -> value("databaseName").toString());
 	}	
 }
 
 SettingWindow::~SettingWindow()
 {
-	cout<<"Delete"<<endl;
 	delete layout1;
 	delete chartRange;
 	delete timeRange;
@@ -152,15 +150,13 @@ SettingWindow::~SettingWindow()
 
 void SettingWindow::Change()
 {
-	QSettings *newSetting = new QSettings;
-	newSetting -> setValue("chartRange",timeRange->value());                       //设置1：表格范围
-	newSetting -> setValue("timeUnit",timeUnit -> currentIndex());                        //设置2：表格范围的单位
-	newSetting -> setValue("dataNum",numSlider -> value());                        //设置3：本地保存数据个数
-	newSetting -> setValue("serialName",serialPort -> currentIndex());		//设置4：串口名
-	newSetting -> setValue("hostName",hostname -> text());  			//设置5:主机名
-	newSetting -> setValue("userName",username -> text());                         //设置6：用户名
-	newSetting -> setValue("passWord",passwd -> text()); 				//设置6:密码
-	newSetting -> setValue("databaseName",databasename -> text());			//设置7:数据库名
-	emit settingChanged(newSetting);
+	localSetting -> setValue("chartRange",timeRange->value());                       //设置1：表格范围
+	localSetting -> setValue("timeUnit",timeUnit -> currentIndex());                        //设置2：表格范围的单位
+	localSetting -> setValue("dataNum",numSlider -> value());                        //设置3：本地保存数据个数
+	localSetting -> setValue("serialName",serialPort -> currentIndex());		//设置4：串口名
+	localSetting -> setValue("hostName",hostname -> text());  			//设置5:主机名
+	localSetting -> setValue("userName",username -> text());                         //设置6：用户名
+	localSetting -> setValue("passWord",passwd -> text()); 				//设置6:密码
+	localSetting -> setValue("databaseName",databasename -> text());			//设置7:数据库名
 	this -> accept();
 }
