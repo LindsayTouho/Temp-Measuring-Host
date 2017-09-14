@@ -109,7 +109,7 @@ SettingWindow::SettingWindow(QWidget *parent,QSettings *oldSetting) : QDialog(pa
 	this -> setLayout(mainLayout);
 
 	connect(OK,SIGNAL(clicked()),this,SLOT(Change()));			//change也会崩溃
-	connect(Cancle,SIGNAL(clicked()),this,SLOT(close()));
+	connect(Cancle,SIGNAL(clicked()),this,SLOT(reject()));
 	cout<<2<<endl;
 
 	if(oldSetting== nullptr )                                            //这里有问题
@@ -162,5 +162,5 @@ void SettingWindow::Change()
 	newSetting -> setValue("passWord",passwd -> text()); 				//设置6:密码
 	newSetting -> setValue("databaseName",databasename -> text());			//设置7:数据库名
 	emit settingChanged(newSetting);
-	this -> close();
+	this -> accept();
 }

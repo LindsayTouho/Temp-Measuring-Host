@@ -44,8 +44,8 @@ class Window:public QMainWindow
 		QPushButton *Open_Close;
 		QPushButton *Quit;
 
-		SendWindow *subWindow1;
-		SettingWindow *subWindow2;
+		SendWindow *subWindow1=0;
+		SettingWindow *subWindow2=0;
 
     		QMap<qint16 , QVector<Data*>> data;
 		QSerialPort *serial;

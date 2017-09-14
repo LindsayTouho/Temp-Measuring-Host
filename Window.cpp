@@ -115,15 +115,10 @@ Window::~Window()                       //need addition
 }
 void Window::showSetting()
 {
-		cout<<"j"<<endl;
-    if(!subWindow2)                                  //这里 有问题，多半是内存管理上的毛病
+    if(!subWindow2)                                  //要死了，忘了cpp未初始化的指针不为空，会蠢死去：w
 	{
-		cout<<"i"<<endl;
-		sleep(50);
 		subWindow2 = new SettingWindow(this,setting);
-		sleep(1000);
 		connect(subWindow2,SIGNAL(settingChanged(QSettings*)),this,SLOT(saveSetting(QSettings*)));
-		cout<<"K"<<endl;
 	}
 		subWindow2 -> show();
 		subWindow2 -> raise();
@@ -131,7 +126,7 @@ void Window::showSetting()
 }
 void Window::showSend()
 {
-    if(subWindow1)
+	if(!subWindow1)
 	{
 		subWindow1 = new SendWindow(this);
 		connect(subWindow1,SIGNAL(sendding(unsigned)),this,SLOT(serialSend(unsigned)));

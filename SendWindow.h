@@ -11,6 +11,7 @@ private:
 	QVBoxLayout *mainLayout;
 	QLayout * layout[4];
 	QPushButton * button [4];
+	QPushButton * close;
         QLabel *lable[4];
 public:
 	SendWindow(QWidget *parent = nullptr); 
