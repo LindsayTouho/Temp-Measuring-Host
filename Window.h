@@ -1,5 +1,12 @@
+//窗口布局还需要调整，保证lable和chart以同样的比例缩放
+
+#ifndef WINDOW_H
+#define WINDOW_H
+
+#include<QSettings>
 #include<QMainWindow>
 #include<QDataStream>
+#include<QByteArray>
 #include<QSerialPort>
 #include<QMenuBar>
 #include<QLabel>
@@ -18,6 +25,9 @@
 #include<QLineSeries>
 #include<QString>
 #include"data.h"
+#include"SettingWindow.h"
+#include"SendWindow.h"
+#include<QAction>
 using namespace QtCharts;
 
 class Window:public QMainWindow
@@ -32,21 +42,34 @@ class Window:public QMainWindow
 		QVBoxLayout *mainLayout;
 		QComboBox *Terminal;
 		QComboBox *nodeBox;
-		QLabel *valueTime;
-        QLabel * Node[8];
+    		QLabel * Node[8];
 		QPushButton *Open_Close;
 		QPushButton *Quit;
-        QMap<qint16 , QVector<Data*>> data;
+
+		SendWindow *subWindow1 = 0;
+		SettingWindow *subWindow2 = 0;
+
+    		QMap<qint16 , QVector<Data*>> data;
 		QSerialPort *serial;
-        QDataStream *Buffer;
+  		QByteArray *Buffer;
 
 		QChart *chart;
-        QValueAxis *axisX;
-        QValueAxis *axisY;
+  		QValueAxis *axisX;
+    		QValueAxis *axisY;
 		QLineSeries *line;
 		QChartView *view;
+
+		QSettings setting;
+
+		QAction *sendAction;
+		QAction *settingAction;
+
 		void sleep(unsigned ms);
-		void addInValue();
+		bool addInValue(QDataStream& stream);
+		void creatMenu();
+		bool readSettings();
+
+		int localNum;
 
 	public:
 		Window();
@@ -54,5 +77,11 @@ class Window:public QMainWindow
 	public slots:
 		void on_Open_Close_clicked();
 		void on_serial_readyRead();
-        void refresh();
+        	void refresh();
+
+		void serialSend(unsigned m);
+
+		void showSetting();
+		void showSend();
 };
+#endif

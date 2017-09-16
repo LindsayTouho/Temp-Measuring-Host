@@ -1,29 +1,33 @@
 #include"Window.h"
-#include<iostream>
-using namespace std;
 
 Window::Window()
 {
 	this->resize(700,400);
     	this->setObjectName(tr("this"));
+	this -> setWindowTitle("SofeWare");
+
+
     	for(int i=0;i!=8;++i)
 	{
         	Node[i]=new QLabel(this);                                    //label for show temperature use numbers
         	Node[i]->setText("<h3><font color=red>None</font></h3>");
 	}
-    	menuBar()->addAction(tr("setting"));                                //menubar uncompleted
-	
+
 	Terminal=new QComboBox(this);                                      //every terminal contain 8 nodes
-    	Terminal->addItem("None");
+  	Terminal->addItem("None");
 	nodeBox=new QComboBox(this);
 	for(int i=0;i!=8;++i)
 	{
 		nodeBox->addItem(tr("Node")+QString::number(i+1));        //all nodes set as "Node" first
 	}
+
+
 	Open_Close=new QPushButton(this);                                //add buttons
 	Open_Close->setText(tr("&Open"));
 	Quit=new QPushButton(this);
 	Quit->setText(tr("&Quit"));
+
+
 
 	layout2=new QVBoxLayout;
 	for(int i=0;i!=4;++i)                                            //arrange label for temperature
@@ -36,30 +40,42 @@ Window::Window()
 
 	serial=new QSerialPort;
 
+
+
 	line=new QLineSeries;                                          //prepare for chart
-    	line->setPen(QPen(Qt::blue,2,Qt::SolidLine));
+	line->setPen(QPen(Qt::blue,2,Qt::SolidLine));
 
 	chart=new QChart;
 	chart->setTitle(tr("Temperature"));
 	chart->legend()->setAlignment(Qt::AlignBottom);
-    	chart->createDefaultAxes();
+	chart->createDefaultAxes();
 
-    	axisX=new QValueAxis;
-    	axisX->setRange(-60,0);
-    	axisX->setLabelFormat("%d");
-    	axisX->setGridLineVisible(true);
-    	axisX->setTickCount(6);
-    	axisX->setMinorTickCount(4);
+	axisX=new QValueAxis;
 
-    	chart->setAnimationOptions(QChart::SeriesAnimations);
-    	chart->setAxisX(axisX,line);
-    	view=new QChartView(this);
-    	view->setChart(chart);
-    	view->setRenderHint(QPainter::Antialiasing);
+	axisX->setRange(-60,0);
+  	axisX->setLabelFormat("%.2f");
+  	axisX->setGridLineVisible(true);
+  	axisX->setTickCount(6);
+  	axisX->setMinorTickCount(4);
+	axisX->setTitleText("Time/mintus");
+
+
+  	chart->setAnimationOptions(QChart::SeriesAnimations);
+  	chart->setAxisX(axisX,line);
+  	view=new QChartView(this);
+  	view->setChart(chart);
+  	view->setRenderHint(QPainter::Antialiasing);
+
+	localNum = 100;
+
+
 
 	layout3= new QHBoxLayout;
 	layout3->addLayout(layout2);
 	layout3->addWidget(view);
+	layout3->setStretchFactor(layout2,1);
+	layout3->setStretchFactor(view,4);
+
 	layout4=new QHBoxLayout;
 	layout4->addWidget(Terminal);
 	layout4->addWidget(nodeBox);
@@ -73,10 +89,16 @@ Window::Window()
 	mainWidget->setLayout(mainLayout);
 	this->setCentralWidget(mainWidget);
 
+
+
 	connect(Open_Close,SIGNAL(clicked()),this,SLOT(on_Open_Close_clicked()));
-    	connect(Terminal,SIGNAL(currentTextChanged(QString)),this,SLOT(refresh()));
-    	connect(nodeBox,SIGNAL(currentTextChanged(QString)),this,SLOT(refresh()));
-    	connect(Quit,SIGNAL(clicked()),this,SLOT(close()));
+	connect(Terminal,SIGNAL(currentTextChanged(QString)),this,SLOT(refresh()));
+	connect(nodeBox,SIGNAL(currentTextChanged(QString)),this,SLOT(refresh()));
+	connect(Quit,SIGNAL(clicked()),this,SLOT(close()));
+
+	creatMenu();
+	readSettings();
+	//readSettings
 };
 Window::~Window()                       //need addition
 {
@@ -87,25 +109,48 @@ Window::~Window()                       //need addition
 	delete layout2;
 	delete Terminal;
 	delete nodeBox;
-	delete valueTime;
 	delete Open_Close;
 	delete Quit;
 	delete serial;
 }
-void Window::addInValue()                //temp add in data if it is useful
+void Window::showSetting()
 {
-    	Data *temp=new Data(*Buffer);
+	if(!subWindow2)                                  //要死了，忘了cpp未初始化的指针不为空，会蠢死去：w
+	{
+		subWindow2 = new SettingWindow(this,&setting);
+	}
+	subWindow2 -> show();
+	subWindow2 -> raise();
+	subWindow2 -> activateWindow();
+		
+}
+void Window::showSend()
+{
+	if(!subWindow1)
+	{
+		subWindow1 = new SendWindow(this);
+		connect(subWindow1,SIGNAL(sendding(unsigned)),this,SLOT(serialSend(unsigned)));
+	}
+	subWindow1 -> show ();
+	subWindow1 -> raise();
+	subWindow1 -> activateWindow();
+}
+
+bool Window::addInValue(QDataStream& stream)                //temp add in data if it is useful
+{
+  	Data *temp=new Data(stream);
 	if(temp->isCompleted())
 	{
 		data[temp->Id()].append(temp);
-	}
+    }
+	return true;
 }
 void Window::refresh()
 {
 	auto keys=data.keys();
     	for(qint16 i:keys)                                                   //refresh terminal box
     	{
-        if(Terminal->findText(QString::number(i,16).right(4).toUpper())==-1)
+       		if(Terminal->findText(QString::number(i,16).right(4).toUpper())==-1)
             	Terminal->addItem(QString::number(i,16).right(4).toUpper());
 	}
 	bool ok;
@@ -129,22 +174,68 @@ void Window::refresh()
 	line->clear();                                            //refresh chart
     	chart->removeSeries(line);
     	chart->removeAxis(axisX);
-	int x=0;
-    	int y=0;                                                    //need addition
+	float x=0.0;
+    	float y=0;                                                    
     	int i=0;
 	y=nodeBox->currentIndex();
-	while(x<=60)
+	while(x<=(setting . value("chartRange") .toInt()))						//添加设置后需要更改
 	{
-        if((lastData-i)==data[temp].begin())
+		if((lastData-i)==data[temp].begin())
 				break;
-        x=(*(lastData-i))->time().secsTo(QTime::currentTime());
-        line->append(-x,(*(lastData-i))->Temper(y));
-        ++i;
+		if(setting .value("timeUnit") .toString() == "second(s)")
+			x=(*(lastData-i))->time().secsTo(QTime::currentTime());
+		
+		if(setting .value("timeUnit") .toString() == "minute(s)")
+			x=(float)(*(lastData-i)) -> time().secsTo(QTime::currentTime())/60;
+
+		if(setting .value("timeUnit") .toString() == "hour(s)")
+			x=(float)(*(lastData-i)) -> time().secsTo(QTime::currentTime())/3600;
+		line->append(-x,(*(lastData-i))->Temper(y));
+		++i;
 	}
     	chart->addSeries(line);
     	chart->createDefaultAxes();
     	chart->setAxisX(axisX,line);
+
+ 	//清除过多的本地数据
+	for(auto temp:data)
+	{
+		if (temp.size()>=localNum)
+		{
+			for(auto i = temp.begin()+localNum;i != temp.end();++i)
+			{
+				delete *i;
+			}
+			temp.erase(temp.begin()+localNum,temp.end());
+		}
+	}
 }
+
+void Window::creatMenu()
+{
+	auto menu = this->menuBar();
+	sendAction = new QAction(tr("Send Window"),this);
+	connect(sendAction,SIGNAL(triggered()),this,SLOT(showSend()));
+	settingAction = new QAction(tr("Setting"),this);
+	connect(settingAction,SIGNAL(triggered()),this,SLOT(showSetting()));
+	menu -> addAction(sendAction);
+	menu -> addAction(settingAction);
+}
+
+bool Window::readSettings()
+{
+	if(setting. value("chartRange") !=QVariant())
+	{
+		axisX -> setRange(-(setting . value("chartRange").toInt()),0);
+
+		axisX -> setTitleText(QString("Time/")+(setting . value("timeUnit").toString()));
+		localNum = setting . value("dataNum").toInt();
+		return true;
+	}
+	return false;
+}
+
+	
 
 void Window::sleep(unsigned ms)
 {
@@ -157,26 +248,23 @@ void Window::on_Open_Close_clicked()
 	if(serial==nullptr||!(serial->isOpen()))
 	{
 		const auto infos=QSerialPortInfo::availablePorts();
-        if(infos.count()==0)
-        {
-            return ;
-        }
-        const auto &current=infos[0];
-		if(infos.count()!=1)
+		if(infos.count()==0)
 		{
-			//
-			//
-			//
+			QMessageBox::warning(this,"Warning","No serial port is connecting",QMessageBox::Ok);
+		    	return ;
 		}
-		serial->setPort(current);
-	   	serial->setBaudRate(QSerialPort::Baud38400);
-	   	serial->setParity(QSerialPort::NoParity);
+		if(infos.count()!=1)
+			serial -> setPort(infos[(setting . value("serialName") . toInt())]);
+		else
+			serial->setPort(infos[0]);
+		serial->setBaudRate(QSerialPort::Baud38400);
+		serial->setParity(QSerialPort::NoParity);
 		serial->setDataBits(QSerialPort::Data8);
 		serial->setStopBits(QSerialPort::OneStop);
-        if(serial->open(QIODevice::ReadWrite))
+		if(serial->open(QIODevice::ReadWrite))
 		{
 			serial->setDataTerminalReady(true);
-            connect(serial,SIGNAL(readyRead()),this,SLOT(on_serial_readyRead()));
+			connect(serial,SIGNAL(readyRead()),this,SLOT(on_serial_readyRead()));
 			Open_Close->setText(tr("&Close"));
 		}
 	}
@@ -189,11 +277,24 @@ void Window::on_Open_Close_clicked()
 void Window::on_serial_readyRead()
 {
 	QByteArray b;
-    	sleep(100);
 	b=serial->readAll();
-    	serial->write(b);
-    	Buffer= new QDataStream(b);
-	addInValue();
+	if(Buffer == nullptr)
+		Buffer = new QByteArray(b);
+	else
+		Buffer-> append(b);
+	b=*Buffer;
+	QDataStream *temp = new QDataStream(b);
+	addInValue(*temp);
+	if(b != *Buffer)
+	{
+		*Buffer = b;
+	}
 	refresh();
-    	delete Buffer;
+}
+void Window::serialSend(unsigned m)
+{
+	QByteArray byte;
+	byte.resize(sizeof(unsigned));
+	memcpy(byte.data(),&m,sizeof(m));
+	serial ->write(byte);
 }
