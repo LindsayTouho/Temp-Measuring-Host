@@ -1,6 +1,4 @@
 #include"SettingWindow.h"
-#include<iostream>
-using namespace std;
 
 SettingWindow::SettingWindow(QWidget *parent,QSettings *oldSetting) : QDialog(parent)
 {
@@ -158,5 +156,6 @@ void SettingWindow::Change()
 	localSetting -> setValue("userName",username -> text());                         //设置6：用户名
 	localSetting -> setValue("passWord",passwd -> text()); 				//设置6:密码
 	localSetting -> setValue("databaseName",databasename -> text());			//设置7:数据库名
+	QMessageBox::warning(this,tr("Warning"),tr("Restart to take effect"),QMessageBox::Ok);
 	this -> accept();
 }

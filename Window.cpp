@@ -1,6 +1,4 @@
 #include"Window.h"
-#include<iostream>
-using namespace std;
 
 Window::Window()
 {
@@ -117,7 +115,6 @@ Window::~Window()                       //need addition
 }
 void Window::showSetting()
 {
-	cout<<"ready"<<endl;
 	if(!subWindow2)                                  //要死了，忘了cpp未初始化的指针不为空，会蠢死去：w
 	{
 		subWindow2 = new SettingWindow(this,&setting);
@@ -125,7 +122,6 @@ void Window::showSetting()
 	subWindow2 -> show();
 	subWindow2 -> raise();
 	subWindow2 -> activateWindow();
-	cout<<"complete"<<endl;
 		
 }
 void Window::showSend()
@@ -179,10 +175,10 @@ void Window::refresh()
     	chart->removeSeries(line);
     	chart->removeAxis(axisX);
 	int x=0;
-    	int y=0;                                                    //need addition
+    	int y=0;                                                    
     	int i=0;
 	y=nodeBox->currentIndex();
-	while(x<=60)
+	while(x<=60)						//添加设置后需要更改
 	{
 		if((lastData-i)==data[temp].begin())
 				break;
@@ -223,7 +219,6 @@ bool Window::readSettings()
 {
 	if(setting. value("chartRange") !=QVariant())
 	{
-		cout<<"read oldsetting"<<endl;
 		axisX -> setRange(-(setting . value("chartRange").toInt()),0);
 
 		axisX -> setTitleText(QString("Time/")+((setting . value("timeUnit").toInt())?QString("Hours"):QString("Minustes")));
