@@ -1,5 +1,7 @@
 //窗口布局还需要调整，保证lable和chart以同样的比例缩放
 
+#ifndef WINDOW_H
+#define WINDOW_H
 
 #include<QSettings>
 #include<QMainWindow>
@@ -82,3 +84,4 @@ class Window:public QMainWindow
 		void showSetting();
 		void showSend();
 };
+#endif

@@ -1,3 +1,5 @@
+#ifndef SENDWINDOW_H
+#define SENDWINDOW_H
 #include<QLabel>
 #include<QPushButton>
 #include<QDialog>
@@ -28,3 +30,4 @@ public slots:
 	void button3(){emit sendding(closeAlarm);};
 	void button4(){emit sendding(manualAlarm);};
 };
+#endif

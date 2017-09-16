@@ -2,7 +2,8 @@
 //string 应该是用来标记的设置名，variant可以转换成其他的数据类型
 
 
-
+#ifndef SETTINGWINDOW_H
+#define SETTINGWINDOW_H
 
 #include<QString>
 #include<QDialog>
@@ -68,4 +69,4 @@ public slots:
 signals:
 	void settingChanged(QSettings *newSetting);
 };
-
+#endif

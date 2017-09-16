@@ -174,15 +174,22 @@ void Window::refresh()
 	line->clear();                                            //refresh chart
     	chart->removeSeries(line);
     	chart->removeAxis(axisX);
-	int x=0;
-    	int y=0;                                                    
+	float x=0.0;
+    	float y=0;                                                    
     	int i=0;
 	y=nodeBox->currentIndex();
-	while(x<=60)						//添加设置后需要更改
+	while(x<=(setting . value("chartRange") .toInt()))						//添加设置后需要更改
 	{
 		if((lastData-i)==data[temp].begin())
 				break;
-		x=(*(lastData-i))->time().secsTo(QTime::currentTime());
+		if(setting .value("timeUnit") .toString() == "second(s)")
+			x=(*(lastData-i))->time().secsTo(QTime::currentTime());
+		
+		if(setting .value("timeUnit") .toString() == "minute(s)")
+			x=(float)(*(lastData-i)) -> time().secsTo(QTime::currentTime())/60;
+
+		if(setting .value("timeUnit") .toString() == "hour(s)")
+			x=(float)(*(lastData-i)) -> time().secsTo(QTime::currentTime())/3600;
 		line->append(-x,(*(lastData-i))->Temper(y));
 		++i;
 	}
@@ -221,7 +228,7 @@ bool Window::readSettings()
 	{
 		axisX -> setRange(-(setting . value("chartRange").toInt()),0);
 
-		axisX -> setTitleText(QString("Time/")+((setting . value("timeUnit").toInt())?QString("Hours"):QString("Minustes")));
+		axisX -> setTitleText(QString("Time/")+(setting . value("timeUnit").toString()));
 		localNum = setting . value("dataNum").toInt();
 		return true;
 	}
@@ -243,7 +250,8 @@ void Window::on_Open_Close_clicked()
 		const auto infos=QSerialPortInfo::availablePorts();
 		if(infos.count()==0)
 		{
-		    return ;
+			QMessageBox::warning(this,"Warning","No serial port is connecting",QMessageBox::Ok);
+		    	return ;
 		}
 		if(infos.count()!=1)
 			serial -> setPort(infos[(setting . value("serialName") . toInt())]);

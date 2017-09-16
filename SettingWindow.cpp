@@ -9,6 +9,7 @@ SettingWindow::SettingWindow(QWidget *parent,QSettings *oldSetting) : QDialog(pa
 	timeRange = new QSpinBox(this);
 	timeRange->setRange(1,60);
 	timeUnit = new QComboBox(this);
+	timeUnit->addItem("second(s)");
 	timeUnit->addItem("minute(s)");
 	timeUnit->addItem("hour(s)");
 	
@@ -113,9 +114,9 @@ SettingWindow::SettingWindow(QWidget *parent,QSettings *oldSetting) : QDialog(pa
 	if(localSetting != nullptr && localSetting -> value("chartRange") != QVariant())                                            //这里有问题
 	{
 		timeRange -> setValue(localSetting -> value("chartRange").toInt());
-		timeUnit ->  setCurrentIndex(localSetting -> value("timeUnit").toInt());
+		timeUnit ->  setCurrentText(localSetting -> value("timeUnit").toString());
 		numSlider -> setValue(localSetting -> value("numSlider").toInt());
-		serialPort -> setCurrentText(localSetting->value("serialName").toString());
+		serialPort -> setCurrentIndex(localSetting->value("serialName").toInt());
 		hostname ->  setText(localSetting-> value("hostName").toString());
 		username -> setText(localSetting -> value("userName").toString());
 		passwd -> setText(localSetting -> value("passWord").toString());
@@ -149,7 +150,7 @@ SettingWindow::~SettingWindow()
 void SettingWindow::Change()
 {
 	localSetting -> setValue("chartRange",timeRange->value());                       //设置1：表格范围
-	localSetting -> setValue("timeUnit",timeUnit -> currentIndex());                        //设置2：表格范围的单位
+	localSetting -> setValue("timeUnit",timeUnit -> currentText());                        //设置2：表格范围的单位
 	localSetting -> setValue("dataNum",numSlider -> value());                        //设置3：本地保存数据个数
 	localSetting -> setValue("serialName",serialPort -> currentIndex());		//设置4：串口名
 	localSetting -> setValue("hostName",hostname -> text());  			//设置5:主机名
