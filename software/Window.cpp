@@ -122,7 +122,7 @@ void Window::showSetting()
 	subWindow2 -> show();
 	subWindow2 -> raise();
 	subWindow2 -> activateWindow();
-		
+
 }
 void Window::showSend()
 {
@@ -142,8 +142,26 @@ bool Window::addInValue(QDataStream& stream)                //temp add in data i
 	if(temp->isCompleted())
 	{
 		data[temp->Id()].append(temp);
-    }
-	return true;
+		QString tableName=(QString::number(temp->Id(),16).right(4).toUpper());
+		QSqlQuery query;
+		QString table = QString("CREATE TABLE IF NOT EXISTS");
+		table += tableName;
+		table += QString("(time timestamp NOT NULL default CURRENT_TIMESTAMP,T1   int       NULL,T2   int       NULL,T3   int       NULL,T4   int       NULL,T5   int       NULL,T6   int       NULL,T7   int       NULL,T8   int       NULL,PRIMARY KEY(time))ENGINE=InnoDB");
+		query.exec(table);
+		QString insert = QString("INSERT INTO") ;
+		insert += tableName ;
+		insert += QString("(T1,T2,T3,T4,T5,T6,T7,T8) VALUES(");
+		for(int i=0;i!=8;++i){
+			if(temp->isOpen(i))
+				insert += QString::number(temp -> Temper(i));
+			else
+				insert += QString("NULL");
+		query.exec(insert);
+		}
+		return true;
+
+	}
+	return false;
 }
 void Window::refresh()
 {
@@ -175,7 +193,7 @@ void Window::refresh()
     	chart->removeSeries(line);
     	chart->removeAxis(axisX);
 	float x=0.0;
-    	float y=0;                                                    
+    	float y=0;
     	int i=0;
 	y=nodeBox->currentIndex();
 	while(x<=(setting . value("chartRange") .toInt()))						//添加设置后需要更改
@@ -184,7 +202,7 @@ void Window::refresh()
 				break;
 		if(setting .value("timeUnit") .toString() == "second(s)")
 			x=(*(lastData-i))->time().secsTo(QTime::currentTime());
-		
+
 		if(setting .value("timeUnit") .toString() == "minute(s)")
 			x=(float)(*(lastData-i)) -> time().secsTo(QTime::currentTime())/60;
 
@@ -235,7 +253,7 @@ bool Window::readSettings()
 	return false;
 }
 
-	
+
 
 void Window::sleep(unsigned ms)
 {
@@ -261,7 +279,7 @@ void Window::on_Open_Close_clicked()
 		serial->setParity(QSerialPort::NoParity);
 		serial->setDataBits(QSerialPort::Data8);
 		serial->setStopBits(QSerialPort::OneStop);
-		if(serial->open(QIODevice::ReadWrite))
+		if(serial->open(QIODevice::ReadWrite) && dbconnect())
 		{
 			serial->setDataTerminalReady(true);
 			connect(serial,SIGNAL(readyRead()),this,SLOT(on_serial_readyRead()));
@@ -297,4 +315,30 @@ void Window::serialSend(unsigned m)
 	byte.resize(sizeof(unsigned));
 	memcpy(byte.data(),&m,sizeof(m));
 	serial ->write(byte);
+}
+
+bool Window::dbconnect(){
+	if(setting.value("hostName") != QVariant())
+	{
+		db.setHostName(setting.value("hostName").toString());
+		db.setDatabaseName(setting.value("databaseName").toString());
+		db.setUserName(setting.value("userName").toString());
+		db.setPassword(setting.value("passWord").toString());
+		if(!db.open()){
+			QMessageBox::critical(0,tr("Database Error"),db.lastError().text());
+			return false;
+		}
+		return true;
+	}
+	else{
+		db.setHostName("47.93.191.3");
+		db.setDatabaseName("temperature");
+		db.setUserName("public");
+		db.setPassword("123456");
+		if(!db.open()){
+			QMessageBox::critical(0,tr("Database Error"),db.lastError().text());
+			return false;
+		}
+		return true;
+	}
 }

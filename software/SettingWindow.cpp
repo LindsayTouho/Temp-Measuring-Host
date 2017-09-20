@@ -12,7 +12,7 @@ SettingWindow::SettingWindow(QWidget *parent,QSettings *oldSetting) : QDialog(pa
 	timeUnit->addItem("second(s)");
 	timeUnit->addItem("minute(s)");
 	timeUnit->addItem("hour(s)");
-	
+
 	dataNum = new QLabel (this);
 	dataNum -> setText("Lacol Data Number");
 	numSlider = new QSpinBox(this);
@@ -36,15 +36,15 @@ SettingWindow::SettingWindow(QWidget *parent,QSettings *oldSetting) : QDialog(pa
 	user	     = new QLabel(this);
 	user	     -> setText("Username");
 	username     = new QLineEdit(this);
-	username     -> setText("servant");
+	username     -> setText("public");
 	pass 	     = new QLabel(this);
 	pass         -> setText("Password");
 	passwd       = new QLineEdit(this);
-	passwd       -> setText("Changli");
+	passwd       -> setText("123456");
 	dataname     = new QLabel(this);
 	dataname     -> setText("Database Name");
 	databasename = new QLineEdit(this);
-	databasename -> setText("new");
+	databasename -> setText("temperature");
 
 
 	OK = new QPushButton(this);
@@ -92,7 +92,7 @@ SettingWindow::SettingWindow(QWidget *parent,QSettings *oldSetting) : QDialog(pa
 	layout5 = new QHBoxLayout;
 	layout5 -> addWidget(OK);
 	layout5 -> addWidget(Cancle);
-	
+
 	mainLayout = new QVBoxLayout;
 	mainLayout -> addLayout(layout1);
 	mainLayout -> addStretch();
@@ -121,7 +121,7 @@ SettingWindow::SettingWindow(QWidget *parent,QSettings *oldSetting) : QDialog(pa
 		username -> setText(localSetting -> value("userName").toString());
 		passwd -> setText(localSetting -> value("passWord").toString());
 		databasename -> setText(localSetting -> value("databaseName").toString());
-	}	
+	}
 }
 
 SettingWindow::~SettingWindow()

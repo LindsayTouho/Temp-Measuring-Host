@@ -18,5 +18,5 @@ class Data
 		double Temper(int i);
 		bool isOpen(int i);
 		bool isCompleted();
-        qint16 Id();
+		qint16 Id();
 };

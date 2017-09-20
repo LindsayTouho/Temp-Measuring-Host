@@ -25,3 +25,4 @@ QT += widgets
 QT += core
 QT += serialport
 QT += charts
+QT += sql

@@ -28,6 +28,10 @@
 #include"SettingWindow.h"
 #include"SendWindow.h"
 #include<QAction>
+#include<QSqlDatabase>
+#include<QSqlQuery>
+#include<QMessageBox>
+#include<QSqlError>
 using namespace QtCharts;
 
 class Window:public QMainWindow
@@ -68,8 +72,10 @@ class Window:public QMainWindow
 		bool addInValue(QDataStream& stream);
 		void creatMenu();
 		bool readSettings();
-
+		bool dbconnect();
 		int localNum;
+
+		QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
 
 	public:
 		Window();
