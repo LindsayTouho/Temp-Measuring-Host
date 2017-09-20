@@ -232,7 +232,7 @@ void Window::refresh()
 void Window::creatMenu()
 {
 	auto menu = this->menuBar();
-	sendAction = new QAction(tr("Send Window"),this);
+	sendAction = new QAction(tr("Send"),this);
 	connect(sendAction,SIGNAL(triggered()),this,SLOT(showSend()));
 	settingAction = new QAction(tr("Setting"),this);
 	connect(settingAction,SIGNAL(triggered()),this,SLOT(showSetting()));
