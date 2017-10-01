@@ -10,14 +10,17 @@
   </head>
   <body>
     <center>
-    <form method="post" action="search.php">
+    <form method="post" action="search.php" target="_blank">
      <label>ID：</label>
-     <input type = "test" name="ID" pattern="[A-Z][0-9]{4}"/>
+     <input type = "test" name="ID" style="width:250px" list="idList"  required/>
+     <datalist id="idList">
+       <option value="A111">目前唯一可用ID</option>
+     </datalist>
      <label for="startDate">开始日期：</label>
-     <input id="startDate" type = "text" name = "startDate" placeholder="格式(yy-mm-dd)"/>
+     <input id="startDate" type = "text" name = "startDate" style="width:250px" placeholder="格式(yyyy-mm-dd) " required />
      <label for="endDate">截至日期：</label>
-     <input id="endDate" type="text" name="endDate" placeholder="格式(yyyy-mm-dd)" />
-     <input type ="submit" value = "search" />
+     <input id="endDate" type="text" name="endDate" style="width:250px" placeholder="格式(yyyy-mm-dd)" required/>
+     <input type ="submit" value = "搜索" />
    </form>
  </center>
 </body>
