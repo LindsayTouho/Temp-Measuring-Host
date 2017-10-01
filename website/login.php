@@ -25,6 +25,7 @@
 	$count = $row[0];
 	if($count > 0){
 		require('header.php');
+    require('home.php');
 		require('footer.php');
 	}
 	else {

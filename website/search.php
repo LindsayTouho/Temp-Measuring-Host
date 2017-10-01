@@ -19,8 +19,17 @@
   $ID = $_POST['ID'];
   $startDate = $_POST['startDate'];
   $endDate = $_POST['endDate'];
-
+  $upTemper = $_POST['upTemper'];
+  if($upTemper==''){
+    $upTemper= 999999;
+  }
+  else{
+    $upTemper = (int) $upTemper;
+  }
 	$db = new mysqli('47.93.191.3','public','Changli','temperature');
+
+
+
 	if(mysqli_connect_errno()){
 		echo 'ERROR : can not connect to database';
 		exit;
@@ -33,7 +42,7 @@
   echo '<table align = "center">';
   ?>
   <tr>
-    <td>时间</td>
+    <td >时间</td>
     <td>温度一</td>
     <td>温度二</td>
     <td>温度三</td>
@@ -50,33 +59,74 @@
       echo '<td>';
       echo stripslashes($row['time']);
       echo '</td>';
-      echo '<td>';
+      if($row['T1']>$upTemper){
+        echo '<td style="color:red">';
+      }
+      else {
+          echo '<td>';
+        }
       echo stripslashes($row['T1']?$row['T1']:'NULL');
       echo '</td>';
-      echo '<td>';
+      if($row['T2']>$upTemper){
+        echo '<td style="color:red">';
+      }
+      else {
+          echo '<td>';
+        }
       echo stripslashes($row['T2']?$row['T2']:'NULL');
       echo '</td>';
-      echo '<td>';
+      if($row['T3']>$upTemper){
+        echo '<td style="color:red">';
+      }
+      else {
+          echo '<td>';
+        }
       echo stripslashes($row['T3']?$row['T3']:'NULL');
       echo '</td>';
-      echo '<td>';
+      if($row['T4']>$upTemper){
+        echo '<td style="color:red">';
+      }
+      else {
+          echo '<td>';
+        }
       echo stripslashes($row['T4']?$row['T4']:'NULL');
       echo '</td>';
-      echo '<td>';
+      if($row['T5']>$upTemper){
+        echo '<td style="color:red">';
+      }
+      else {
+          echo '<td>';
+        }
       echo stripslashes($row['T5']?$row['T5']:'NULL');
       echo '</td>';
-      echo '<td>';
+      if($row['T6']>$upTemper){
+        echo '<td style="color:red">';
+      }
+      else {
+          echo '<td>';
+        }
       echo stripslashes($row['T6']?$row['T6']:'NULL');
       echo '</td>';
-      echo '<td>';
+      if($row['T7']>$upTemper){
+        echo '<td style="color:red">';
+      }
+      else {
+          echo '<td>';
+        }
       echo stripslashes($row['T7']?$row['T7']:'NULL');
       echo '</td>';
-      echo '<td>';
+      if($row['T8']>$upTemper){
+        echo '<td style="color:red">';
+      }
+      else {
+          echo '<td>';
+        }
       echo stripslashes($row['T8']?$row['T8']:'NULL');
       echo '</td>';
       echo '</tr>';
     }
   echo '</table>';
+
 ?>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
