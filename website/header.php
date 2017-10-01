@@ -11,15 +11,12 @@
   <body>
     <center>
     <form method="post" action="search.php">
-     <span>ID：</span>
-     <input type = "test" name="ID"/>
-     <span>	&nbsp	&nbsp	&nbsp	&nbsp</span>
-     <span>开始日期：</span>
-     <input type = "text" name = "startDate" placeholder="格式(yy-mm-dd)"/>
-     <span>	&nbsp	&nbsp	&nbsp	&nbsp</span>
-     <span>截至日期：</span>
-     <input type = "text" name = "endDate" placeholder="格式(yy-mm-dd)" />
-     <span>	&nbsp	&nbsp	&nbsp	&nbsp</span>
+     <label>ID：</label>
+     <input type = "test" name="ID" pattern="[A-Z][0-9]{4}"/>
+     <label for="startDate">开始日期：</label>
+     <input id="startDate" type = "text" name = "startDate" placeholder="格式(yy-mm-dd)"/>
+     <label for="endDate">截至日期：</label>
+     <input id="endDate" type="text" name="endDate" placeholder="格式(yyyy-mm-dd)" />
      <input type ="submit" value = "search" />
    </form>
  </center>

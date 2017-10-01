@@ -10,15 +10,16 @@
   </head>
   <body>
     <h1 align="center">Welcome</h1>
+    <center>
 	<form method="post" action = "login.php" >
 		<table>
 			<tr>
 				<td><label width = "20px">用户名：</label></td>
-				<td><input type = "test" name = "userName"/></td>
+				<td><input type = "test" name = "userName" required/></td>
 			</tr>
 			<tr>
 				<td><label>密码：</label></td>
-				<td><input type = "password" name = "passWord"/></td>
+				<td><input type = "password" name = "passWord" required/></td>
 			</tr>
 			<tr>
 				<td><input type = "submit" value = "登录" /></td>
@@ -26,6 +27,7 @@
 			</tr>
 		</table>
 	</form>
+</center>
 	<HR style="FILTER: progid:DXImageTransform.Microsoft.Glow(color=#987cb9,strength=10)" width="80%" color=#987cb9 SIZE=1>
 	<footer align = "center"><small>湘ICP备17017352号</small></footer>
 
