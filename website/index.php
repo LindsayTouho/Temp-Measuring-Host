@@ -9,6 +9,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
   </head>
   <body>
+      <?php
+      if($_COOKIE['name']){
+          echo "<script>window.open('./login.php','_self')</script>";
+          exit;
+      }
+      ?>
     <h1 align="center">Welcome</h1>
     <center>
 	<form method="post" action = "login.php" >
@@ -22,8 +28,8 @@
 				<td><input type = "password" name = "passWord" required/></td>
 			</tr>
 			<tr>
-				<td><input type = "submit" value = "登录" /></td>
-				<td><input type = "reset" value = "重置" /></td>
+				<td><input type = "submit" value = "登录" class="btn btn-primary" style="width:100px"/></td>
+				<td><input type = "reset" value = "重置" class="btn btn-danger" style="width:100px"/></td>
 			</tr>
 		</table>
 	</form>

@@ -22,7 +22,7 @@
      <input id="endDate" type="date" name="endDate" style="width:250px" required/>
      <label for="upTemper">上限温度</label>
      <input id="upTemper" type="text" name="upTemper" style="width:250px" placeholder="(选填)">
-     <input type ="submit" value = "搜索" />
+     <input type ="submit" value = "搜索" class="btn btn-info" style="height:30px"/>
    </form>
  </center>
 </body>

@@ -11,25 +11,32 @@
 	<body>
 	<?php
 	$userName = $_POST['userName'];
-	$passWd = $_POST['passWord'];
+	$passWd = md5($_POST['passWord']);
 
 	$db = new mysqli('47.93.191.3','public','Changli','temperature');
 	if(mysqli_connect_errno()){
 		echo 'ERROR : can not connect to database';
 		exit;
 	}
-	$query = "select count(*) from users where user_name = '".$userName."'and pass_word = md5('".$passWd."')";
+	if($_COOKIE['name'] && !$userName){
+		$userName = $_COOKIE['name'];
+		$passWd = $_COOKIE['pw'];
+	$query = "select count(*) from users where user_name = '".$userName."'and pass_word = '".$passWd."'";
 	$db -> select_db("temperature");
 	$result = $db -> query($query);
 	$row = mysqli_fetch_row($result);
 	$count = $row[0];
 	if($count > 0){
 		require('header.php');
-    require('home.php');
+		require('home.php');
 		require('footer.php');
+		setcookie('name',$userName,time()+24*3600);
+		setcookie('pw',md5($passWd),time()+24*3600);
 	}
-	else {
+    else {
 		echo "帐号密码错误";
+        setcookie('name',$userName,time());
+        setcookie('pw',md5($passWd),time());
 		exit;
 	}
 ?>
