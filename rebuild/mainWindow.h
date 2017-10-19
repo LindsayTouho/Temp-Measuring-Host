@@ -30,6 +30,7 @@
 #include"data.h"
 #include"settingWindow.h"
 #include"sendWindow.h"
+#include"debugWindow.h"
 using namespace QtCharts;
 
 class Window:public QMainWindow
@@ -63,8 +64,11 @@ class Window:public QMainWindow
 
         SendWindow *subWindow1 = 0;
 		SettingWindow *subWindow2 = 0;
+		debugWindow *subWindow3 = 0;
+
 		QAction *sendAction;
 		QAction *settingAction;
+		QAction *debugAction;
 
 		void sleep(unsigned ms);
         void createMainWindow();
@@ -91,6 +95,7 @@ class Window:public QMainWindow
 
 		void showSetting();
 		void showSend();
+		void showDebug();
 
     signals:
         void closewindow();

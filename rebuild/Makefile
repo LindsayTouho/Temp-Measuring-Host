@@ -54,17 +54,21 @@ SOURCES       = data.cpp \
 		mainWindow.cpp \
 		sendWindow.cpp \
 		settingWindow.cpp \
-		main.cpp moc_mainWindow.cpp \
+		main.cpp \
+		debugWindow.cpp moc_mainWindow.cpp \
 		moc_sendWindow.cpp \
-		moc_settingWindow.cpp
+		moc_settingWindow.cpp \
+		moc_debugWindow.cpp
 OBJECTS       = data.o \
 		mainWindow.o \
 		sendWindow.o \
 		settingWindow.o \
 		main.o \
+		debugWindow.o \
 		moc_mainWindow.o \
 		moc_sendWindow.o \
-		moc_settingWindow.o
+		moc_settingWindow.o \
+		moc_debugWindow.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
 		/usr/lib/qt/mkspecs/common/linux.conf \
@@ -249,11 +253,13 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		rebuild.pro data.h \
 		mainWindow.h \
 		sendWindow.h \
-		settingWindow.h data.cpp \
+		settingWindow.h \
+		debugWindow.h data.cpp \
 		mainWindow.cpp \
 		sendWindow.cpp \
 		settingWindow.cpp \
-		main.cpp
+		main.cpp \
+		debugWindow.cpp
 QMAKE_TARGET  = rebuild
 DESTDIR       = 
 TARGET        = rebuild
@@ -657,8 +663,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents data.h mainWindow.h sendWindow.h settingWindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents data.cpp mainWindow.cpp sendWindow.cpp settingWindow.cpp main.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents data.h mainWindow.h sendWindow.h settingWindow.h debugWindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents data.cpp mainWindow.cpp sendWindow.cpp settingWindow.cpp main.cpp debugWindow.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -689,12 +695,13 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/qt/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -fno-plt -Wall -W -dM -E -o moc_predefs.h /usr/lib/qt/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainWindow.cpp moc_sendWindow.cpp moc_settingWindow.cpp
+compiler_moc_header_make_all: moc_mainWindow.cpp moc_sendWindow.cpp moc_settingWindow.cpp moc_debugWindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainWindow.cpp moc_sendWindow.cpp moc_settingWindow.cpp
+	-$(DEL_FILE) moc_mainWindow.cpp moc_sendWindow.cpp moc_settingWindow.cpp moc_debugWindow.cpp
 moc_mainWindow.cpp: data.h \
 		settingWindow.h \
 		sendWindow.h \
+		debugWindow.h \
 		mainWindow.h \
 		moc_predefs.h \
 		/usr/bin/moc
@@ -709,6 +716,11 @@ moc_settingWindow.cpp: settingWindow.h \
 		moc_predefs.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/servant/shiny-guacamole/rebuild -I/home/servant/shiny-guacamole/rebuild -I/usr/include/qt -I/usr/include/qt/QtCharts -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtSerialPort -I/usr/include/qt/QtSql -I/usr/include/qt/QtCore -I/usr/include/c++/7.1.1 -I/usr/include/c++/7.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include-fixed -I/usr/include settingWindow.h -o moc_settingWindow.cpp
+
+moc_debugWindow.cpp: debugWindow.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/servant/shiny-guacamole/rebuild -I/home/servant/shiny-guacamole/rebuild -I/usr/include/qt -I/usr/include/qt/QtCharts -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtSerialPort -I/usr/include/qt/QtSql -I/usr/include/qt/QtCore -I/usr/include/c++/7.1.1 -I/usr/include/c++/7.1.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.1.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.1.1/include-fixed -I/usr/include debugWindow.h -o moc_debugWindow.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -730,7 +742,8 @@ data.o: data.cpp data.h
 mainWindow.o: mainWindow.cpp mainWindow.h \
 		data.h \
 		settingWindow.h \
-		sendWindow.h
+		sendWindow.h \
+		debugWindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainWindow.o mainWindow.cpp
 
 sendWindow.o: sendWindow.cpp sendWindow.h
@@ -742,8 +755,12 @@ settingWindow.o: settingWindow.cpp settingWindow.h
 main.o: main.cpp mainWindow.h \
 		data.h \
 		settingWindow.h \
-		sendWindow.h
+		sendWindow.h \
+		debugWindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
+
+debugWindow.o: debugWindow.cpp debugWindow.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debugWindow.o debugWindow.cpp
 
 moc_mainWindow.o: moc_mainWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainWindow.o moc_mainWindow.cpp
@@ -753,6 +770,9 @@ moc_sendWindow.o: moc_sendWindow.cpp
 
 moc_settingWindow.o: moc_settingWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_settingWindow.o moc_settingWindow.cpp
+
+moc_debugWindow.o: moc_debugWindow.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_debugWindow.o moc_debugWindow.cpp
 
 ####### Install
 

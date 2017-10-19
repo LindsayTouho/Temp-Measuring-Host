@@ -35,7 +35,7 @@ void SettingWindow::createWindow(){
 
     this -> setWindowTitle("Settings");
     chartRange = new QLabel(this);
-    chartRange -> setText("Chart Range");
+    chartRange -> setText(tr("图表x轴范围"));
     timeRange = new QSpinBox(this);
     timeRange->setRange(1,60);
     timeRange -> setValue(localSetting -> value("chartRange",QVariant(60)).toInt());
@@ -46,13 +46,13 @@ void SettingWindow::createWindow(){
     timeUnit ->  setCurrentText(localSetting -> value("timeUnit",QVariant("minute(s)")).toString());
 
     dataNum = new QLabel (this);
-    dataNum -> setText("Lacol Data Number");
+    dataNum -> setText(tr("本地数据数量"));
     numSlider = new QSpinBox(this);
     numSlider -> setRange(0,1000);
     numSlider -> setValue(localSetting -> value("dataNum",QVariant(100)).toInt());
 
     serialName = new QLabel(this);
-    serialName -> setText("Serial Port");
+    serialName -> setText(tr("串口"));
     serialPort = new QComboBox (this);
     const auto infos = QSerialPortInfo::availablePorts();
     for(auto i : infos)
@@ -61,21 +61,21 @@ void SettingWindow::createWindow(){
     }
     serialPort  -> setCurrentIndex(localSetting->value("serialName",QVariant(0)).toInt());
     database     = new QLabel(this);
-    database     ->setText("Database");
+    database     ->setText(tr("数据库设置"));
     host 	     = new QLabel(this);
-    host	     -> setText("Hostname");
+    host	     -> setText(tr("主机名"));
     hostname     = new QLineEdit(this);
     hostname    ->  setText(localSetting-> value("hostName",QVariant("47.93.191.3")).toString());
     user	     = new QLabel(this);
-    user	     -> setText("Username");
+    user	     -> setText(tr("用户名"));
     username     = new QLineEdit(this);
     username -> setText(localSetting -> value("userName",QVariant("public")).toString());
     pass 	     = new QLabel(this);
-    pass         -> setText("Password");
+    pass         -> setText(tr("密码"));
     passwd       = new QLineEdit(this);
     passwd -> setText(localSetting -> value("passWord",QVariant("123456")).toString());
     dataname     = new QLabel(this);
-    dataname     -> setText("Database Name");
+    dataname     -> setText(tr("库名"));
     databasename = new QLineEdit(this);
     databasename -> setText(localSetting -> value("databaseName",QVariant("temperature")).toString());
 
@@ -83,8 +83,8 @@ void SettingWindow::createWindow(){
 
     OK = new QPushButton(this);
     Cancle = new QPushButton(this);
-    OK -> setText("OK");
-    Cancle -> setText("Cancle");
+    OK -> setText(tr("确定"));
+    Cancle -> setText(tr("取消"));
 
 }
 

@@ -8,18 +8,18 @@ SendWindow::SendWindow(QWidget *parent) : QDialog(parent)
 	{
 		lable[i] = new QLabel;
 		button[i] = new QPushButton;
-		button[i] -> setText("Send");
+		button[i] -> setText(tr("发送"));
 		layout[i] = new QHBoxLayout;
 		layout[i] -> addWidget(lable[i]);
 		layout[i] -> addWidget(button[i]);
 		mainLayout -> addLayout(layout[i]);
 	}
-	lable[0] -> setText("Shake Hand");
-	lable[1] -> setText("Gateway");
-	lable[2] -> setText("Close Alarm");
-	lable[3] -> setText("Manual Alarm");
+	lable[0] -> setText(tr("握手"));
+	lable[1] -> setText(tr("网关"));
+	lable[2] -> setText(tr("取消警报"));
+	lable[3] -> setText(tr("手动警报"));
 	close = new QPushButton;
-	close -> setText("Close");
+	close -> setText(tr("关闭"));
 	mainLayout-> addWidget(close);
 	connect(button[0],SIGNAL(clicked()),this,SLOT(button1()));
 	connect(button[1],SIGNAL(clicked()),this,SLOT(button2()));

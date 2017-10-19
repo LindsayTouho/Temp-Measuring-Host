@@ -1,4 +1,6 @@
 #include"mainWindow.h"
+#include<iostream>
+using namespace std;
 
 Window::Window(){
 
@@ -39,19 +41,19 @@ void Window::createMainWindow(){
 	}
 
 	Terminal=new QComboBox(this);
-  	Terminal->addItem("None");
+  	Terminal->addItem("空");
 
 	nodeBox=new QComboBox(this);
 	for(int i=0;i!=8;++i)
 	{
-		nodeBox->addItem(tr("Node")+QString::number(i+1));
+		nodeBox->addItem(tr("节点")+QString::number(i+1));
 	}
 
 
 	Open_Close=new QPushButton(this);
-	Open_Close->setText(tr("&Open"));
+	Open_Close->setText(tr("开启"));
 	Quit=new QPushButton(this);
-	Quit->setText(tr("&Quit"));
+	Quit->setText(tr("退出"));
 
 
 
@@ -62,7 +64,7 @@ void Window::createMainWindow(){
 	line->setPen(QPen(Qt::blue,2,Qt::SolidLine));
 
 	chart=new QChart;
-	chart->setTitle(tr("Temperature"));
+	chart->setTitle(tr("温度"));
 	chart->legend()->setAlignment(Qt::AlignBottom);
 	chart->createDefaultAxes();
 
@@ -123,14 +125,18 @@ void Window::createMenu()
 {
 	auto menu = this->menuBar();
 
-	sendAction = new QAction(tr("Send"),this);
+	sendAction = new QAction(tr("传输协议"),this);
 	connect(sendAction,SIGNAL(triggered()),this,SLOT(showSend()));
 
-	settingAction = new QAction(tr("Setting"),this);
+	settingAction = new QAction(tr("设置"),this);
 	connect(settingAction,SIGNAL(triggered()),this,SLOT(showSetting()));
+
+    debugAction = new QAction(tr("详细信息"),this);
+	connect(debugAction,SIGNAL(triggered()),this,SLOT(showDebug()));
 
 	menu -> addAction(sendAction);
 	menu -> addAction(settingAction);
+    menu -> addAction(debugAction);
 }
 
 void Window::createEvent(){
@@ -148,10 +154,28 @@ void Window::sleep(unsigned ms)
 	QCoreApplication::processEvents(QEventLoop::AllEvents,100);
 }
 
+QString convert(char * chs){
+    QString result;
+    char ch = chs;
+    while(*ch != '\0'){
+        if(*ch <10)
+            result.append('0'+ *ch);
+        else
+            result.append(*ch -10 + 'A');
+    }
+    result.append('\n');
+    return result;
+}
+
 void Window::on_serial_readyRead()
 {
+
+    cout<<1<<endl;
 	QByteArray b;
 	b=serial->readAll();
+    bool ok;
+    debugWindow -> showMessage(convert(byte_head.data()))
+
 	if(Buffer == nullptr)
 		Buffer = new QByteArray(b);
 	else
@@ -193,12 +217,12 @@ void Window::on_Open_Close_clicked()
 
         serial->setDataTerminalReady(true);
         connect(serial,SIGNAL(readyRead()),this,SLOT(on_serial_readyRead()));
-        Open_Close->setText(tr("&Close"));
+        Open_Close->setText(tr("关闭"));
 	}
 	else
 	{
 		serial->close();
-		Open_Close->setText(tr("&Open"));
+		Open_Close->setText(tr("开启"));
 	}
 }
 
@@ -253,6 +277,19 @@ void Window::showSetting()
 	subWindow2 -> activateWindow();
 
 }
+
+void Window::showDebug(){
+
+    if(!subWindow3)                                  //要死了，忘了cpp未初始化的指针不为空，会蠢死去
+    {
+        subWindow3 = new debugWindow(this);
+    }
+
+    subWindow3 -> show();
+    subWindow3 -> raise();
+    subWindow3 -> activateWindow();
+}
+
 void Window::refresh()
 {
 	auto keys=data.keys();
