@@ -1,4 +1,4 @@
-#include"SendWindow.h"
+#include"sendWindow.h"
 
 SendWindow::SendWindow(QWidget *parent) : QDialog(parent)
 {

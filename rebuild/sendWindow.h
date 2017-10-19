@@ -16,7 +16,7 @@ private:
 	QPushButton * close=0;
         QLabel *lable[4];
 public:
-	SendWindow(QWidget *parent = nullptr); 
+	SendWindow(QWidget *parent = nullptr);
 	~SendWindow();
 	unsigned shakeHands=0xFE002100;
 	unsigned gateway = 0xFE002300;

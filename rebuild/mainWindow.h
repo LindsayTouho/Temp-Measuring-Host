@@ -1,8 +1,11 @@
-//窗口布局还需要调整，保证lable和chart以同样的比例缩放
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
-#ifndef WINDOW_H
-#define WINDOW_H
-
+#include<QAction>
+#include<QSqlDatabase>
+#include<QSqlQuery>
+#include<QMessageBox>
+#include<QSqlError>
 #include<QSettings>
 #include<QMainWindow>
 #include<QDataStream>
@@ -25,20 +28,15 @@
 #include<QLineSeries>
 #include<QString>
 #include"data.h"
-#include"SettingWindow.h"
-#include"SendWindow.h"
-#include<QAction>
-#include<QSqlDatabase>
-#include<QSqlQuery>
-#include<QMessageBox>
-#include<QSqlError>
+#include"settingWindow.h"
+#include"sendWindow.h"
 using namespace QtCharts;
 
 class Window:public QMainWindow
 {
 		Q_OBJECT
 	private:
-		QHBoxLayout *layout1[4];     //attention
+		QHBoxLayout *layout1[4];
 		QVBoxLayout *layout2;
 		QHBoxLayout *layout3;
 		QHBoxLayout *layout4;
@@ -46,34 +44,38 @@ class Window:public QMainWindow
 		QVBoxLayout *mainLayout;
 		QComboBox *Terminal;
 		QComboBox *nodeBox;
-    		QLabel * Node[8];
+    	QLabel * Node[8];
 		QPushButton *Open_Close;
 		QPushButton *Quit;
 
-		SendWindow *subWindow1 = 0;
-		SettingWindow *subWindow2 = 0;
 
-    		QMap<qint16 , QVector<Data*>> data;
+    	QMap<qint16 , QVector<Data*>> data;
 		QSerialPort *serial;
   		QByteArray *Buffer;
 
 		QChart *chart;
   		QValueAxis *axisX;
-    		QValueAxis *axisY;
+    	QValueAxis *axisY;
 		QLineSeries *line;
 		QChartView *view;
 
 		QSettings setting;
 
+        SendWindow *subWindow1 = 0;
+		SettingWindow *subWindow2 = 0;
 		QAction *sendAction;
 		QAction *settingAction;
 
 		void sleep(unsigned ms);
-		bool addInValue(QDataStream& stream);
-		void creatMenu();
-		bool readSettings();
+        void createMainWindow();
+        void setBuJu();
+        void createEvent();
+		bool addInValue(QDataStream& stream);         //串口操作，将数据试图保存
+		void createMenu();                             //创建menubar
+		bool readSettings();                          //读取设置
 		bool dbconnect();
-		int localNum;
+        void throwEvent(QString m);                           //连接数据库
+		int localNum=100;
 
 		QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
 
@@ -83,11 +85,15 @@ class Window:public QMainWindow
 	public slots:
 		void on_Open_Close_clicked();
 		void on_serial_readyRead();
-        	void refresh();
+        void refresh();
 
 		void serialSend(unsigned m);
 
 		void showSetting();
 		void showSend();
+
+    signals:
+        void closewindow();
 };
+
 #endif

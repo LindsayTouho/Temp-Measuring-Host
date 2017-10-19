@@ -1,18 +1,18 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'SettingWindow.h'
+** Meta object code from reading C++ file 'settingWindow.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.2)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "SettingWindow.h"
+#include "settingWindow.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'SettingWindow.h' doesn't include <QObject>."
+#error "The header file 'settingWindow.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.9.1. It"
+#error "This file was generated using the moc from 5.9.2. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -121,7 +121,7 @@ void *SettingWindow::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_SettingWindow.stringdata0))
-        return static_cast<void*>(const_cast< SettingWindow*>(this));
+        return static_cast<void*>(this);
     return QDialog::qt_metacast(_clname);
 }
 

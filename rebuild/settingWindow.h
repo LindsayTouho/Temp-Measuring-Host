@@ -1,7 +1,3 @@
-//Seting用到的函数有 setValue(QStirng,QVariant)和 value(QStirng) 
-//string 应该是用来标记的设置名，variant可以转换成其他的数据类型
-
-
 #ifndef SETTINGWINDOW_H
 #define SETTINGWINDOW_H
 
@@ -63,6 +59,8 @@ private:
 
 	QVBoxLayout *mainLayout;
 
+    void createWindow();
+    void createLayout();
 public slots:
 	void Change();
 
