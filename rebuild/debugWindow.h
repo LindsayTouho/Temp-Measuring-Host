@@ -8,6 +8,7 @@
 #include<QString>
 #include<QWidget>
 #include<QDialog>
+#include<QByteArray>
 
 class debugWindow : public QDialog{
 	Q_OBJECT;
@@ -20,7 +21,7 @@ private:
 public:
 	debugWindow(QWidget *parent = nullptr);
 	~debugWindow();
-	void showMessage(QString *messages);
+	void showMessage(QByteArray messages);
 signals:
 
 public slots:

@@ -154,27 +154,15 @@ void Window::sleep(unsigned ms)
 	QCoreApplication::processEvents(QEventLoop::AllEvents,100);
 }
 
-// QString convert(char * chs){
-//     QString result;
-//     char ch = chs;
-//     while(*ch != '\0'){
-//         if(*ch <10)
-//             result.append('0'+ *ch);
-//         else
-//             result.append(*ch -10 + 'A');
-//     }
-//     result.append('\n');
-//     return result;
-// }
+
 
 void Window::on_serial_readyRead()
 {
 
-    cout<<1<<endl;
 	QByteArray b;
 	b=serial->readAll();
-    // bool ok;
-    // debugWindow -> showMessage(convert(byte_head.data()))
+
+    subWindow3 -> showMessage(b);
 
 	if(Buffer == nullptr)
 		Buffer = new QByteArray(b);
@@ -187,6 +175,7 @@ void Window::on_serial_readyRead()
 		*Buffer = b;
 	}
 	refresh();
+    delete temp;
 }
 
 
@@ -323,22 +312,21 @@ void Window::refresh()
     float y=0;
     int i=0;
 	y=nodeBox->currentIndex();
-    if((*lastData) -> isOpen(y)){
-        while(x<=(setting . value("chartRange",QVariant(60)) .toInt()))						//添加设置后需要更改
-        {
-            if((lastData-i)==data[temp].begin())
-            break;
+
+    while(x<=(setting . value("chartRange",QVariant(60)) .toInt()))						//添加设置后需要更改
+    {
+        if((lastData-i)==data[temp].begin())
+                break;
+        if((*lastData) -> isOpen(y)){
             if(setting .value("timeUnit",QVariant("minute(s)")) .toString() == "second(s)")
                 x=(*(lastData-i))->time().secsTo(QTime::currentTime());
             if(setting .value("timeUnit",QVariant("minute(s)")) .toString() == "minute(s)")
 			    x=(float)(*(lastData-i)) -> time().secsTo(QTime::currentTime())/60;
-
 		    if(setting .value("timeUnit",QVariant("minute(s)")) .toString() == "hour(s)")
 			   x=(float)(*(lastData-i)) -> time().secsTo(QTime::currentTime())/3600;
-
             line->append(-x,(*(lastData-i))->Temper(y));
+        }
             ++i;
-	   }
     }
     	chart->addSeries(line);
     	chart->createDefaultAxes();

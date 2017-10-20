@@ -34,6 +34,13 @@ debugWindow::~debugWindow(){
     delete buttomLayout;
     delete mainLayout;
 }
-void debugWindow::showMessage(QString *messages){
-    showWidget->insertPlainText(*messages);
+void debugWindow::showMessage(QByteArray messages)
+{
+    int a=0;
+    QDataStream *stream = new QDataStream(messages);
+    while(!stream->atEnd()){
+        (*stream)>>a;
+        showWidget -> insertPlainText(QString::number(a,16));
+    }
+    delete stream;
 }
