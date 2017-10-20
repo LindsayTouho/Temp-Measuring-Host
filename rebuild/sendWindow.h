@@ -18,10 +18,10 @@ private:
 public:
 	SendWindow(QWidget *parent = nullptr);
 	~SendWindow();
-	unsigned shakeHands=0xFE002100;
-	unsigned gateway = 0xFE002300;
-	unsigned closeAlarm = 0xFE002800;
-	unsigned manualAlarm = (0xFE002900);
+    unsigned shakeHands=0x002100FE;
+    unsigned gateway = 0x002300FE;
+    unsigned closeAlarm = 0x002800FE;
+    unsigned manualAlarm = 0x002900FE;
 signals:
 	void sendding(unsigned);
 public slots:

@@ -53,7 +53,7 @@ Data::Data(QDataStream &s)
 
 
     	s>>temp8;                                  //31
-    	if(temp8==102)
+        if(temp8==0x66)
 		    Completed=true;
     	else
             Completed=false;
@@ -63,7 +63,6 @@ QTime Data::time()
 {
 	return Time;
 }
-
 
 double Data::Temper(int i)
 {
@@ -83,12 +82,10 @@ bool Data::isOpen(int i)
 	else return 0;
 }
 
-
 bool Data::isCompleted()
 {
 	return Completed;
 }
-
 
 qint16 Data::Id()
 {

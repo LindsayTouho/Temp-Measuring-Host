@@ -51,8 +51,8 @@ class Window:public QMainWindow
 
 
     	QMap<qint16 , QVector<Data*>> data;
-		QSerialPort *serial;
-  		QByteArray *Buffer;
+		QSerialPort *serial=nullptr;
+  		QByteArray *Buffer=nullptr;
 
 		QChart *chart;
   		QValueAxis *axisX;
@@ -91,7 +91,7 @@ class Window:public QMainWindow
 		void on_serial_readyRead();
         void refresh();
 
-		void serialSend(unsigned m);
+        void serialSend(unsigned m);
 
 		void showSetting();
 		void showSend();

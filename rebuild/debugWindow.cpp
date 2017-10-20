@@ -1,5 +1,6 @@
 #include"debugWindow.h"
-
+#include<iostream>
+using namespace std;
 
 
 debugWindow::debugWindow(QWidget *parent) : QDialog(parent){
@@ -36,7 +37,7 @@ debugWindow::~debugWindow(){
 }
 void debugWindow::showMessage(QByteArray messages)
 {
-    int a=0;
+    unsigned a=0;
     QDataStream *stream = new QDataStream(messages);
     while(!stream->atEnd()){
         (*stream)>>a;

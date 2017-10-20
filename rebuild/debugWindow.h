@@ -21,7 +21,7 @@ private:
 public:
 	debugWindow(QWidget *parent = nullptr);
 	~debugWindow();
-	void showMessage(QByteArray messages);
+    void showMessage(QByteArray messages);
 signals:
 
 public slots:

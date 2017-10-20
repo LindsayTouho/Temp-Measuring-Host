@@ -3,7 +3,8 @@
 using namespace std;
 
 Window::Window(){
-
+    QCoreApplication::setOrganizationName("Cstdu");
+    QCoreApplication::setApplicationName("Mysoft");
     createMainWindow();
     setBuJu();
     createEvent();
@@ -154,35 +155,29 @@ void Window::sleep(unsigned ms)
 	QCoreApplication::processEvents(QEventLoop::AllEvents,100);
 }
 
-
-
 void Window::on_serial_readyRead()
 {
-
 	QByteArray b;
 	b=serial->readAll();
-
-    subWindow3 -> showMessage(b);
+    // if(subWindow3 != nullptr)
+        subWindow3 -> showMessage(b);
 
 	if(Buffer == nullptr)
 		Buffer = new QByteArray(b);
 	else
 		Buffer-> append(b);
-	b=*Buffer;
+    b = *Buffer;
 	QDataStream *temp = new QDataStream(b);
     if(	addInValue(*temp))
 	{
 		*Buffer = b;
 	}
 	refresh();
-    delete temp;
 }
-
-
 
 void Window::on_Open_Close_clicked()
 {
-	if(serial==nullptr||!(serial->isOpen()))
+	if(!(serial->isOpen()))
 	{
 		const auto infos=QSerialPortInfo::availablePorts();
 		if(infos.count()==0)
@@ -199,10 +194,10 @@ void Window::on_Open_Close_clicked()
             throwEvent("串口未能打开");
             return;
         }
-        if (!dbconnect()){
-            throwEvent("数据库连接失败");
-            return;
-        }
+//        if (!dbconnect()){
+//            throwEvent("数据库连接失败");
+//            return;
+//        }
 
         serial->setDataTerminalReady(true);
         connect(serial,SIGNAL(readyRead()),this,SLOT(on_serial_readyRead()));
@@ -227,7 +222,7 @@ bool Window::dbconnect(){
     db.setHostName(setting.value("hostName",QVariant("47.93.191.3")).toString());
     db.setDatabaseName(setting.value("databaseName",QVariant("temperature")).toString());
     db.setUserName(setting.value("userName",QVariant("public")).toString());
-    db.setPassword(setting.value("passWord",QVariant("123456")).toString());
+    db.setPassword(setting.value("passWord",QVariant("Chagnli")).toString());
     if(!db.open()){
         return false;
     }
@@ -237,11 +232,11 @@ bool Window::dbconnect(){
 void Window::serialSend(unsigned m) //用于传递网关之类的协议
 {
 	QByteArray byte;
-	byte.resize(sizeof(unsigned));
-	memcpy(byte.data(),&m,sizeof(m));
-	serial -> write(byte);
+    byte.resize(4);
+    memcpy(byte.data(),&m,4);
+    if(serial->isOpen())
+        serial -> write(byte);
 }
-
 
 void Window::showSend()
 {
