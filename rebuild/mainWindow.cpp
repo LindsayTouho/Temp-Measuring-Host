@@ -1,6 +1,5 @@
 #include"mainWindow.h"
-#include<iostream>
-using namespace std;
+
 
 Window::Window(){
     QCoreApplication::setOrganizationName("Cstdu");
@@ -28,7 +27,6 @@ Window::~Window()
 	delete serial;
 }
 
-
 void Window::createMainWindow(){
     this->resize(700,400);
     this->setObjectName(tr("this"));
@@ -38,7 +36,7 @@ void Window::createMainWindow(){
     for(int i=0;i!=8;++i)
 	{
         	Node[i]=new QLabel(this);
-        	Node[i]->setText("<h3><font color=red>None</font></h3>");
+            Node[i]->setText("<h3><font color=blue>None</font></h3>");
 	}
 
 	Terminal=new QComboBox(this);
@@ -103,8 +101,8 @@ void Window::setBuJu(){
     layout3= new QHBoxLayout;               //layout2 + 右侧折线图部分
 	layout3->addLayout(layout2);
 	layout3->addWidget(view);
-	layout3->setStretchFactor(layout2,1);
-	layout3->setStretchFactor(view,4);
+    layout3->setStretchFactor(layout2,1);
+    layout3->setStretchFactor(view,4);
 
 	layout4=new QHBoxLayout;               //下侧控制部分
 	layout4->addWidget(Terminal);
@@ -112,6 +110,8 @@ void Window::setBuJu(){
 	layout4->addStretch();
 	layout4->addWidget(Open_Close);
 	layout4->addWidget(Quit);
+    Terminal -> setFixedWidth(60);
+    nodeBox -> setFixedWidth(60);
 
 
 	mainLayout=new QVBoxLayout;            //主布局  显示部分 和 控制部分结合
@@ -157,13 +157,13 @@ void Window::sleep(unsigned ms)
 
 void Window::on_serial_readyRead()
 {
-    sleep(1000);
+//    sleep(1000);
 	QByteArray b;
 	b=serial->readAll();
-    // if(subWindow3 != nullptr)
+    if(subWindow3)
         subWindow3 -> showMessage(b);
 
-	if(Buffer == nullptr)
+    if(!Buffer)
 		Buffer = new QByteArray(b);
 	else
 		Buffer-> append(b);
@@ -173,10 +173,9 @@ void Window::on_serial_readyRead()
 	{
         delete Buffer;
         Buffer = nullptr;
-        cout<<"data+1"<<endl;
-		// *Buffer = b;
 	}
 	refresh();
+
 }
 
 void Window::on_Open_Close_clicked()
@@ -233,8 +232,7 @@ bool Window::dbconnect(){
     return true;
 }
 
-void Window::serialSend(unsigned m) //用于传递网关之类的协议
-{
+void Window::serialSend(unsigned m) {
 	QByteArray byte;
     byte.resize(4);
     memcpy(byte.data(),&m,4);
@@ -297,7 +295,7 @@ void Window::refresh()
     {
         if((*lastData)->isOpen(i))
         {
-    		Node[i]->setText(tr("<h3><font color=green>")+QString::number((*lastData)->Temper(i))+tr("°C</font></h3>"));
+            Node[i]->setText(tr("<h3><font color=green>")+QString::number((*lastData)->Temper(i))+tr("°C</font></h3>"));
         }
     	else
     	{
@@ -350,22 +348,30 @@ bool Window::addInValue(QDataStream& stream)
   	Data *temp=new Data(stream);
 	if(temp->isCompleted())
 	{
-        cout<<temp->Temper(4)<<endl;
 		data[temp->Id()].append(temp);
 		QString tableName=(QString::number(temp->Id(),16).right(4).toUpper());
 		QSqlQuery query;
-		QString table = QString("CREATE TABLE IF NOT EXISTS");
+        QString table = QString("CREATE TABLE IF NOT EXISTS ");
 		table += tableName;
-		table += QString("(time timestamp NOT NULL default CURRENT_TIMESTAMP,T1   int       NULL,T2   int       NULL,T3   int       NULL,T4   int       NULL,T5   int       NULL,T6   int       NULL,T7   int       NULL,T8   int       NULL,PRIMARY KEY(time))ENGINE=InnoDB");
+        table += QString("(time timestamp NOT NULL default CURRENT_TIMESTAMP,T1   decimal(8,2)       NULL,T2   decimal(8,2)       NULL,T3   decimal(8,2)        NULL,T4   decimal(8,2)       NULL,T5   decimal(8,2)        NULL,T6   decimal(8,2)       NULL,T7   decimal(8,2)        NULL,T8   decimal(8,2)        NULL,PRIMARY KEY(time))ENGINE=InnoDB");
 		query.exec(table);
-		QString insert = QString("INSERT INTO") ;
+        QString insert = QString("INSERT INTO ") ;
 		insert += tableName ;
 		insert += QString("(T1,T2,T3,T4,T5,T6,T7,T8) VALUES(");
+        bool first = true;
 		for(int i=0;i!=8;++i){
-			if(temp->isOpen(i))
-				insert += QString::number(temp -> Temper(i));
-			else
-				insert += QString("NULL");
+            if(temp->isOpen(i)){
+                if(!first)
+                    insert += QString(",");
+                insert += QString::number(temp -> Temper(i));
+
+            }
+            else{
+                if(!first)
+                    insert += QString(",");
+                insert += QString("NULL");
+            }
+            first = false;
 		}
         insert += ")";
         query.exec(insert);

@@ -21,7 +21,7 @@
 	if($_COOKIE['name'] && !$userName){
 		$userName = $_COOKIE['name'];
 		$passWd = $_COOKIE['pw'];
-	$query = "select count(*) from users where user_name = '".$userName."'and pass_word = '".$passWd."'";
+	$query = "select count(*) from users where user_name = '".$userName."'and pass_word = md5('".$passWd."')";
 	$db -> select_db("temperature");
 	$result = $db -> query($query);
 	$row = mysqli_fetch_row($result);
@@ -30,13 +30,9 @@
 		require('header.php');
 		require('home.php');
 		require('footer.php');
-		setcookie('name',$userName,time()+24*3600);
-		setcookie('pw',md5($passWd),time()+24*3600);
 	}
     else {
 		echo "帐号密码错误";
-        setcookie('name',$userName,time());
-        setcookie('pw',md5($passWd),time());
 		exit;
 	}
 ?>

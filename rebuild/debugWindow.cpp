@@ -1,10 +1,10 @@
 #include"debugWindow.h"
-#include<iostream>
-using namespace std;
+
 
 
 debugWindow::debugWindow(QWidget *parent) : QDialog(parent){
 
+    resize(400,400);
 
     showWidget = new QTextEdit;
     clearButton = new QPushButton;
@@ -43,5 +43,6 @@ void debugWindow::showMessage(QByteArray messages)
         (*stream)>>a;
         showWidget -> insertPlainText(QString::number(a,16));
     }
+    showWidget -> insertPlainText("\n");
     delete stream;
 }

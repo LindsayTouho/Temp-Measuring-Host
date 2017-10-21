@@ -68,7 +68,7 @@ double Data::Temper(int i)
 {
 	if(i<8)
 	{
-        	return Value[i]*0.0625;
+            return (double)((int)(Value[i]*6.25))/100;
 	}
 	else return 0;
 }
