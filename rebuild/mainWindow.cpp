@@ -157,6 +157,7 @@ void Window::sleep(unsigned ms)
 
 void Window::on_serial_readyRead()
 {
+    sleep(1000);
 	QByteArray b;
 	b=serial->readAll();
     // if(subWindow3 != nullptr)
@@ -170,7 +171,10 @@ void Window::on_serial_readyRead()
 	QDataStream *temp = new QDataStream(b);
     if(	addInValue(*temp))
 	{
-		*Buffer = b;
+        delete Buffer;
+        Buffer = nullptr;
+        cout<<"data+1"<<endl;
+		// *Buffer = b;
 	}
 	refresh();
 }
@@ -194,10 +198,10 @@ void Window::on_Open_Close_clicked()
             throwEvent("串口未能打开");
             return;
         }
-//        if (!dbconnect()){
-//            throwEvent("数据库连接失败");
-//            return;
-//        }
+       if (!dbconnect()){
+           throwEvent("数据库连接失败");
+           return;
+       }
 
         serial->setDataTerminalReady(true);
         connect(serial,SIGNAL(readyRead()),this,SLOT(on_serial_readyRead()));
@@ -280,7 +284,7 @@ void Window::refresh()
     for(qint16 i:keys)
     {
        	if(Terminal->findText(QString::number(i,16).right(4).toUpper())==-1)
-        Terminal->addItem(QString::number(i,16).right(4).toUpper());
+            Terminal->addItem(QString::number(i,16).right(4).toUpper());
 	}
 	bool ok;
     qint16 temp=Terminal->currentText().toInt(&ok,16);
@@ -297,7 +301,7 @@ void Window::refresh()
         }
     	else
     	{
-    		Node[i]->setText("<h3><font color=red>None</font></h3>");
+    		Node[i]->setText("<h3><font color=blue>None</font></h3>");
         }
     }
 	line->clear();
@@ -346,6 +350,7 @@ bool Window::addInValue(QDataStream& stream)
   	Data *temp=new Data(stream);
 	if(temp->isCompleted())
 	{
+        cout<<temp->Temper(4)<<endl;
 		data[temp->Id()].append(temp);
 		QString tableName=(QString::number(temp->Id(),16).right(4).toUpper());
 		QSqlQuery query;
@@ -361,8 +366,9 @@ bool Window::addInValue(QDataStream& stream)
 				insert += QString::number(temp -> Temper(i));
 			else
 				insert += QString("NULL");
-		query.exec(insert);
 		}
+        insert += ")";
+        query.exec(insert);
 		return true;
 
 	}
