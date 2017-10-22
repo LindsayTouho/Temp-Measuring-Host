@@ -1,5 +1,6 @@
 #include"mainWindow.h"
-
+#include<iostream>
+using namespace std;
 
 Window::Window(){
     QCoreApplication::setOrganizationName("Cstdu");
@@ -351,29 +352,23 @@ bool Window::addInValue(QDataStream& stream)
 		data[temp->Id()].append(temp);
 		QString tableName=(QString::number(temp->Id(),16).right(4).toUpper());
 		QSqlQuery query;
-        QString table = QString("CREATE TABLE IF NOT EXISTS ");
-		table += tableName;
-        table += QString("(time timestamp NOT NULL default CURRENT_TIMESTAMP,T1   decimal(8,2)       NULL,T2   decimal(8,2)       NULL,T3   decimal(8,2)        NULL,T4   decimal(8,2)       NULL,T5   decimal(8,2)        NULL,T6   decimal(8,2)       NULL,T7   decimal(8,2)        NULL,T8   decimal(8,2)        NULL,PRIMARY KEY(time))ENGINE=InnoDB");
-		query.exec(table);
-        QString insert = QString("INSERT INTO ") ;
-		insert += tableName ;
-		insert += QString("(T1,T2,T3,T4,T5,T6,T7,T8) VALUES(");
-        bool first = true;
+        QString insert = QString("INSERT INTO temper_temper ") ;
+		insert += QString("(name,T1,T2,T3,T4,T5,T6,T7,T8) VALUES(");
+        insert += "'";
+        insert += tableName;
+        insert += "'";
 		for(int i=0;i!=8;++i){
             if(temp->isOpen(i)){
-                if(!first)
-                    insert += QString(",");
+                insert += QString(",");
                 insert += QString::number(temp -> Temper(i));
 
             }
             else{
-                if(!first)
-                    insert += QString(",");
-                insert += QString("NULL");
+                insert += QString(",NULL");
             }
-            first = false;
 		}
         insert += ")";
+        cout<<insert.toLatin1().data()<<endl;
         query.exec(insert);
 		return true;
 
