@@ -14,3 +14,7 @@ class temper(models.Model):
     T6 = models.DecimalField(decimal_places=2,max_digits=6,null=True)
     T7 = models.DecimalField(decimal_places=2,max_digits=6,null=True)
     T8 = models.DecimalField(decimal_places=2,max_digits=6,null=True)
+
+class users(models.Model):
+    name = models.CharField(max_length=20)
+    password = models.CharField(max_length=40)

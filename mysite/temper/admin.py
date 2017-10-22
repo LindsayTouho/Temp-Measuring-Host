@@ -7,3 +7,4 @@ from . import models
 
 # Register your models here.
 admin.site.register(models.temper)
+admin.site.register(models.users)
