@@ -10,6 +10,7 @@ Window::Window(){
     createMenu();
 
     localNum = setting . value("dataNum",QVariant(100)).toInt();
+    clarmTemper = setting . value("clarmTemper",QVariant(50)).toInt();
     serial=new QSerialPort;
 }
 
@@ -28,7 +29,7 @@ Window::~Window()
 }
 
 void Window::createMainWindow(){
-    this->resize(700,400);
+    this->resize(800,400);
     this->setObjectName(tr("this"));
     this -> setWindowTitle("SofeWare");
 
@@ -83,7 +84,9 @@ void Window::createMainWindow(){
   	view->setChart(chart);
   	view->setRenderHint(QPainter::Antialiasing);
 
-
+    clarmMessage = new QTextEdit(this);
+    clarmMessage -> setReadOnly(true);
+    clarmMessage -> setFixedSize(150,300);
 }
 
 void Window::setBuJu(){
@@ -101,6 +104,7 @@ void Window::setBuJu(){
     layout3= new QHBoxLayout;               //layout2 + 右侧折线图部分
 	layout3->addLayout(layout2);
 	layout3->addWidget(view);
+    layout3 -> addWidget(clarmMessage);
     layout3->setStretchFactor(layout2,1);
     layout3->setStretchFactor(view,4);
 
@@ -126,7 +130,7 @@ void Window::createMenu()
 {
 	auto menu = this->menuBar();
 
-	sendAction = new QAction(tr("传输协议"),this);
+	sendAction = new QAction(tr("发送协议"),this);
 	connect(sendAction,SIGNAL(triggered()),this,SLOT(showSend()));
 
 	settingAction = new QAction(tr("设置"),this);
@@ -136,8 +140,9 @@ void Window::createMenu()
 	connect(debugAction,SIGNAL(triggered()),this,SLOT(showDebug()));
 
 	menu -> addAction(sendAction);
-	menu -> addAction(settingAction);
     menu -> addAction(debugAction);
+	menu -> addAction(settingAction);
+
 }
 
 void Window::createEvent(){
@@ -293,7 +298,13 @@ void Window::refresh()
 	auto lastData=data[temp].end()-1;
     for(int i=0;i!=8;++i)
     {
-        if((*lastData)->isOpen(i))
+        if ((*lastData)->Temper(i) > clarmTemper){
+            serialSend(0x002900FE);
+            clarmMessage -> insertPlainText(QString::number(i,16).right(4).toUpper());
+            clarmMessage -> insertPlainText(tr("-")+QString::number(i,10)+tr("\n"));
+            Node[i]->setText(tr("<h3><font color=red>")+QString::number((*lastData)->Temper(i))+tr("°C</font></h3>"));
+        }
+        else if((*lastData)->isOpen(i))
         {
             Node[i]->setText(tr("<h3><font color=green>")+QString::number((*lastData)->Temper(i))+tr("°C</font></h3>"));
         }

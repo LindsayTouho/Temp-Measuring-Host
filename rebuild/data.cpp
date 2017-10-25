@@ -70,12 +70,12 @@ double Data::Temper(int i)
 	{
             return (double)((int)(Value[i]*6.25))/100;
 	}
-	else return 0;
+	else return -1;
 }
 
 bool Data::isOpen(int i)
 {
-	if(i<8)                     
+	if(i<8)
 	{
 		return States[i];
 	}
