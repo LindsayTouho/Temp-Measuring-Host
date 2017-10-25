@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include<QDateTime>
 #include<QAction>
 #include<QSqlDatabase>
 #include<QSqlQuery>

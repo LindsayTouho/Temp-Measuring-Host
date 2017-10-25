@@ -1,6 +1,5 @@
 #include"mainWindow.h"
-#include<iostream>
-using namespace std;
+
 
 Window::Window(){
     QCoreApplication::setOrganizationName("Cstdu");
@@ -149,13 +148,13 @@ void Window::createEvent(){
     connect(this,SIGNAL(closewindow()),this,SLOT(close()));
 }
 
-void Window::sleep(unsigned ms)
-{
-	QTime reachTime=QTime::currentTime().addMSecs(ms);
-	while(QTime::currentTime() < reachTime)
-	QCoreApplication::processEvents(QEventLoop::AllEvents,100);
-}
-
+// void Window::sleep(unsigned ms)
+// {
+// 	QTime reachTime=QDateTime::currentDateTime().addMSecs(ms);
+// 	while(QDateTime::currentDateTime() < reachTime)
+// 	QCoreApplication::processEvents(QEventLoop::AllEvents,100);
+// }
+//
 void Window::on_serial_readyRead()
 {
 //    sleep(1000);
@@ -353,7 +352,7 @@ bool Window::addInValue(QDataStream& stream)
 		QString tableName=(QString::number(temp->Id(),16).right(4).toUpper());
 		QSqlQuery query;
         QString insert = QString("INSERT INTO temper_temper ") ;
-		insert += QString("(name,T1,T2,T3,T4,T5,T6,T7,T8) VALUES(");
+		insert += QString("(name,T1,T2,T3,T4,T5,T6,T7,T8,time) VALUES(");
         insert += "'";
         insert += tableName;
         insert += "'";
@@ -367,8 +366,7 @@ bool Window::addInValue(QDataStream& stream)
                 insert += QString(",NULL");
             }
 		}
-        insert += ")";
-        cout<<insert.toLatin1().data()<<endl;
+        insert += ",now())";
         query.exec(insert);
 		return true;
 

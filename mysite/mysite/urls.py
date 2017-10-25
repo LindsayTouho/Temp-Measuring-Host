@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from temper import view
+from temper import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$',view.index),
-    url(r'^login/',view.login),
+    url(r'^$', views.index),
+    url(r'^login/', views.login),
+    url(r'^search/', views.search),
 ]
