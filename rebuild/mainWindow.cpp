@@ -12,6 +12,9 @@ Window::Window(){
     localNum = setting . value("dataNum",QVariant(100)).toInt();
     clarmTemper = setting . value("clarmTemper",QVariant(50)).toInt();
     serial=new QSerialPort;
+    QTimer *refreshTimer = new QTimer;
+    connect( refreshTimer, SIGNAL(timeout()), this, SLOT(refresh()));
+    refreshTimer -> start(1000);
 }
 
 Window::~Window()
@@ -65,20 +68,27 @@ void Window::createMainWindow(){
 
 	chart=new QChart;
 	chart->setTitle(tr("温度"));
-	chart->legend()->setAlignment(Qt::AlignBottom);
+
+    chart->setMargins(QMargins(0,0,0,0));
+    chart->legend()->hide();
+    chart->setPlotAreaBackgroundBrush(QBrush(Qt::black));
+    chart->setPlotAreaBackgroundVisible(true);
+
+
 	chart->createDefaultAxes();
+    chart -> setTheme(QChart::ChartThemeQt);
+
 
 	axisX=new QValueAxis;
 
 	axisX -> setRange(-(setting . value("chartRange",QVariant(60)).toInt()),0);
-  	axisX->setLabelFormat("%.2f");
+  	axisX-> setLabelFormat("%.1f");
   	axisX->setGridLineVisible(true);
   	axisX->setTickCount(6);
   	axisX->setMinorTickCount(4);
 	axisX -> setTitleText(QString("Time/")+(setting . value("timeUnit",QVariant("Minute(s)")).toString()));
 
 
-  	chart->setAnimationOptions(QChart::SeriesAnimations);
   	chart->setAxisX(axisX,line);
   	view=new QChartView(this);
   	view->setChart(chart);

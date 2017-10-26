@@ -22,6 +22,7 @@
 #include<QRect>
 #include<QSerialPortInfo>
 #include<QTime>
+#include<QTimer>
 #include<QCoreApplication>
 #include<QChart>
 #include<QValueAxis>
