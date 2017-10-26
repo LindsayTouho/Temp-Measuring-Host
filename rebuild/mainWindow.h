@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include<QDateTime>
 #include<QAction>
 #include<QSqlDatabase>
 #include<QSqlQuery>
@@ -21,12 +22,14 @@
 #include<QRect>
 #include<QSerialPortInfo>
 #include<QTime>
+#include<QTimer>
 #include<QCoreApplication>
 #include<QChart>
 #include<QValueAxis>
 #include<QChartView>
 #include<QLineSeries>
 #include<QString>
+#include<QTextEdit>
 #include"data.h"
 #include"settingWindow.h"
 #include"sendWindow.h"
@@ -48,6 +51,7 @@ class Window:public QMainWindow
     	QLabel * Node[8];
 		QPushButton *Open_Close;
 		QPushButton *Quit;
+		QTextEdit *clarmMessage;
 
 
     	QMap<qint16 , QVector<Data*>> data;
@@ -80,6 +84,7 @@ class Window:public QMainWindow
 		bool dbconnect();
         void throwEvent(QString m);                           //连接数据库
 		int localNum=100;
+		int clarmTemper = 50;
 
 		QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
 

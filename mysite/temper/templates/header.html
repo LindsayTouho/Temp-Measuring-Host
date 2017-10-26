@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset = "utf-8">
+  </head>
+  <body>
+  <div align="center">
+      <form method="post" action="\search\" target="_blank">
+     <label for = "ID">ID：</label>
+          <input id = 'ID' type = "text" name="ID" style="width:250px" list="idList"  required />
+     <datalist id="idList">
+       <option value="A111">目前唯一可用ID</option>
+     </datalist>
+     <label for="startDate">开始日期：</label>
+     <input id="startDate" type = "date" name = "startDate" style="width:250px" required />
+     <label for="endDate">截至日期：</label>
+     <input id="endDate" type="date" name="endDate" style="width:250px" required/>
+     <label for="upTemper">上限温度</label>
+     <input id="upTemper" type="text" name="upTemper" style="width:250px" placeholder="(选填)">
+     <input type ="submit" value = "搜索"  style="height:30px"/>
+   </form>
+ </div>
+</body>
+</html>

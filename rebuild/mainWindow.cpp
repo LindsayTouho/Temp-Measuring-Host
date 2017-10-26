@@ -10,7 +10,11 @@ Window::Window(){
     createMenu();
 
     localNum = setting . value("dataNum",QVariant(100)).toInt();
+    clarmTemper = setting . value("clarmTemper",QVariant(50)).toInt();
     serial=new QSerialPort;
+    QTimer *refreshTimer = new QTimer;
+    connect( refreshTimer, SIGNAL(timeout()), this, SLOT(refresh()));
+    refreshTimer -> start(1000);
 }
 
 Window::~Window()
@@ -28,7 +32,7 @@ Window::~Window()
 }
 
 void Window::createMainWindow(){
-    this->resize(700,400);
+    this->resize(800,400);
     this->setObjectName(tr("this"));
     this -> setWindowTitle("SofeWare");
 
@@ -64,26 +68,35 @@ void Window::createMainWindow(){
 
 	chart=new QChart;
 	chart->setTitle(tr("温度"));
-	chart->legend()->setAlignment(Qt::AlignBottom);
+
+    chart->setMargins(QMargins(0,0,0,0));
+    chart->legend()->hide();
+    chart->setPlotAreaBackgroundBrush(QBrush(Qt::black));
+    chart->setPlotAreaBackgroundVisible(true);
+
+
 	chart->createDefaultAxes();
+    chart -> setTheme(QChart::ChartThemeQt);
+
 
 	axisX=new QValueAxis;
 
 	axisX -> setRange(-(setting . value("chartRange",QVariant(60)).toInt()),0);
-  	axisX->setLabelFormat("%.2f");
+  	axisX-> setLabelFormat("%.1f");
   	axisX->setGridLineVisible(true);
   	axisX->setTickCount(6);
   	axisX->setMinorTickCount(4);
 	axisX -> setTitleText(QString("Time/")+(setting . value("timeUnit",QVariant("Minute(s)")).toString()));
 
 
-  	chart->setAnimationOptions(QChart::SeriesAnimations);
   	chart->setAxisX(axisX,line);
   	view=new QChartView(this);
   	view->setChart(chart);
   	view->setRenderHint(QPainter::Antialiasing);
 
-
+    clarmMessage = new QTextEdit(this);
+    clarmMessage -> setReadOnly(true);
+    clarmMessage -> setFixedSize(150,300);
 }
 
 void Window::setBuJu(){
@@ -101,6 +114,7 @@ void Window::setBuJu(){
     layout3= new QHBoxLayout;               //layout2 + 右侧折线图部分
 	layout3->addLayout(layout2);
 	layout3->addWidget(view);
+    layout3 -> addWidget(clarmMessage);
     layout3->setStretchFactor(layout2,1);
     layout3->setStretchFactor(view,4);
 
@@ -126,7 +140,7 @@ void Window::createMenu()
 {
 	auto menu = this->menuBar();
 
-	sendAction = new QAction(tr("传输协议"),this);
+	sendAction = new QAction(tr("发送协议"),this);
 	connect(sendAction,SIGNAL(triggered()),this,SLOT(showSend()));
 
 	settingAction = new QAction(tr("设置"),this);
@@ -136,8 +150,9 @@ void Window::createMenu()
 	connect(debugAction,SIGNAL(triggered()),this,SLOT(showDebug()));
 
 	menu -> addAction(sendAction);
-	menu -> addAction(settingAction);
     menu -> addAction(debugAction);
+	menu -> addAction(settingAction);
+
 }
 
 void Window::createEvent(){
@@ -148,13 +163,13 @@ void Window::createEvent(){
     connect(this,SIGNAL(closewindow()),this,SLOT(close()));
 }
 
-void Window::sleep(unsigned ms)
-{
-	QTime reachTime=QTime::currentTime().addMSecs(ms);
-	while(QTime::currentTime() < reachTime)
-	QCoreApplication::processEvents(QEventLoop::AllEvents,100);
-}
-
+// void Window::sleep(unsigned ms)
+// {
+// 	QTime reachTime=QDateTime::currentDateTime().addMSecs(ms);
+// 	while(QDateTime::currentDateTime() < reachTime)
+// 	QCoreApplication::processEvents(QEventLoop::AllEvents,100);
+// }
+//
 void Window::on_serial_readyRead()
 {
 //    sleep(1000);
@@ -173,8 +188,9 @@ void Window::on_serial_readyRead()
 	{
         delete Buffer;
         Buffer = nullptr;
+        refresh();
 	}
-	refresh();
+
 
 }
 
@@ -293,7 +309,10 @@ void Window::refresh()
 	auto lastData=data[temp].end()-1;
     for(int i=0;i!=8;++i)
     {
-        if((*lastData)->isOpen(i))
+        if ((*lastData)->Temper(i) >= clarmTemper){
+            Node[i]->setText(tr("<h3><font color=red>")+QString::number((*lastData)->Temper(i))+tr("°C</font></h3>"));
+        }
+        else if((*lastData)->isOpen(i))
         {
             Node[i]->setText(tr("<h3><font color=green>")+QString::number((*lastData)->Temper(i))+tr("°C</font></h3>"));
         }
@@ -351,32 +370,33 @@ bool Window::addInValue(QDataStream& stream)
 		data[temp->Id()].append(temp);
 		QString tableName=(QString::number(temp->Id(),16).right(4).toUpper());
 		QSqlQuery query;
-        QString table = QString("CREATE TABLE IF NOT EXISTS ");
-		table += tableName;
-        table += QString("(time timestamp NOT NULL default CURRENT_TIMESTAMP,T1   decimal(8,2)       NULL,T2   decimal(8,2)       NULL,T3   decimal(8,2)        NULL,T4   decimal(8,2)       NULL,T5   decimal(8,2)        NULL,T6   decimal(8,2)       NULL,T7   decimal(8,2)        NULL,T8   decimal(8,2)        NULL,PRIMARY KEY(time))ENGINE=InnoDB");
-		query.exec(table);
-        QString insert = QString("INSERT INTO ") ;
-		insert += tableName ;
-		insert += QString("(T1,T2,T3,T4,T5,T6,T7,T8) VALUES(");
-        bool first = true;
+        QString insert = QString("INSERT INTO temper_temper ") ;
+		insert += QString("(name,T1,T2,T3,T4,T5,T6,T7,T8,time) VALUES(");
+        insert += "'";
+        insert += tableName;
+        insert += "'";
 		for(int i=0;i!=8;++i){
             if(temp->isOpen(i)){
-                if(!first)
-                    insert += QString(",");
+                insert += QString(",");
                 insert += QString::number(temp -> Temper(i));
 
             }
             else{
-                if(!first)
-                    insert += QString(",");
-                insert += QString("NULL");
+                insert += QString(",NULL");
             }
-            first = false;
 		}
-        insert += ")";
+        insert += ",now())";
         query.exec(insert);
+        for(int i=0;i<8;++i){
+            if((temp -> Temper(i)) >= clarmTemper&&clarmMessage){
+                serialSend(0x002900FE);
+                clarmMessage -> insertPlainText(QTime::currentTime().toString("hh:mm:ss")+" "+tableName+'-'+QString::number(i+1)+'\n');
+            }
+        }
+        if (! stream.atEnd()){
+            addInValue(stream);
+        }
 		return true;
-
 	}
 	return false;
 }

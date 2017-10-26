@@ -29,6 +29,9 @@ SettingWindow::~SettingWindow()
 	delete OK;
 	delete Cancle;
 	delete mainLayout;
+    delete layout10;
+    delete clarmBox;
+    delete clarmLabel;
 }
 
 void SettingWindow::createWindow(){
@@ -60,12 +63,19 @@ void SettingWindow::createWindow(){
         serialPort->addItem(i.portName());
     }
     serialPort  -> setCurrentIndex(localSetting->value("serialName",QVariant(0)).toInt());
+
+    clarmLabel = new QLabel (this);
+    clarmLabel -> setText(tr("警报温度"));
+    clarmBox = new QSpinBox(this);
+    clarmBox -> setRange(0,1000);
+    clarmBox -> setValue(localSetting -> value("clarmTemper",QVariant(50)).toInt());
+
     database     = new QLabel(this);
     database     ->setText(tr("数据库设置"));
     host 	     = new QLabel(this);
     host	     -> setText(tr("主机名"));
     hostname     = new QLineEdit(this);
-    hostname    ->  setText(localSetting-> value("hostName",QVariant("47.93.191.3")).toString());
+    hostname    ->  setText(tr("*********"));//localSetting-> value("hostName",QVariant("47.93.191.3")).toString());
     user	     = new QLabel(this);
     user	     -> setText(tr("用户名"));
     username     = new QLineEdit(this);
@@ -73,7 +83,7 @@ void SettingWindow::createWindow(){
     pass 	     = new QLabel(this);
     pass         -> setText(tr("密码"));
     passwd       = new QLineEdit(this);
-    passwd -> setText(localSetting -> value("passWord",QVariant("123456")).toString());
+    passwd -> setText(tr("*********"));//localSetting -> value("passWord",QVariant("123456")).toString());
     dataname     = new QLabel(this);
     dataname     -> setText(tr("库名"));
     databasename = new QLineEdit(this);
@@ -130,10 +140,16 @@ void SettingWindow::createLayout(){
 	layout5 -> addWidget(OK);
 	layout5 -> addWidget(Cancle);
 
+    layout10 = new QHBoxLayout;
+    layout10 -> addWidget(clarmLabel);
+    layout10 -> addWidget(clarmBox);
+
 	mainLayout = new QVBoxLayout;
 	mainLayout -> addLayout(layout1);
 	mainLayout -> addStretch();
 	mainLayout -> addLayout(layout2);
+    mainLayout -> addStretch();
+    mainLayout -> addLayout(layout10);
 	mainLayout -> addStretch();
 	mainLayout -> addLayout(layout3);
 	mainLayout -> addStretch();
@@ -157,6 +173,7 @@ void SettingWindow::Change()
 	localSetting -> setValue("userName",username -> text());                         //设置6：用户名
 	localSetting -> setValue("passWord",passwd -> text()); 				//设置6:密码
 	localSetting -> setValue("databaseName",databasename -> text());			//设置7:数据库名
-	QMessageBox::warning(this,tr("Warning"),tr("Restart to take effect"),QMessageBox::Ok);
+    localSetting -> setValue("clarmTemper",clarmBox-> value());
+    QMessageBox::warning(this,tr("Warning"),tr("Restart to take effect"),QMessageBox::Ok);
 	this -> accept();
 }

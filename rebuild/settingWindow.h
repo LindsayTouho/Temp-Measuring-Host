@@ -38,6 +38,10 @@ private:
 	QLabel *serialName;
 	QComboBox *serialPort;			//打开串口名
 
+	QHBoxLayout *layout10;
+	QLabel *clarmLabel;
+	QSpinBox *clarmBox;
+
 	QVBoxLayout *layout4;
 	QLabel *database;
 	QHBoxLayout *layout6;
