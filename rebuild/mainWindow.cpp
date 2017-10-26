@@ -393,8 +393,10 @@ bool Window::addInValue(QDataStream& stream)
                 clarmMessage -> insertPlainText(QTime::currentTime().toString("hh:mm:ss")+" "+tableName+'-'+QString::number(i+1)+'\n');
             }
         }
+        if (! stream.atEnd()){
+            addInValue(stream);
+        }
 		return true;
-
 	}
 	return false;
 }
