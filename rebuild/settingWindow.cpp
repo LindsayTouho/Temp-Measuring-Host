@@ -75,7 +75,7 @@ void SettingWindow::createWindow(){
     host 	     = new QLabel(this);
     host	     -> setText(tr("主机名"));
     hostname     = new QLineEdit(this);
-    hostname    ->  setText(localSetting-> value("hostName",QVariant("47.93.191.3")).toString());
+    hostname    ->  setText(tr("*********"));//localSetting-> value("hostName",QVariant("47.93.191.3")).toString());
     user	     = new QLabel(this);
     user	     -> setText(tr("用户名"));
     username     = new QLineEdit(this);
@@ -83,7 +83,7 @@ void SettingWindow::createWindow(){
     pass 	     = new QLabel(this);
     pass         -> setText(tr("密码"));
     passwd       = new QLineEdit(this);
-    passwd -> setText(localSetting -> value("passWord",QVariant("123456")).toString());
+    passwd -> setText(tr("*********"));//localSetting -> value("passWord",QVariant("123456")).toString());
     dataname     = new QLabel(this);
     dataname     -> setText(tr("库名"));
     databasename = new QLineEdit(this);

@@ -178,8 +178,9 @@ void Window::on_serial_readyRead()
 	{
         delete Buffer;
         Buffer = nullptr;
+        refresh();
 	}
-	refresh();
+
 
 }
 
@@ -298,10 +299,7 @@ void Window::refresh()
 	auto lastData=data[temp].end()-1;
     for(int i=0;i!=8;++i)
     {
-        if ((*lastData)->Temper(i) > clarmTemper){
-            serialSend(0x002900FE);
-            clarmMessage -> insertPlainText(QString::number(i,16).right(4).toUpper());
-            clarmMessage -> insertPlainText(tr("-")+QString::number(i,10)+tr("\n"));
+        if ((*lastData)->Temper(i) >= clarmTemper){
             Node[i]->setText(tr("<h3><font color=red>")+QString::number((*lastData)->Temper(i))+tr("°C</font></h3>"));
         }
         else if((*lastData)->isOpen(i))
@@ -379,6 +377,12 @@ bool Window::addInValue(QDataStream& stream)
 		}
         insert += ",now())";
         query.exec(insert);
+        for(int i=0;i<8;++i){
+            if((temp -> Temper(i)) >= clarmTemper&&clarmMessage){
+                serialSend(0x002900FE);
+                clarmMessage -> insertPlainText(QTime::currentTime().toString("hh:mm:ss")+" "+tableName+'-'+QString::number(i+1)+'\n');
+            }
+        }
 		return true;
 
 	}
