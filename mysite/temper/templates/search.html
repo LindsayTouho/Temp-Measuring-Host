@@ -23,6 +23,7 @@
     <td>温度六</td>
     <td>温度七</td>
     <td>温度八</td>
+      <td>端口名</td>
   </tr>
   {% for line in chart %}
       <tr>
@@ -119,6 +120,7 @@
       {% else %}
           <td></td>
       {% endif %}
+      <td>{{ line.name }}</td>
       </tr>
   {% endfor %}
   </table>

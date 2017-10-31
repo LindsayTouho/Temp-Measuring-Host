@@ -5,7 +5,7 @@ from django.db import models
 
 
 class temper(models.Model):
-    name = models.CharField(max_length=5,)
+    name = models.CharField(max_length=5)
     time = models.DateTimeField(auto_now_add=True)
     T1 = models.DecimalField(decimal_places=1,max_digits=6,blank=True,null = True)
     T2 = models.DecimalField(decimal_places=1,max_digits=6,blank=True,null = True)

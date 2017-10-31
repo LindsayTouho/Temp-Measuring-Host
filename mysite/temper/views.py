@@ -28,12 +28,14 @@ def login(request):
         return HttpResponse("Invaild user name or password")
 
 def search(request):
-    ID = request.POST['ID']
     startDate = request.POST['startDate']
     endDate = request.POST['endDate']
     if 'upTemper' in request.POST and request.POST['upTemper']:
         upTemper = request.POST['upTemper']
     else:
         upTemper = '99'
-    result = temper.objects.filter(name=ID).filter(time__lt= datetime.datetime.strptime(endDate,"%Y-%m-%d") ).filter(time__gt=datetime.datetime.strptime(startDate,"%Y-%m-%d"))
+    result = temper.objects.filter(time__lt= datetime.datetime.strptime(endDate,"%Y-%m-%d") ).filter(time__gt=datetime.datetime.strptime(startDate,"%Y-%m-%d"))
+    if 'ID' in request.POST and request.POST['ID']:
+        ID = request.POST['ID']
+        result = result.filter(name=ID)
     return render(request,'search.html',{'chart':result.values(),'upTemper':int(upTemper)})
