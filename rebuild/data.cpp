@@ -18,7 +18,8 @@ void Data::node(const qint8 &s)			 //辅助函数，根据int8保存各节点数
 	}
 }
 
-
+Data::~Data(){
+}
 
 Data::Data(QDataStream &s)
 {
@@ -50,7 +51,7 @@ Data::Data(QDataStream &s)
     	}
     	s>>temp8;                                  //28
         s>>temp16;                                  //29,30
-
+		Father = temp16;
 
     	s>>temp8;                                  //31
         if(temp8==0x66)
@@ -90,4 +91,8 @@ bool Data::isCompleted()
 qint16 Data::Id()
 {
 	return ID;
+}
+
+qint16 Data::father(){
+	return Father;
 }

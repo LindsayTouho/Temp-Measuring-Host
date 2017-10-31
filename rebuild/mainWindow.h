@@ -52,7 +52,7 @@ class Window:public QMainWindow
 		QPushButton *Open_Close;
 		QPushButton *Quit;
 		QTextEdit *clarmMessage;
-
+		QLabel *fatherName;
 
     	QMap<qint16 , QVector<Data*>> data;
 		QSerialPort *serial=nullptr;

@@ -13,7 +13,7 @@ Window::Window(){
     clarmTemper = setting . value("clarmTemper",QVariant(50)).toInt();
     serial=new QSerialPort;
     QTimer *refreshTimer = new QTimer;
-    connect( refreshTimer, SIGNAL(timeout()), this, SLOT(refresh()));
+    connect(refreshTimer, SIGNAL(timeout()), this, SLOT(refresh()));
     refreshTimer -> start(1000);
 }
 
@@ -58,7 +58,7 @@ void Window::createMainWindow(){
 	Quit=new QPushButton(this);
 	Quit->setText(tr("退出"));
 
-
+    fatherName = new QLabel(this);
 
 
 
@@ -119,6 +119,7 @@ void Window::setBuJu(){
     layout3->setStretchFactor(view,4);
 
 	layout4=new QHBoxLayout;               //下侧控制部分
+    layout4->addWidget(fatherName);
 	layout4->addWidget(Terminal);
 	layout4->addWidget(nodeBox);
 	layout4->addStretch();
@@ -170,9 +171,10 @@ void Window::createEvent(){
 // 	QCoreApplication::processEvents(QEventLoop::AllEvents,100);
 // }
 //
+
+
 void Window::on_serial_readyRead()
 {
-//    sleep(1000);
 	QByteArray b;
 	b=serial->readAll();
     if(subWindow3)
@@ -187,6 +189,7 @@ void Window::on_serial_readyRead()
     if(	addInValue(*temp))
 	{
         delete Buffer;
+        delete temp;
         Buffer = nullptr;
         refresh();
 	}
@@ -294,19 +297,27 @@ void Window::showDebug(){
 
 void Window::refresh()
 {
+
 	auto keys=data.keys();
     for(qint16 i:keys)
     {
-       	if(Terminal->findText(QString::number(i,16).right(4).toUpper())==-1)
-            Terminal->addItem(QString::number(i,16).right(4).toUpper());
+       	if(Terminal->findText(("0000"+QString::number(i,16)).right(4).toUpper())==-1)
+            Terminal->addItem(("0000"+QString::number(i,16)).right(4).toUpper());
 	}
 	bool ok;
     qint16 temp=Terminal->currentText().toInt(&ok,16);
 	if(!ok)
     {
+        for(int i=0;i!=8;++i)
+        {
+                Node[i]->setText("<h3><font color=blue>None</font></h3>");
+        }
+        line->clear();
+        fatherName -> setText("");
     	return;
 	}
 	auto lastData=data[temp].end()-1;
+    fatherName ->setText(("0000"+QString::number((*lastData)->father(),16)).right(4).toUpper());
     for(int i=0;i!=8;++i)
     {
         if ((*lastData)->Temper(i) >= clarmTemper){
@@ -349,17 +360,11 @@ void Window::refresh()
     	chart->setAxisX(axisX,line);
 
  	//清除过多的本地数据
-	for(auto temp:data)
-	{
-		if (temp.size()>=localNum)
-		{
-			for(auto i = temp.begin()+localNum;i != temp.end();++i)
-			{
-				delete *i;
-			}
-			temp.erase(temp.begin()+localNum,temp.end());
-		}
-	}
+    auto &a = data[temp];
+    if(a.size()>=localNum){
+        delete a[0];
+        a.removeFirst();
+    }
 }
 
 bool Window::addInValue(QDataStream& stream)
@@ -368,7 +373,7 @@ bool Window::addInValue(QDataStream& stream)
 	if(temp->isCompleted())
 	{
 		data[temp->Id()].append(temp);
-		QString tableName=(QString::number(temp->Id(),16).right(4).toUpper());
+		QString tableName=(("0000"+QString::number(temp->Id(),16)).right(4).toUpper());
 		QSqlQuery query;
         QString insert = QString("INSERT INTO temper_temper ") ;
 		insert += QString("(name,T1,T2,T3,T4,T5,T6,T7,T8,time) VALUES(");
@@ -398,5 +403,6 @@ bool Window::addInValue(QDataStream& stream)
         }
 		return true;
 	}
+    delete temp;
 	return false;
 }
