@@ -5,7 +5,9 @@ from .models import users,temper
 from django.shortcuts import render
 from hashlib import md5
 from django.http.response import HttpResponse
+from django.core.paginator import Paginator
 import datetime
+from math import ceil
 
 def index(request):
     return render(request,'index.html')
@@ -39,3 +41,26 @@ def search(request):
         ID = request.POST['ID']
         result = result.filter(name=ID)
     return render(request,'search.html',{'chart':result.values(),'upTemper':int(upTemper)})
+
+
+def page(request,page_num):
+    page_num = int(page_num)
+    startDate = request.POST['startDate']
+    endDate = request.POST['endDate']
+
+    if 'upTemper' in request.POST and request.POST['upTemper']:
+        upTemper = request.POST['upTemper']
+    else:
+        upTemper = '99'
+
+    result = temper.objects.filter(time__lt= datetime.datetime.strptime(endDate,"%Y-%m-%d") ).filter(time__gt=datetime.datetime.strptime(startDate,"%Y-%m-%d"))
+
+
+    if 'ID' in request.POST and request.POST['ID']:
+        ID = request.POST['ID']
+        result = result.filter(name=ID)
+
+    pagintor = Paginator(result,100)
+    result= pagintor.page(page_num)
+
+    return render(request,'search.html',locals())

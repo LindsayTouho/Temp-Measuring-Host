@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^login/', views.login),
     url(r'^search/', views.search),
+    url(r'^search_page/(\d)',views.page)
 ]
