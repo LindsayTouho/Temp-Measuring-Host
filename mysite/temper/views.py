@@ -40,8 +40,6 @@ def search(request):
         cd = S.cleaned_data
         startDate = cd['startDate']
         endDate = cd['endDate']
-        ID = cd['ID']
-        upTemper = cd['upTemper']
 
 
         result = temper.objects.filter(time__lt= endDate).filter(time__gt=startDate)
@@ -50,7 +48,8 @@ def search(request):
         if cd['ID']:
             ID = cd['ID']
             result = result.filter(name=ID)
-
+        if cd['upTemper']:
+            upTemper=int(cd['upTemper'])
         return render(request, 'search.html', locals())
     return HttpResponse("Fail")
 
