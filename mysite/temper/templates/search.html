@@ -27,7 +27,7 @@
   </tr>
   {% for line in result %}
       <tr>
-      <td> {{ line.time }}</td>
+      <td> {{ line.time | date:"Y年m月d日 H:i:s"}}</td>
 
       {% if line.T1 %}
           {%if line.T1 < upTemper %}

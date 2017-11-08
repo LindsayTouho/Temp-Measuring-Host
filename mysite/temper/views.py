@@ -7,6 +7,7 @@ from hashlib import md5
 from django.http.response import HttpResponse
 from django.core.paginator import Paginator
 import datetime
+from .forms import searcher
 from math import ceil
 
 def index(request):
@@ -30,37 +31,47 @@ def login(request):
         return HttpResponse("Invaild user name or password")
 
 def search(request):
-    startDate = request.POST['startDate']
-    endDate = request.POST['endDate']
-    if 'upTemper' in request.POST and request.POST['upTemper']:
-        upTemper = request.POST['upTemper']
-    else:
-        upTemper = '99'
-    result = temper.objects.filter(time__lt= datetime.datetime.strptime(endDate,"%Y-%m-%d") ).filter(time__gt=datetime.datetime.strptime(startDate,"%Y-%m-%d"))
-    if 'ID' in request.POST and request.POST['ID']:
-        ID = request.POST['ID']
-        result = result.filter(name=ID)
-    return render(request,'search.html',{'chart':result.values(),'upTemper':int(upTemper)})
+    S=searcher(request.GET)
+    endDate=''
+    startDate=''
+    upTemper =''
+    ID= ''
+    if S.is_valid():
+        cd = S.cleaned_data
+        startDate = cd['startDate']
+        endDate = cd['endDate']
+        ID = cd['ID']
+        upTemper = cd['upTemper']
 
+
+        result = temper.objects.filter(time__lt= endDate).filter(time__gt=startDate)
+
+
+        if cd['ID']:
+            ID = cd['ID']
+            result = result.filter(name=ID)
+
+        return render(request, 'search.html', locals())
+    return HttpResponse("Fail")
 
 def page(request,page_num):
     page_num = int(page_num)
-    startDate = request.POST['startDate']
-    endDate = request.POST['endDate']
+    startDate = request.GET['startDate']
+    endDate = request.GET['endDate']
 
-    if 'upTemper' in request.POST and request.POST['upTemper']:
-        upTemper = request.POST['upTemper']
+    if 'upTemper' in request.GET and request.GET['upTemper']:
+        upTemper = request.GET['upTemper']
     else:
         upTemper = '99'
 
     result = temper.objects.filter(time__lt= datetime.datetime.strptime(endDate,"%Y-%m-%d") ).filter(time__gt=datetime.datetime.strptime(startDate,"%Y-%m-%d"))
 
 
-    if 'ID' in request.POST and request.POST['ID']:
-        ID = request.POST['ID']
+    if 'ID' in request.GET and request.GET['ID']:
+        ID = request.GET['ID']
         result = result.filter(name=ID)
 
     pagintor = Paginator(result,100)
     result= pagintor.page(page_num)
 
-    return render(request,'search.html',locals())
+    return render(request,'search_page.html',locals())
