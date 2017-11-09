@@ -20,7 +20,7 @@ from temper import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index),
-    url(r'^login/', views.login),
-    url(r'^search/', views.search),
-    url(r'^search_page/(\d)',views.page)
+    url(r'^login/$', views.login),
+    url(r'^search/$', views.search),
+    url(r'^search_page/(\d{1,2})$',views.page)
 ]

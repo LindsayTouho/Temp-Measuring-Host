@@ -6,7 +6,6 @@ from django.shortcuts import render
 from hashlib import md5
 from django.http.response import HttpResponse
 from django.core.paginator import Paginator
-import datetime
 from .forms import searcher
 from math import ceil
 
@@ -56,8 +55,6 @@ def search(request):
 def page(request,page_num):
     page_num = int(page_num)
     S=searcher(request.GET)
-    endDate=''
-    startDate=''
     upTemper =''
     ID= ''
     if S.is_valid():
@@ -69,10 +66,22 @@ def page(request,page_num):
         result = temper.objects.filter(time__lt= endDate).filter(time__gt=startDate)
 
 
+
         if cd['ID']:
             ID = cd['ID']
             result = result.filter(name=ID)
         if cd['upTemper']:
             upTemper=int(cd['upTemper'])
-        return render(request, 'search.html', locals())
+
+        l = request.get_full_path()[:13]
+        links = []
+        i = 1
+        while i <= ceil(result.count()/100)+1:
+            links.append(l + str(i) + '?startDate=' + str(startDate) + '&endDate=' + str(endDate) + '&ID=' + str(ID)+'&upTemper='+str(upTemper))
+            i += 1
+
+        result = result[(page_num - 1) * 100:page_num * 100]
+
+
+        return render(request, 'search_page.html', locals())
     return HttpResponse("Fail")

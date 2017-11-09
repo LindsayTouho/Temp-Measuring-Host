@@ -125,4 +125,15 @@
   {% endfor %}
   <footer><div align="center">{{ link }}</div> </footer>
   </table>
+  <div align="center"><footer >第
+  {% for link in links %}
+      {% ifequal page_num forloop.counter %}
+          {{ forloop.counter }}
+      {% else %}
+        <a href="{{ link }}">{{ forloop.counter }} </a>
+      {% endifequal %}
+  {% endfor %}页
+  </footer></div>
+  </body>
+</html>
 
