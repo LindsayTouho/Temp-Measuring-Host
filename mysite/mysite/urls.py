@@ -16,11 +16,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from temper import views
-
+from weixin.views import index as weixin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index),
     url(r'^login/$', views.login),
     url(r'^search/$', views.search),
-    url(r'^search_page/(\d{1,2})$',views.page)
+    url(r'^search_page/(\d{1,2})$',views.page),
+    url(r'^weixin/$',weixin),
 ]
