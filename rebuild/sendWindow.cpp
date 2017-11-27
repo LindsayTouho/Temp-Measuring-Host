@@ -4,7 +4,7 @@ SendWindow::SendWindow(QWidget *parent) : QDialog(parent)
 {
 	this -> setWindowTitle("Send");
 	mainLayout = new QVBoxLayout;
-	for(int i = 0 ; i<4 ; ++i)
+	for(int i = 0 ; i<6 ; ++i)
 	{
 		lable[i] = new QLabel;
 		button[i] = new QPushButton;
@@ -18,6 +18,8 @@ SendWindow::SendWindow(QWidget *parent) : QDialog(parent)
 	lable[1] -> setText(tr("网关"));
 	lable[2] -> setText(tr("取消警报"));
 	lable[3] -> setText(tr("手动警报"));
+	lable[4] -> setText(tr("解除网关"));
+	lable[5] -> setText(tr("上传"));
 	close = new QPushButton;
 	close -> setText(tr("关闭"));
 	mainLayout-> addWidget(close);
@@ -25,6 +27,8 @@ SendWindow::SendWindow(QWidget *parent) : QDialog(parent)
 	connect(button[1],SIGNAL(clicked()),this,SLOT(button2()));
 	connect(button[2],SIGNAL(clicked()),this,SLOT(button3()));
 	connect(button[3],SIGNAL(clicked()),this,SLOT(button4()));
+	connect(button[4],SIGNAL(clicked()),this,SLOT(button5()));
+	connect(button[5],SIGNAL(clicked()),this,SLOT(button6()));
 	connect(close,SIGNAL(clicked()),this,SLOT(accept()));
 	setLayout(mainLayout);
 }
