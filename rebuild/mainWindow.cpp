@@ -58,7 +58,7 @@ void Window::createMainWindow(){
 	Quit=new QPushButton(this);
 	Quit->setText(tr("退出"));
 
-    fatherName = new QLabel(this);
+  fatherName = new QLabel(this);
 
 
 
@@ -244,7 +244,7 @@ bool Window::dbconnect(){
     db.setHostName(setting.value("hostName",QVariant("47.93.191.3")).toString());
     db.setDatabaseName(setting.value("databaseName",QVariant("temperature")).toString());
     db.setUserName(setting.value("userName",QVariant("public")).toString());
-    db.setPassword(setting.value("passWord",QVariant("Chagnli")).toString());
+    db.setPassword(setting.value("passWord",QVariant("Changli")).toString());
     if(!db.open()){
         return false;
     }

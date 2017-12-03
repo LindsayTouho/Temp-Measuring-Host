@@ -50,8 +50,8 @@ Data::Data(QDataStream &s)
             Value.push_back(temp16);
     	}
     	s>>temp8;                                  //28
-        s>>temp16;                                  //29,30
-		Father = temp16;
+      s>>temp16;                                  //29,30
+			Father = temp16;
 
     	s>>temp8;                                  //31
         if(temp8==0x66)
