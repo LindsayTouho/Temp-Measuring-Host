@@ -172,7 +172,6 @@ void Window::createEvent(){
 // }
 //
 
-
 void Window::on_serial_readyRead()
 {
 	QByteArray b;
