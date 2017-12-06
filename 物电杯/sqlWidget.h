@@ -11,7 +11,7 @@ private:
   QSqlTableModel *model;
   QTableView *view;
 public:
-  sqlWidget(QWidget *parent = nullptr,QSqlDatabase &db,int Id,int index);
+  sqlWidget(QWidget *parent = nullptr,QSqlDatabase &db,QString terminal_name,int index=1);
   ~sqlWidget();
   void changeIndex(int index)
 };

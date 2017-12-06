@@ -11,6 +11,9 @@
 #include<QLineSeries>  //折线图头文件
 #include<QValueAxis>
 #include<QChartView>
+#include<QDebug>
+#include<QVector>
+#include<QPointF>
 using namespace QtCharts;
 
 
@@ -21,11 +24,10 @@ public:
 
   void setTitle(QString title);
   void setRange(int min,int max);
-  void push(Data &n);
-  void pop(qint16 ID);
   void setline(QLineSeries *L);
 private:
   void refresh();       //私有函数
+  int get_last();
 
   qint16 currentID;
 

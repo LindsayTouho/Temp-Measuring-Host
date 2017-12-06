@@ -48,43 +48,13 @@ chartWidget::~chartWidget(){
   delete view;
 }
 
-void chartWidget::push(Data &n){
-  // chart -> removeSeries(line);
-  // chart -> removeAxis(axisX);
 
-  if(currentItem == 0){
-    line -> append(-(n.time().secsTo(QTime::currentTime())),n.temperature());
-    resentValue -> setText(QString::number(n.temperature()));
-  }
-  else if(currentItem == 1){
-    line -> append(-(n.time().secsTo(QTime::currentTime())),n.humidity());
-    resentValue -> setText(QString::number(n.humidity()));
-  }
-  else if(currentItem == 2){
-    line -> append(-(n.time().secsTo(QTime::currentTime())),n.beam());
-    resentValue -> setText(QString::number(n.beam()));
-  }
 
-  // chart -> addSeries(line);
-  // chart -> createDefaultAxes();
-  // chart -> setAxisX(axisX,line);
-  refresh();
-}
-
-void chartWidget::pop(qint16 ID){
-
-    refresh();
-}
 
 void chartWidget::setRange(int min,int max){
-  // chart -> removeSeries(line);
-  // chart -> removeAxis(axisX);
 
   axisX -> setRange(min,max);
 
-  // chart -> addSeries(line);
-  // chart -> createDefaultAxes();
-  // chart -> setAxisX(axisX,line);
   refresh();
 }
 
@@ -94,7 +64,9 @@ void chartWidget::setTitle(QString title){
 }
 
 void chartWidget::refresh(){
+  resentValue-> setText(QString::number(get_last()));
 }
+
 
 void chartWidget::setline(QLineSeries *L){
   chart -> removeSeries(line);
@@ -103,4 +75,10 @@ void chartWidget::setline(QLineSeries *L){
   chart -> createDefaultAxes();
   chart -> setAxisX(axisX,L);
   line = L;
+  print_line(L);
+}
+
+int chartWidget::get_last(){
+  QVector<QPointF> v = line -> pointsVector();
+  return v.last().y();
 }
