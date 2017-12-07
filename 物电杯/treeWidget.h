@@ -3,13 +3,17 @@
 
 #include<QTreeWidget>
 #include<QSqlDatabase>
+#include<QSqlQuery>
+#include<QLineSeries>
+#include<QDateTime>
 
-class sqlWidget:public QTreeWidget{
+class treeWidget:public QTreeWidget{
 public:
-  sqlWidget();
-  sqlWidget();
+  treeWidget(QWidget *parent = nullptr,QSqlDatabase &db);
+  ~treeWidget();
   void addItem(QString terminal_name);
   void removeItem(QString terminal_name);
-}
-
+private:
+  QLineSeries *makeLine(QString terminal_name,int index);
+};
 #endif
