@@ -18,13 +18,16 @@ using namespace QtCharts;
 
 
 class chartWidget : public QWidget{
+  Q_OBJECT;
+public slots:
+  void setline(QLineSeries *L);
+  void setRange(int min,int max);
+  void setTitle(QString title);
+
 public:
   chartWidget(QWidget *parent = nullptr,int Item=0);
   ~chartWidget();
 
-  void setTitle(QString title);
-  void setRange(int min,int max);
-  void setline(QLineSeries *L);
 private:
   void refresh();       //私有函数
   int get_last();

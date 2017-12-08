@@ -3,9 +3,11 @@
 #include<QStringList>
 
 class treeWidgetItem:public  QTreeWidgetItem{
+  Q_OBJECT;
+public slots:
+  void setData(QLineSeries *data);
 public:
   treeWidgetItem(QStringList *list);
-  void setData(QLineSeries *data);
   QLineSeries *data();
 private:
   QLineSeries *data=nullptr;
