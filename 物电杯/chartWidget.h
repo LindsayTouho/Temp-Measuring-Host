@@ -14,6 +14,8 @@
 #include<QDebug>
 #include<QVector>
 #include<QPointF>
+#include<QDateTime>
+#include<QTimer>
 using namespace QtCharts;
 
 
@@ -23,13 +25,14 @@ public slots:
   void setline(QLineSeries *L);
   void setRange(int min,int max);
   void setTitle(QString title);
+  void refresh();
 
 public:
   chartWidget(QWidget *parent = nullptr,int Item=0);
   ~chartWidget();
 
 private:
-  void refresh();       //私有函数
+         //私有函数
   int get_last();
 
   qint16 currentID;

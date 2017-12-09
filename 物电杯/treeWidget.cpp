@@ -36,31 +36,49 @@ QLineSeries *treeWidget::makeLine(QString terminal_name,int index){
   }
   else{
     return NULL;
-  }
-  QLineSeries *line = new QLineSeries;
+  };
   while(query.next()){
     QDateTime T = QDateTime::fromString(query.value(0).toString(),"yyyy-MM-ss hh:mm:ss");
-    line -> append(-(T.secsTo(QDateTime::currentTime())),query.value(1).toDouble();
+    line -> append(-(T.secsTo(QDateTime::currentTime())),query.value(1).toDouble());
   }
   return line;
 }
 
-void treeWidget::addItem(QString terminal_name) {
-  treeWidgetItem *item = new treeWidgetItem;
-  QLineSeries *temp;
-  treeWidgetItem *temperature = new treeWidgetItem(QStringList()<<"温度");
-  temp = makeLine(terminal_name,2);
-  temperature -> setData(temp);
-  treeWidgetItem *humidity = new treeWidgetItem(QStringList()<<"湿度");
-  temp = makeLine(terminal_name,3);
-  temperature -> setData(temp);
-  treeWidgetItem *beam = new treeWidgetItem(QStringList()<<"光照");
-  temp = makeLine(terminal_name,4);
-  temperature -> setData(temp);
-  item -> addChild(temperature);
-  item -> addChild(humidity);
-  item -> addChild(beam);
-  addTopLevelItem(item);
+void treeWidget::refresh(data *n) {
+  QString terminal_name = QString::number(n->terminalID()).right(4);
+  if(findChildren(terminal_name).isEmpty()){     //虽然这路不用makekine函数效率更高，不过懒得写了
+    treeWidgetItem *n = new treeWidgetItem;
+    QLineSeries *temp;
+    treeWidgetItem *temperature = new treeWidgetItem(QStringList()<<"温度");
+    temp = makeLine(name,2);
+    temperature -> setData(temp);
+    treeWidgetItem *humidity = new treeWidgetItem(QStringList()<<"湿度");
+    temp = makeLine(name,3);
+    temperature -> setData(temp);
+    treeWidgetItem *beam = new treeWidgetItem(QStringList()<<"光照");
+    temp = makeLine(name,4);
+    temperature -> setData(temp);
+    n->addChild(temperature);
+    n->addChild(humidity);
+    n->addChild(beam);
+    addTopLevelItem(n);
+  }
+  else{
+    treeWidgetItem &currentItem = findChildren(terminal_name).front();
+    QLineSeries *line ;
+    line = currentItem.child(0).data();
+    if(line != nullptr){
+      line -> append(-(T.secsTo(QDateTime::currentTime())),n->temperature());
+    }
+    line = currentItem.child(1).data();
+    if(line != nullptr){
+      line -> append(-(T.secsTo(QDateTime::currentTime())),n->humidity());
+    }
+    line = currentItem.child(2).data();
+    if(line != nullptr){
+      line -> append(-(T.secsTo(QDateTime::currentTime())),n->beam());
+    }
+  }
 }
 
-//time = QDateTime::fromString(strBuffer, "yyyy-MM-dd hh:mm:ss");
+//time = QDateTime::fromString(strBuffer, "yyyy-MM-dd hh:mm:ss
