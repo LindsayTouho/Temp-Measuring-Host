@@ -46,7 +46,7 @@ QLineSeries *treeWidget::makeLine(QString terminal_name,int index){
 
 void treeWidget::refresh(data *n) {
   QString terminal_name = QString::number(n->terminalID()).right(4);
-  if(findChildren(terminal_name).isEmpty()){     //虽然这路不用makekine函数效率更高，不过懒得写了
+  if(findChildren(terminal_name).isEmpty()){     //虽然这里不用makekine函数效率更高，不过懒得写了
     treeWidgetItem *n = new treeWidgetItem;
     QLineSeries *temp;
     treeWidgetItem *temperature = new treeWidgetItem(QStringList()<<"温度");
@@ -81,4 +81,4 @@ void treeWidget::refresh(data *n) {
   }
 }
 
-//time = QDateTime::fromString(strBuffer, "yyyy-MM-dd hh:mm:ss
+//time = QDateTime::fromString(strBuffer, "yyyy-MM-dd hh:mm:ss");
