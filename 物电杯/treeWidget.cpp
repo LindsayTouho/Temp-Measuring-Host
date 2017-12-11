@@ -4,6 +4,8 @@ treeWidget::treeWidget(QWidget * parent,QSqlDatabase &db):QTreeWidget(parent){
    QSqlQuery query;
    QLineSeries *temp;
    query.exec("SELECT DISTINCT name FROM data");
+
+
    while(query.next()){
      QString name = query.value(0).toString();
      treeWidgetItem *n = new treeWidgetItem(QStringList()<<name);
@@ -21,6 +23,7 @@ treeWidget::treeWidget(QWidget * parent,QSqlDatabase &db):QTreeWidget(parent){
      n->addChild(beam);
      addTopLevelItem(n);
    }
+
 }
 
 QLineSeries *treeWidget::makeLine(QString terminal_name,int index){
@@ -44,7 +47,7 @@ QLineSeries *treeWidget::makeLine(QString terminal_name,int index){
   return line;
 }
 
-void treeWidget::refresh(data *n) {
+void treeWidget::refresh(Data *n) {
   QString terminal_name = QString::number(n->terminalID()).right(4);
   if(findChildren(terminal_name).isEmpty()){     //虽然这里不用makekine函数效率更高，不过懒得写了
     treeWidgetItem *n = new treeWidgetItem;

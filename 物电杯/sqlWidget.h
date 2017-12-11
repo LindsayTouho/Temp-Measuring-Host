@@ -11,9 +11,9 @@ private:
   QSqlTableModel *model;
   QTableView *view;
 public:
-  sqlWidget(QWidget *parent = nullptr,QSqlDatabase &db,QString terminal_name,int index=1);
+  sqlWidget(QWidget *parent = nullptr,QSqlDatabase &db,QString terminal_name);
   ~sqlWidget();
-  void changeIndex(int index)
+  void changeTerminal(QString terminal_name)
 };
 #endif
 //view->hideColumn(0);  隐藏部分列

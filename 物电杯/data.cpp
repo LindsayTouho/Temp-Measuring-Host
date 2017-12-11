@@ -16,6 +16,10 @@ int Data::beam(){
   return Beam;
 }
 
+int Data::smog(){
+    reutrn Smog;
+}
+
 Data::Data(QDataStream &in){
   qint8 temp8=0;
   qint16 temp16=0;
@@ -33,9 +37,11 @@ Data::Data(QDataStream &in){
   in>>temp16;    //ds
   in>>temp8;
 
+
   in>>Temperature;  //温度
   in>>Humidity;   //湿度
   in>>Beam ;     //光照
+  in>>Smog ;
 
   /*这里可能有烟雾数值*/
   /*if(type==0x0060)*/
@@ -53,4 +59,8 @@ Data::Data(QDataStream &in){
 
 qint16 Data::terminalID(){
   return ID;
+}
+
+int Data::type(){
+  return type;
 }

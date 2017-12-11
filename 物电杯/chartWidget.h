@@ -20,7 +20,7 @@ using namespace QtCharts;
 
 
 class chartWidget : public QWidget{
-  Q_OBJECT;
+  Q_OBJECT
 public slots:
   void setline(QLineSeries *L);
   void setRange(int min,int max);
