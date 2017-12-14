@@ -7,8 +7,8 @@ class treeWidgetItem:public  QTreeWidgetItem{
 public slots:
   void setData(QLineSeries *data);
 public:
-  treeWidgetItem(QStringList *list);
+  treeWidgetItem(QStringList list);
   QLineSeries *data();
 private:
-  QLineSeries *data=nullptr;
-}
+  QLineSeries *Data=nullptr;
+};

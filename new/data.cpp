@@ -20,6 +20,10 @@ int Data::smog(){
     return Smog;
 }
 
+int Data::type(){
+    return Type;
+}
+
 Data::Data(QDataStream &in){
   qint8 temp8=0;
   qint16 temp16=0;
@@ -31,7 +35,7 @@ Data::Data(QDataStream &in){
 
   in>>ID;        //终端号
 
-  in>>type;     //终端识别号
+  in>>Type;     //终端识别号
 
 
   in>>temp16;    //ds
@@ -58,12 +62,9 @@ qint16 Data::terminalID(){
   return ID;
 }
 
-int Data::type(){
-  return type;
-}
 
 bool Data::is_completed(){
-  return completed;
+  return Completed;
 }
 
 QString Data::terminal_name(){

@@ -1,12 +1,11 @@
 #include"chartWidget.h"
 
 
-chartWidget::chartWidget(QWidget *parent,int Item):QWidget(parent){
+chartWidget::chartWidget(QWidget *parent):QWidget(parent){
   resentValue = new QLabel;
   currentTime = new QLabel;
   resentValue -> setAlignment(Qt::AlignHCenter);
   currentTime -> setAlignment(Qt::AlignHCenter);
-  currentItem = Item;
 
 
   line = new QLineSeries;     //设置折线图

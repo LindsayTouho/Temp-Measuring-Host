@@ -31,10 +31,11 @@ SOURCES += chartWidget.cpp \
            sqlWidget.cpp \
            treeWidget.cpp \
            treeWidgetItem.cpp \
-           serial.cpp
+           serial.cpp \
+           main.cpp
 
 QT += charts
 QT += widgets
 QT += core
-QT += gui
+QT += serialport
 QT += sql

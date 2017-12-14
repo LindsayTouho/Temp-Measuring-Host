@@ -6,14 +6,17 @@
 #include<QTableView>
 #include<QSqlDatabase>
 #include<QString>
+#include<QHBoxLayout>
 
-class sqlWidget:public QWidget{
+class sqlWidget : public QWidget{
+    Q_OBJECT
 private:
   QSqlTableModel *model;
   QTableView *view;
   QString current_terminal;
+  QHBoxLayout *L;
 public:
-  sqlWidget(QWidget *parent = nullptr,QSqlDatabase &db,QString terminal_name);
+  sqlWidget(QWidget *parent,QString terminal_name,QSqlDatabase &db);
   ~sqlWidget();
 public slots:
   void changeTerminal(QString terminal_name);

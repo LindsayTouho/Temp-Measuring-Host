@@ -1,6 +1,6 @@
 #include"treeWidget.h"
 
-treeWidget::treeWidget(QWidget * parent,QSqlDatabase &db):QTreeWidget(parent){
+treeWidget::treeWidget(QWidget * parent):QTreeWidget(parent){
    QSqlQuery query;
    QLineSeries *temp;
    query.exec("SELECT DISTINCT name FROM data");
@@ -31,7 +31,6 @@ treeWidget::treeWidget(QWidget * parent,QSqlDatabase &db):QTreeWidget(parent){
 
 QLineSeries *treeWidget::makeLine(QString terminal_name,int index){
   QLineSeries *line = new QLineSeries;
-  QDateTime T = n->time();
   QSqlQuery query;
   if(index == 2){
     query.exec("SELECT timer,temperature FROM data  WHERE name = "+terminal_name);
@@ -50,27 +49,27 @@ QLineSeries *treeWidget::makeLine(QString terminal_name,int index){
   };
   while(query.next()){
     QDateTime T = QDateTime::fromString(query.value(0).toString(),"yyyy-MM-ss hh:mm:ss");
-    line -> append(-(T.secsTo(QDateTime::currentTime())),query.value(1).toDouble());
+    line -> append(-(T.secsTo(QDateTime::currentDateTime())),query.value(1).toDouble());
   }
   return line;
 }
 
 void treeWidget::append(Data *n) {
   QString terminal_name = n->terminal_name();
-  if(findChildren(terminal_name).isEmpty()){     //虽然这里不用makekine函数效率更高，不过懒得写了
-    treeWidgetItem *n = new treeWidgetItem;
+  if(findChild<treeWidgetItem *>(terminal_name)){     //虽然这里不用makekine函数效率更高，不过懒得写了
+    treeWidgetItem *n = new treeWidgetItem(QStringList()<<terminal_name);
     QLineSeries *temp;
     treeWidgetItem *temperature = new treeWidgetItem(QStringList()<<"温度");
-    temp = makeLine(name,2);
+    temp = makeLine(terminal_name,2);
     temperature -> setData(temp);
     treeWidgetItem *humidity = new treeWidgetItem(QStringList()<<"湿度");
-    temp = makeLine(name,3);
+    temp = makeLine(terminal_name,3);
     temperature -> setData(temp);
     treeWidgetItem *beam = new treeWidgetItem(QStringList()<<"光照");
-    temp = makeLine(name,4);
+    temp = makeLine(terminal_name,4);
     temperature -> setData(temp);
     treeWidgetItem *smog = new treeWidgetItem(QStringList()<<"烟雾");
-    temp = makeLine(name,5);
+    temp = makeLine(terminal_name,5);
     smog ->setData(temp);
     n->addChild(temperature);
     n->addChild(humidity);
@@ -78,21 +77,22 @@ void treeWidget::append(Data *n) {
     addTopLevelItem(n);
   }
   else{
-    treeWidgetItem &currentItem = findChildren(terminal_name).front();
+    treeWidgetItem *const currentItem = findChild<treeWidgetItem *>(terminal_name);
     QLineSeries *line ;
-    line = currentItem.child(0).data();
+    line = ((treeWidgetItem*)currentItem->child(0))->data();
+    QDateTime T = n->time();
     if(line != nullptr){
       line -> append(-(T.secsTo(QDateTime::currentDateTime())),n->temperature());
     }
-    line = currentItem.child(1).data();
+    line = ((treeWidgetItem*)currentItem->child(1))->data();
     if(line != nullptr){
       line -> append(-(T.secsTo(QDateTime::currentDateTime())),n->humidity());
     }
-    line = currentItem.child(2).data();
+    line = ((treeWidgetItem*)currentItem->child(2))->data();
     if(line != nullptr){
       line -> append(-(T.secsTo(QDateTime::currentDateTime())),n->beam());
     }
-    line = currentItem.child(3).data();
+    line = ((treeWidgetItem*)currentItem->child(3))->data();
     if(line != nullptr){
       line -> append(-(T.secsTo(QDateTime::currentDateTime())),n->smog());
     }

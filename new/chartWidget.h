@@ -28,7 +28,7 @@ public slots:
   void refresh();
 
 public:
-  chartWidget(QWidget *parent = nullptr,int Item=0);
+  chartWidget(QWidget *parent = nullptr);
   ~chartWidget();
 
 private:
@@ -37,7 +37,6 @@ private:
 
   qint16 currentID;
 
-  int currentItem=0;
 
   QLabel *resentValue;    //视图
   QLabel *currentTime;

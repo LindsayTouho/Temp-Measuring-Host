@@ -13,7 +13,7 @@ private:
   qint8 Beam;
   qint8 Smog;
   qint16 ID;
-  qint16 type;
+  qint16 Type;
   bool Completed=false;
 
 public:

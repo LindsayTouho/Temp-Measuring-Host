@@ -1,6 +1,6 @@
 #include"treeWidgetItem.h"
 
-treeWidgetItem::treeWidgetItem(QStringList *list):QTreeWidgetItem(list){
+treeWidgetItem::treeWidgetItem(QStringList list):QTreeWidgetItem(list){
 }
 
 void treeWidgetItem::setData(QLineSeries *data){

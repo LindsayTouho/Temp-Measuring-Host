@@ -6,6 +6,7 @@
 #include"data.h"
 
 class serial{
+    Q_OBJECT
 public:
   serial(QString serial_name);
 private:
