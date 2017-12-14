@@ -18,6 +18,9 @@ treeWidget::treeWidget(QWidget * parent,QSqlDatabase &db):QTreeWidget(parent){
      treeWidgetItem *beam = new treeWidgetItem(QStringList()<<"光照");
      temp = makeLine(name,4);
      temperature -> setData(temp);
+     treeWidgetItem *smog = new treeWidgetItem(QStringList()<<"烟雾");
+     temp = makeLine(name,5);
+     smog ->setData(temp);
      n->addChild(temperature);
      n->addChild(humidity);
      n->addChild(beam);
@@ -27,6 +30,8 @@ treeWidget::treeWidget(QWidget * parent,QSqlDatabase &db):QTreeWidget(parent){
 }
 
 QLineSeries *treeWidget::makeLine(QString terminal_name,int index){
+  QLineSeries *line = new QLineSeries;
+  QDateTime T = n->time();
   QSqlQuery query;
   if(index == 2){
     query.exec("SELECT timer,temperature FROM data  WHERE name = "+terminal_name);
@@ -36,6 +41,9 @@ QLineSeries *treeWidget::makeLine(QString terminal_name,int index){
   }
   else if(index ==4){
     query.exec("SELECT timer,beam FROM data WHERE name = "+terminal_name);
+  }
+  else if(index ==5){
+    query.exec("SELECT timer,smog FROM data WHERE name = "+terminal_name);
   }
   else{
     return NULL;
@@ -47,8 +55,8 @@ QLineSeries *treeWidget::makeLine(QString terminal_name,int index){
   return line;
 }
 
-void treeWidget::refresh(Data *n) {
-  QString terminal_name = QString::number(n->terminalID()).right(4);
+void treeWidget::append(Data *n) {
+  QString terminal_name = n->terminal_name();
   if(findChildren(terminal_name).isEmpty()){     //虽然这里不用makekine函数效率更高，不过懒得写了
     treeWidgetItem *n = new treeWidgetItem;
     QLineSeries *temp;
@@ -61,6 +69,9 @@ void treeWidget::refresh(Data *n) {
     treeWidgetItem *beam = new treeWidgetItem(QStringList()<<"光照");
     temp = makeLine(name,4);
     temperature -> setData(temp);
+    treeWidgetItem *smog = new treeWidgetItem(QStringList()<<"烟雾");
+    temp = makeLine(name,5);
+    smog ->setData(temp);
     n->addChild(temperature);
     n->addChild(humidity);
     n->addChild(beam);
@@ -71,15 +82,19 @@ void treeWidget::refresh(Data *n) {
     QLineSeries *line ;
     line = currentItem.child(0).data();
     if(line != nullptr){
-      line -> append(-(T.secsTo(QDateTime::currentTime())),n->temperature());
+      line -> append(-(T.secsTo(QDateTime::currentDateTime())),n->temperature());
     }
     line = currentItem.child(1).data();
     if(line != nullptr){
-      line -> append(-(T.secsTo(QDateTime::currentTime())),n->humidity());
+      line -> append(-(T.secsTo(QDateTime::currentDateTime())),n->humidity());
     }
     line = currentItem.child(2).data();
     if(line != nullptr){
-      line -> append(-(T.secsTo(QDateTime::currentTime())),n->beam());
+      line -> append(-(T.secsTo(QDateTime::currentDateTime())),n->beam());
+    }
+    line = currentItem.child(3).data();
+    if(line != nullptr){
+      line -> append(-(T.secsTo(QDateTime::currentDateTime())),n->smog());
     }
   }
 }

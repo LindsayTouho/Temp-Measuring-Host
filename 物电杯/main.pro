@@ -23,13 +23,15 @@ HEADERS += chartWidget.h \
            data.h \
            sqlWidget.h \
            treeWidget.h \
-           treeWidgetItem.h
+           treeWidgetItem.h \
+           serial.h
 SOURCES += chartWidget.cpp \
            collectWindow.cpp \
            data.cpp \
            sqlWidget.cpp \
            treeWidget.cpp \
-           treeWidgetItem.cpp
+           treeWidgetItem.cpp \
+           serial.cpp
 
 QT += charts
 QT += widgets

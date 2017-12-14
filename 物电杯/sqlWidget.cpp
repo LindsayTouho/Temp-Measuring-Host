@@ -2,6 +2,7 @@
 
 //index == 2,3,4时为要显示的行号，为1时显示所有的行
 sqlWidget::sqlWidget(QWidget *parent,QSqlDatabase &db,QString terminal_name):QWidget(parent){
+  current_terminal = terminal_name;
   model = new QSqlTableModel(this,db);
   model -> setTable("data");
   model -> setSort(0,Qt::AscendingOrder);
@@ -18,7 +19,12 @@ sqlWidget::~sqlWidget(){
   delete view;
 }
 
-sqlWidget::changeTerminal(QString terminal_name){
+void sqlWidget::changeTerminal(QString terminal_name){
+  current_terminal = terminal_name;
   model -> setFilter(tr("name = '%1'".arg(terminal_name)));
   model -> select();
+}
+
+void sqlWidget::refresh(){
+    model->select();
 }

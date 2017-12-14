@@ -1,7 +1,7 @@
 #include<QTreeWidgetItem>
 #include<QLineSeries>
 #include<QStringList>
-
+using namespace QtCharts;
 class treeWidgetItem:public  QTreeWidgetItem{
   Q_OBJECT
 public slots:

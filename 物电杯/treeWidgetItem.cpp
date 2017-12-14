@@ -7,6 +7,6 @@ void treeWidgetItem::setData(QLineSeries *data){
   Data = data;
 }
 
-QLineSeries treeWidgetItem::data(){
+QLineSeries *treeWidgetItem::data(){
   return Data;
 }

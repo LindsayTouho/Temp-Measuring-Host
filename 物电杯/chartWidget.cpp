@@ -68,6 +68,7 @@ void chartWidget::setTitle(QString title){
 }
 
 void chartWidget::refresh(){
+  setline(line);
   resentValue-> setText("<h3>最近的值："+QString::number(get_last())+"</h3>");
   currentTime -> setText("<h3>时间："+QDateTime::currentDateTime().toString("yyyy年MM月dd日 hh:mm:ss")+"</h3>");
 }

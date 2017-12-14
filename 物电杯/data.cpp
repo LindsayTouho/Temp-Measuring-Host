@@ -1,6 +1,6 @@
 #include"data.h"
 
-QTime Data::time(){
+QDateTime Data::time(){
   return timer;
 }
 
@@ -17,7 +17,7 @@ int Data::beam(){
 }
 
 int Data::smog(){
-    reutrn Smog;
+    return Smog;
 }
 
 Data::Data(QDataStream &in){
@@ -41,10 +41,7 @@ Data::Data(QDataStream &in){
   in>>Temperature;  //温度
   in>>Humidity;   //湿度
   in>>Beam ;     //光照
-  in>>Smog ;
-
-  /*这里可能有烟雾数值*/
-  /*if(type==0x0060)*/
+  in>>Smog ;    //烟雾
 
   temp16=0;
 
@@ -52,7 +49,7 @@ Data::Data(QDataStream &in){
     in>>temp16;
   }
   in>>temp16;
-  timer=QTime::currentTime();
+  timer=QDateTime::currentDateTime();
   if(temp16%16==0x66)
     Completed=true;
 }
@@ -63,4 +60,12 @@ qint16 Data::terminalID(){
 
 int Data::type(){
   return type;
+}
+
+bool Data::is_completed(){
+  return completed;
+}
+
+QString Data::terminal_name(){
+    return (("0000"+QString::number(ID,16)).right(4).toUpper());
 }
