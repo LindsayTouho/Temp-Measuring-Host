@@ -6,21 +6,22 @@ serial::serial(QString serial_name){
     S.setParity(QSerialPort::NoParity);
     S.setDataBits(QSerialPort::Data8);
     S.setStopBits(QSerialPort::OneStop);
-    QObject::connect(&S,SIGNAL(readyRead()),this,SLOT(on_serial_readyRead()));
+    connect(&S,SIGNAL(readyRead()),this,SLOT(on_serial_readyRead()));
 }
 
-void serial::open(bool flag){
+bool serial::open(bool flag){
     if(flag){
         if(S.isOpen())
-            return;
-        else
-            S.open(QIODevice::ReadWrite);
+            return true;
+        else{
+            return S.open(QIODevice::ReadWrite);
+          }
     }
     else{
-        if(S.isOpen())
+        if(S.isOpen()){
             S.close();
-        else
-            return;
+        }
+        return false;
     }
 }
 
@@ -30,7 +31,6 @@ Data *serial::initData(QDataStream &in){
         free(temp);
         return nullptr;
     }
-    QString = temp->terminal_name();
     QSqlQuery query;
     query.exec(
                 QString("INSERT INTO data (name,timer,temperature,humidity,beam,smog） "

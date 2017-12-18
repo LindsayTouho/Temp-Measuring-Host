@@ -1,0 +1,17 @@
+INPUT(
+./release\chartWidget.o
+./release\collectWindow.o
+./release\data.o
+./release\main.o
+./release\serial.o
+./release\sqlWidget.o
+./release\treeWidget.o
+./release\treeWidgetItem.o
+./release\settingWindow.o
+./release\moc_chartWidget.o
+./release\moc_collectWindow.o
+./release\moc_serial.o
+./release\moc_sqlWidget.o
+./release\moc_treeWidget.o
+./release\moc_treeWidgetItem.o
+);

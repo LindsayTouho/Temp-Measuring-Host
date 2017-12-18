@@ -1,4 +1,5 @@
 #include"sqlWidget.h"
+#include<QDebug>
 
 //index == 2,3,4时为要显示的行号，为1时显示所有的行
 sqlWidget::sqlWidget(QWidget *parent, QString terminal_name, QSqlDatabase &db):QWidget(parent){
@@ -10,7 +11,7 @@ sqlWidget::sqlWidget(QWidget *parent, QString terminal_name, QSqlDatabase &db):Q
   model -> select();
   view  = new QTableView;
   view -> setModel(model);
-  view -> setColumnHidden(0,true);
+  //view -> setColumnHidden(0,true);
   L = new QHBoxLayout;
   L->addWidget(view);
   setLayout(L);
@@ -28,5 +29,5 @@ void sqlWidget::changeTerminal(QString terminal_name){
 }
 
 void sqlWidget::refresh(){
-    model->select();
+    changeTerminal(current_terminal);
 }

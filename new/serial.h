@@ -3,9 +3,11 @@
 #include<QByteArray>
 #include<QDataStream>
 #include<QString>
+#include<QObject>
+#include<QSqlQuery>
 #include"data.h"
 
-class serial{
+class serial : public QObject{
     Q_OBJECT
 public:
   serial(QString serial_name);
@@ -15,7 +17,7 @@ private:
   QByteArray Buffer;
 public slots:
   void on_serial_readyRead();
-  void open(bool flag);
+  bool open(bool flag);
 signals:
   void readed(Data *n);
 };

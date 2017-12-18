@@ -74,8 +74,8 @@ void chartWidget::refresh(){
 
 
 void chartWidget::setline(QLineSeries *L){
-  chart -> removeSeries(line);
   chart -> removeAxis(axisX);
+  chart -> removeSeries(line);
   chart -> addSeries(L);
   chart -> createDefaultAxes();
   chart -> setAxisX(axisX,L);

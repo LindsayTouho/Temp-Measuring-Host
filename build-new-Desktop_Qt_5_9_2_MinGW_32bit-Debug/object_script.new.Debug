@@ -1,0 +1,17 @@
+INPUT(
+./debug\chartWidget.o
+./debug\collectWindow.o
+./debug\data.o
+./debug\main.o
+./debug\serial.o
+./debug\sqlWidget.o
+./debug\treeWidget.o
+./debug\treeWidgetItem.o
+./debug\settingWindow.o
+./debug\moc_chartWidget.o
+./debug\moc_collectWindow.o
+./debug\moc_serial.o
+./debug\moc_sqlWidget.o
+./debug\moc_treeWidget.o
+./debug\moc_treeWidgetItem.o
+);
