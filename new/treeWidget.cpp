@@ -49,8 +49,10 @@ QLineSeries *treeWidget::makeLine(QString terminal_name,int index){
   else{
     return NULL;
   };
+  QSettings settings;
+  int max = settings.value("ram_data_num",QVariant(1000)).toInt();
   int i=0;
-  while(query.next()&&i<1000){                      //这里需要用settings
+  while(query.next()&&i<max){
     QDateTime T = QDateTime::fromString(query.value(0).toString(),"yyyy-MM-dd hh:mm:ss");
     line -> append(-(T.secsTo(QDateTime::currentDateTime()))/60,query.value(1).toDouble());
     ++i;

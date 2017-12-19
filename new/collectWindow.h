@@ -5,17 +5,19 @@
 #include<QPushButton>
 #include<QCoreApplication>
 #include<QMenuBar>
+#include<QAction>
 #include"data.h"
 #include"chartWidget.h"
 #include"serial.h"
 #include"sqlWidget.h"
 #include"treeWidget.h"
+#include"settingwindow.h"
 
 class mainWindow:public QMainWindow{
     Q_OBJECT
 private:
     QSettings setting;
-    serial *S;
+    serial *S = nullptr;
     treeWidget *tree;
     chartWidget *chart;
     sqlWidget *sql;
@@ -28,6 +30,9 @@ private:
     QWidget *mainWidget;
     QHBoxLayout *buttom;
     QVBoxLayout *mainLayout;
+
+    QAction *settingAction;
+    settingWindow *settingWidget=nullptr;
 
     bool is_connect = false;
 
@@ -45,4 +50,6 @@ public slots:
     void readSetting();
     void changeTable(QTreeWidgetItem* item,int cloum);
     void changeChart(QTreeWidgetItem* item,int cloum);
+    void showSetting();
+    void insertToDb(Data *n);
 };

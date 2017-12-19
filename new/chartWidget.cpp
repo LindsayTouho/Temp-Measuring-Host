@@ -83,7 +83,7 @@ void chartWidget::setline(QLineSeries *L){
   //print_line(L);
 }
 
-int chartWidget::get_last(){
+double chartWidget::get_last(){
   QVector<QPointF> v = line -> pointsVector();
   if(!v.isEmpty())
     return v.last().y();

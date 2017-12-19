@@ -10,6 +10,7 @@ mainWindow::mainWindow(){
     createLayout();
     createEvent();
     createMenu();
+    readSetting();
 }
 
 bool mainWindow::dbconnect(){
@@ -33,7 +34,6 @@ void mainWindow::createLayout(){
     right = new QSplitter(Qt::Vertical);
     right -> addWidget(chart);
     right -> addWidget(sql);
-    //right -> setStretchFactor(1,1);
 
     center = new QSplitter(Qt::Horizontal);
     center -> addWidget(tree);
@@ -54,10 +54,14 @@ void mainWindow::createEvent(){
     connect(openCloseButton,SIGNAL(clicked()),this,SLOT(open_close()));
     connect(tree,SIGNAL(itemClicked(QTreeWidgetItem*,int)),this,SLOT(changeTable(QTreeWidgetItem*,int)));
     connect(tree,SIGNAL(itemClicked(QTreeWidgetItem*,int)),this,SLOT(changeChart(QTreeWidgetItem*,int)));
+    connect(quitButton,SIGNAL(clicked(bool)),this,SLOT(close()));
 }
 
 void mainWindow::createMenu(){
-    menuBar() -> setEnabled(true);
+    auto menu = menuBar();
+    settingAction = new QAction(tr("设置"),this);
+    connect(settingAction,SIGNAL(triggered(bool)),this,SLOT(showSetting()));
+    menu -> addAction(settingAction);
 }
 
 void mainWindow::refresh(Data *n){
@@ -77,7 +81,13 @@ void mainWindow::open_close(){
 }
 
 void mainWindow::readSetting(){
-
+    QSettings settings;
+    chart->setRange(-(settings.value("chart_range",QVariant(10)).toInt()),0);
+    if(S)
+        delete S;
+    S = new serial(settings.value("serial_name",QVariant("COM!")).toString());
+    connect(S,SIGNAL(readed(Data*)),tree,SLOT(append(Data*)));
+    connect(S,SIGNAL(readed(Data*)),sql,SLOT(refresh()));
 }
 
 mainWindow::~mainWindow(){
@@ -94,6 +104,20 @@ void mainWindow::changeChart(QTreeWidgetItem *item, int cloum){
     if(item->childCount()==0){
         treeWidgetItem * treeItem = (treeWidgetItem *)item;
         chart->setline(treeItem->data());
-        changeTable(item->parent(),0);
+        changeTable(item->parent(),cloum);
     }
+}
+
+void mainWindow::showSetting(){
+    if(!settingWidget){
+        settingWidget = new settingWindow(this);
+    }
+    settingWidget-> show();
+    settingWidget -> raise();
+    settingWidget -> activateWindow();
+}
+
+void mainWindow::insertToDb(Data *n){
+    QSqlQuery query;
+    query.exec(tr("INSERT INTO data(name,timer,temperature,humili"))
 }

@@ -5,6 +5,7 @@
 #include<QString>
 #include<QObject>
 #include<QSqlQuery>
+#include<QRegExp>
 #include"data.h"
 
 class serial : public QObject{
@@ -19,5 +20,5 @@ public slots:
   void on_serial_readyRead();
   bool open(bool flag);
 signals:
-  void readed(Data *n);
+  void readed(Data*);
 };

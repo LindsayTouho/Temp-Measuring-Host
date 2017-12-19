@@ -7,6 +7,7 @@
 #include<QtCharts/QLineSeries>
 #include<QDateTime>
 #include<QList>
+#include<QSettings>
 #include"treeWidgetItem.h"
 #include"data.h"
 using namespace QtCharts;

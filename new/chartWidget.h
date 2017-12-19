@@ -33,7 +33,7 @@ public:
 
 private:
          //私有函数
-  int get_last();
+  double get_last();
 
   qint16 currentID;
 

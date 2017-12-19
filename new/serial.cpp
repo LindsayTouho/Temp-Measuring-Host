@@ -1,4 +1,5 @@
 #include"serial.h"
+#include<QDebug>
 
 serial::serial(QString serial_name){
     S.setPortName(serial_name);
