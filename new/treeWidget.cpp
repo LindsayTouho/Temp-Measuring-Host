@@ -141,5 +141,6 @@ void treeWidget::updateLine(QLineSeries *line){
     for(auto i = vec.begin();i!=vec.end();++i){
         line->append(*i);
     }
+    updateTime = QDateTime::currentDateTime();
 }
 //time = QDateTime::fromString(strBuffer, "yyyy-MM-dd hh:mm:ss");
