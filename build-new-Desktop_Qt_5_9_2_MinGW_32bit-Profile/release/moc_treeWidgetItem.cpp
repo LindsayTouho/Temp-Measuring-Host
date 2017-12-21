@@ -89,7 +89,7 @@ void treeWidgetItem::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
 }
 
 const QMetaObject treeWidgetItem::staticMetaObject = {
-    { &QObject::staticMetaObject, qt_meta_stringdata_treeWidgetItem.data,
+    { &QItemDelegate::staticMetaObject, qt_meta_stringdata_treeWidgetItem.data,
       qt_meta_data_treeWidgetItem,  qt_static_metacall, nullptr, nullptr}
 };
 
@@ -106,12 +106,12 @@ void *treeWidgetItem::qt_metacast(const char *_clname)
         return static_cast<void*>(this);
     if (!strcmp(_clname, "QTreeWidgetItem"))
         return static_cast< QTreeWidgetItem*>(this);
-    return QObject::qt_metacast(_clname);
+    return QItemDelegate::qt_metacast(_clname);
 }
 
 int treeWidgetItem::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QObject::qt_metacall(_c, _id, _a);
+    _id = QItemDelegate::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {

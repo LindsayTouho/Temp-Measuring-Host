@@ -53,13 +53,17 @@ SOURCES       = ..\new\chartWidget.cpp \
 		..\new\sqlWidget.cpp \
 		..\new\treeWidget.cpp \
 		..\new\treeWidgetItem.cpp \
-		..\new\settingWindow.cpp release\moc_chartWidget.cpp \
+		..\new\settingWindow.cpp \
+		..\new\sernder.cpp \
+		..\new\debuger.cpp release\moc_chartWidget.cpp \
 		release\moc_collectWindow.cpp \
 		release\moc_serial.cpp \
 		release\moc_sqlWidget.cpp \
 		release\moc_treeWidget.cpp \
 		release\moc_treeWidgetItem.cpp \
-		release\moc_settingWindow.cpp
+		release\moc_settingWindow.cpp \
+		release\moc_sender.cpp \
+		release\moc_debuger.cpp
 OBJECTS       = release/chartWidget.o \
 		release/collectWindow.o \
 		release/data.o \
@@ -69,13 +73,17 @@ OBJECTS       = release/chartWidget.o \
 		release/treeWidget.o \
 		release/treeWidgetItem.o \
 		release/settingWindow.o \
+		release/sernder.o \
+		release/debuger.o \
 		release/moc_chartWidget.o \
 		release/moc_collectWindow.o \
 		release/moc_serial.o \
 		release/moc_sqlWidget.o \
 		release/moc_treeWidget.o \
 		release/moc_treeWidgetItem.o \
-		release/moc_settingWindow.o
+		release/moc_settingWindow.o \
+		release/moc_sender.o \
+		release/moc_debuger.o
 
 DIST          =  ..\new\chartWidget.h \
 		..\new\collectWindow.h \
@@ -84,7 +92,9 @@ DIST          =  ..\new\chartWidget.h \
 		..\new\sqlWidget.h \
 		..\new\treeWidget.h \
 		..\new\treeWidgetItem.h \
-		..\new\settingWindow.h ..\new\chartWidget.cpp \
+		..\new\settingWindow.h \
+		..\new\sender.h \
+		..\new\debuger.h ..\new\chartWidget.cpp \
 		..\new\collectWindow.cpp \
 		..\new\data.cpp \
 		..\new\main.cpp \
@@ -92,7 +102,9 @@ DIST          =  ..\new\chartWidget.h \
 		..\new\sqlWidget.cpp \
 		..\new\treeWidget.cpp \
 		..\new\treeWidgetItem.cpp \
-		..\new\settingWindow.cpp
+		..\new\settingWindow.cpp \
+		..\new\sernder.cpp \
+		..\new\debuger.cpp
 QMAKE_TARGET  = new
 DESTDIR        = release\ #avoid trailing-slash linebreak
 TARGET         = new.exe
@@ -113,10 +125,10 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist:
-	$(ZIP) new.zip $(SOURCES) $(DIST) ..\new\new.pro C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\spec_pre.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\qdevice.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\device_config.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\common\g++-base.conf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\common\angle.conf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\common\sanitize.conf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\common\gcc-base.conf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\qconfig.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3danimation.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3danimation_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dcore.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dcore_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dextras.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dextras_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dinput.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dinput_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dlogic.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dlogic_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquick.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquick_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquickanimation.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquickanimation_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquickextras.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquickextras_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquickinput.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquickinput_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquickrender.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquickrender_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquickscene2d.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquickscene2d_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3drender.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3drender_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_accessibility_support_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_axbase.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_axbase_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_axcontainer.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_axcontainer_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_axserver.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_axserver_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_bluetooth.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_bluetooth_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_bootstrap_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_charts.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_charts_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_concurrent.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_concurrent_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_core.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_core_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_dbus.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_dbus_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_designer.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_designer_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_designercomponents_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_devicediscovery_support_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_egl_support_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_eventdispatcher_support_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_fb_support_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_fontdatabase_support_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_gamepad.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_gamepad_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_gui.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_gui_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_help.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_help_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_location.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_location_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_multimedia.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_multimedia_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_multimediawidgets.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_network.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_network_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_nfc.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_nfc_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_opengl.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_opengl_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_openglextensions.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_openglextensions_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_packetprotocol_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_platformcompositor_support_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_positioning.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_positioning_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_printsupport.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_printsupport_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_qml.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_qml_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_qmldebug_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_qmldevtools_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_qmltest.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_qmltest_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_quick.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_quick_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_quickcontrols2.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_quickcontrols2_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_quickparticles_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_quicktemplates2_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_quickwidgets.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_quickwidgets_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_scxml.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_scxml_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_sensors.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_sensors_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_serialbus.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_serialbus_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_serialport.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_serialport_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_sql.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_sql_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_svg.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_svg_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_testlib.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_testlib_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_texttospeech.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_texttospeech_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_theme_support_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_uiplugin.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_uitools.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_uitools_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_webchannel.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_webchannel_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_websockets.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_websockets_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_widgets.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_widgets_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_winextras.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_winextras_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_xml.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_xml_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_xmlpatterns.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\qt_functions.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\qt_config.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\win32-g++\qmake.conf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\spec_post.prf .qmake.stash C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\exclusive_builds.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\toolchain.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\default_pre.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\win32\default_pre.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\resolve_config.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\exclusive_builds_post.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\default_post.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\build_pass.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\resolve_target.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\win32\separate_debug_info.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\qml_debug.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\precompile_header.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\warn_on.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\qt.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\resources.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\moc.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\win32\opengl.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\uic.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\qmake_use.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\file_copies.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\win32\windows.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\testcase_targets.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\exceptions.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\yacc.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\lex.prf ..\new\new.pro C:\Qt\Qt5.9.2\5.9.2\mingw53_32\lib\qtmain.prl C:\Qt\Qt5.9.2\5.9.2\mingw53_32\lib\Qt5Charts.prl C:\Qt\Qt5.9.2\5.9.2\mingw53_32\lib\Qt5Widgets.prl C:\Qt\Qt5.9.2\5.9.2\mingw53_32\lib\Qt5Gui.prl C:\Qt\Qt5.9.2\5.9.2\mingw53_32\lib\Qt5SerialPort.prl C:\Qt\Qt5.9.2\5.9.2\mingw53_32\lib\Qt5Sql.prl C:\Qt\Qt5.9.2\5.9.2\mingw53_32\lib\Qt5Core.prl    C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\data\dummy.cpp ..\new\chartWidget.h ..\new\collectWindow.h ..\new\data.h ..\new\serial.h ..\new\sqlWidget.h ..\new\treeWidget.h ..\new\treeWidgetItem.h ..\new\settingWindow.h ..\new\chartWidget.cpp ..\new\collectWindow.cpp ..\new\data.cpp ..\new\main.cpp ..\new\serial.cpp ..\new\sqlWidget.cpp ..\new\treeWidget.cpp ..\new\treeWidgetItem.cpp ..\new\settingWindow.cpp     
+	$(ZIP) new.zip $(SOURCES) $(DIST) ..\new\new.pro C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\spec_pre.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\qdevice.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\device_config.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\common\g++-base.conf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\common\angle.conf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\common\sanitize.conf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\common\gcc-base.conf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\qconfig.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3danimation.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3danimation_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dcore.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dcore_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dextras.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dextras_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dinput.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dinput_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dlogic.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dlogic_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquick.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquick_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquickanimation.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquickanimation_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquickextras.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquickextras_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquickinput.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquickinput_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquickrender.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquickrender_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquickscene2d.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3dquickscene2d_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3drender.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_3drender_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_accessibility_support_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_axbase.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_axbase_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_axcontainer.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_axcontainer_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_axserver.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_axserver_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_bluetooth.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_bluetooth_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_bootstrap_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_charts.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_charts_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_concurrent.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_concurrent_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_core.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_core_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_dbus.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_dbus_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_designer.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_designer_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_designercomponents_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_devicediscovery_support_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_egl_support_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_eventdispatcher_support_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_fb_support_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_fontdatabase_support_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_gamepad.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_gamepad_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_gui.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_gui_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_help.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_help_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_location.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_location_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_multimedia.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_multimedia_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_multimediawidgets.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_network.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_network_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_nfc.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_nfc_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_opengl.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_opengl_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_openglextensions.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_openglextensions_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_packetprotocol_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_platformcompositor_support_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_positioning.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_positioning_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_printsupport.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_printsupport_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_qml.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_qml_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_qmldebug_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_qmldevtools_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_qmltest.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_qmltest_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_quick.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_quick_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_quickcontrols2.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_quickcontrols2_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_quickparticles_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_quicktemplates2_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_quickwidgets.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_quickwidgets_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_scxml.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_scxml_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_sensors.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_sensors_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_serialbus.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_serialbus_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_serialport.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_serialport_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_sql.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_sql_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_svg.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_svg_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_testlib.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_testlib_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_texttospeech.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_texttospeech_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_theme_support_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_uiplugin.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_uitools.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_uitools_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_webchannel.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_webchannel_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_websockets.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_websockets_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_widgets.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_widgets_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_winextras.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_winextras_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_xml.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_xml_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_xmlpatterns.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\qt_functions.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\qt_config.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\win32-g++\qmake.conf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\spec_post.prf .qmake.stash C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\exclusive_builds.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\toolchain.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\default_pre.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\win32\default_pre.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\resolve_config.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\exclusive_builds_post.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\default_post.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\build_pass.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\resolve_target.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\win32\separate_debug_info.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\qml_debug.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\precompile_header.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\warn_on.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\qt.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\resources.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\moc.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\win32\opengl.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\uic.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\qmake_use.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\file_copies.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\win32\windows.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\testcase_targets.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\exceptions.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\yacc.prf C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\lex.prf ..\new\new.pro C:\Qt\Qt5.9.2\5.9.2\mingw53_32\lib\qtmain.prl C:\Qt\Qt5.9.2\5.9.2\mingw53_32\lib\Qt5Charts.prl C:\Qt\Qt5.9.2\5.9.2\mingw53_32\lib\Qt5Widgets.prl C:\Qt\Qt5.9.2\5.9.2\mingw53_32\lib\Qt5Gui.prl C:\Qt\Qt5.9.2\5.9.2\mingw53_32\lib\Qt5SerialPort.prl C:\Qt\Qt5.9.2\5.9.2\mingw53_32\lib\Qt5Sql.prl C:\Qt\Qt5.9.2\5.9.2\mingw53_32\lib\Qt5Core.prl    C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\data\dummy.cpp ..\new\chartWidget.h ..\new\collectWindow.h ..\new\data.h ..\new\serial.h ..\new\sqlWidget.h ..\new\treeWidget.h ..\new\treeWidgetItem.h ..\new\settingWindow.h ..\new\sender.h ..\new\debuger.h ..\new\chartWidget.cpp ..\new\collectWindow.cpp ..\new\data.cpp ..\new\main.cpp ..\new\serial.cpp ..\new\sqlWidget.cpp ..\new\treeWidget.cpp ..\new\treeWidgetItem.cpp ..\new\settingWindow.cpp ..\new\sernder.cpp ..\new\debuger.cpp     
 
 clean: compiler_clean 
-	-$(DEL_FILE) release\chartWidget.o release\collectWindow.o release\data.o release\main.o release\serial.o release\sqlWidget.o release\treeWidget.o release\treeWidgetItem.o release\settingWindow.o release\moc_chartWidget.o release\moc_collectWindow.o release\moc_serial.o release\moc_sqlWidget.o release\moc_treeWidget.o release\moc_treeWidgetItem.o release\moc_settingWindow.o
+	-$(DEL_FILE) release\chartWidget.o release\collectWindow.o release\data.o release\main.o release\serial.o release\sqlWidget.o release\treeWidget.o release\treeWidgetItem.o release\settingWindow.o release\sernder.o release\debuger.o release\moc_chartWidget.o release\moc_collectWindow.o release\moc_serial.o release\moc_sqlWidget.o release\moc_treeWidget.o release\moc_treeWidgetItem.o release\moc_settingWindow.o release\moc_sender.o release\moc_debuger.o
 
 distclean: clean 
 	-$(DEL_FILE) C:\Users\16642\Documents\GitHub\shiny-guacamole\build-new-Desktop_Qt_5_9_2_MinGW_32bit-Profile\release\new.exe.debug .qmake.stash
@@ -141,9 +153,9 @@ compiler_moc_predefs_clean:
 release/moc_predefs.h: C:/Qt/Qt5.9.2/5.9.2/mingw53_32/mkspecs/features/data/dummy.cpp
 	g++ -fno-keep-inline-dllexport -O2 -g -std=gnu++11 -Wextra -Wall -W -dM -E -o release\moc_predefs.h C:\Qt\Qt5.9.2\5.9.2\mingw53_32\mkspecs\features\data\dummy.cpp
 
-compiler_moc_header_make_all: release/moc_chartWidget.cpp release/moc_collectWindow.cpp release/moc_serial.cpp release/moc_sqlWidget.cpp release/moc_treeWidget.cpp release/moc_treeWidgetItem.cpp release/moc_settingWindow.cpp
+compiler_moc_header_make_all: release/moc_chartWidget.cpp release/moc_collectWindow.cpp release/moc_serial.cpp release/moc_sqlWidget.cpp release/moc_treeWidget.cpp release/moc_treeWidgetItem.cpp release/moc_settingWindow.cpp release/moc_sender.cpp release/moc_debuger.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) release\moc_chartWidget.cpp release\moc_collectWindow.cpp release\moc_serial.cpp release\moc_sqlWidget.cpp release\moc_treeWidget.cpp release\moc_treeWidgetItem.cpp release\moc_settingWindow.cpp
+	-$(DEL_FILE) release\moc_chartWidget.cpp release\moc_collectWindow.cpp release\moc_serial.cpp release\moc_sqlWidget.cpp release\moc_treeWidget.cpp release\moc_treeWidgetItem.cpp release\moc_settingWindow.cpp release\moc_sender.cpp release\moc_debuger.cpp
 release/moc_chartWidget.cpp: ../new/data.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QDateTime \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qdatetime.h \
@@ -443,6 +455,7 @@ release/moc_collectWindow.cpp: C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qmenu.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qaction.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qactiongroup.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QAction \
 		../new/data.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QDateTime \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qdatetime.h \
@@ -523,6 +536,7 @@ release/moc_collectWindow.cpp: C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QByteArray \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSql/QSqlQuery \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSql/qsqlquery.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QRegExp \
 		../new/sqlWidget.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSql/QSqlTableModel \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSql/qsqltablemodel.h \
@@ -540,6 +554,22 @@ release/moc_collectWindow.cpp: C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/
 		../new/treeWidgetItem.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QTreeWidgetItem \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QStringList \
+		../new/settingwindow.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QDialog \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qdialog.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QSpinBox \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qspinbox.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QLineEdit \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qlineedit.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtextcursor.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtextformat.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QMessageBox \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qmessagebox.h \
+		../new/sender.h \
+		../new/debuger.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QTextEdit \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qtextedit.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtextdocument.h \
 		../new/collectWindow.h \
 		release/moc_predefs.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/bin/moc.exe
@@ -606,6 +636,7 @@ release/moc_serial.cpp: C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSerialPort/QSer
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSql/qsqlquery.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSql/qtsqlglobal.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSql/qsqldatabase.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QRegExp \
 		../new/data.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QDateTime \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qdatetime.h \
@@ -897,6 +928,8 @@ release/moc_treeWidget.cpp: C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QTr
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QDateTime \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qdatetime.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/QList \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QSettings \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsettings.h \
 		../new/treeWidgetItem.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QTreeWidgetItem \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QStringList \
@@ -1199,6 +1232,254 @@ release/moc_settingWindow.cpp: C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QSt
 		release/moc_predefs.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/bin/moc.exe
 	C:\Qt\Qt5.9.2\5.9.2\mingw53_32\bin\moc.exe $(DEFINES) --include release/moc_predefs.h -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/mkspecs/win32-g++ -IC:/Users/16642/Documents/GitHub/shiny-guacamole/new -IC:/Users/16642/Documents/GitHub/shiny-guacamole/new -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCharts -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSerialPort -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSql -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore -I. -IC:/Qt/Qt5.9.2/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.2/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.2/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.2/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.2/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.2/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\new\settingWindow.h -o release\moc_settingWindow.cpp
+
+release/moc_sender.cpp: C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QLabel \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qlabel.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qtwidgetsglobal.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtguiglobal.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qglobal.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qconfig-bootstrapped.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qconfig.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qtcore-config.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsystemdetection.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qprocessordetection.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qcompilerdetection.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qtypeinfo.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsysinfo.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qlogging.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qflags.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qatomic.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qbasicatomic.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qatomic_bootstrap.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qgenericatomic.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qatomic_cxx11.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qatomic_msvc.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qglobalstatic.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qmutex.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qnumeric.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qversiontagging.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtgui-config.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qtwidgets-config.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qframe.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qwidget.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qwindowdefs.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qobjectdefs.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qnamespace.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qobjectdefs_impl.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qwindowdefs_win.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qobject.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qstring.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qchar.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qbytearray.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qrefcount.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qarraydata.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qstringbuilder.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qlist.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qalgorithms.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qiterator.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qhashfunctions.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qpair.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qbytearraylist.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qstringlist.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qregexp.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qstringmatcher.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qcoreevent.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qscopedpointer.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qmetatype.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qvarlengtharray.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qcontainerfwd.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qobject_impl.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qmargins.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpaintdevice.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qrect.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsize.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qpoint.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpalette.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qcolor.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qrgb.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qrgba64.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qbrush.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qvector.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qmatrix.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpolygon.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qregion.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qdatastream.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qiodevice.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qline.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtransform.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpainterpath.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qimage.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpixelformat.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpixmap.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsharedpointer.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qshareddata.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qhash.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsharedpointer_impl.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qfont.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qfontmetrics.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qfontinfo.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qsizepolicy.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qcursor.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qkeysequence.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qevent.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qvariant.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qmap.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qdebug.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qtextstream.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qlocale.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qset.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qcontiguouscache.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qurl.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qurlquery.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qfile.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qfiledevice.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qvector2d.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtouchdevice.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QPushButton \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qpushbutton.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qicon.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QDialog \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qdialog.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QHBoxLayout \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qboxlayout.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qlayout.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qlayoutitem.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qgridlayout.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QVBoxLayout \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QVector \
+		../new/sender.h \
+		release/moc_predefs.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/bin/moc.exe
+	C:\Qt\Qt5.9.2\5.9.2\mingw53_32\bin\moc.exe $(DEFINES) --include release/moc_predefs.h -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/mkspecs/win32-g++ -IC:/Users/16642/Documents/GitHub/shiny-guacamole/new -IC:/Users/16642/Documents/GitHub/shiny-guacamole/new -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCharts -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSerialPort -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSql -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore -I. -IC:/Qt/Qt5.9.2/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.2/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.2/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.2/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.2/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.2/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\new\sender.h -o release\moc_sender.cpp
+
+release/moc_debuger.cpp: C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QTextEdit \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qtextedit.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qtwidgetsglobal.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtguiglobal.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qglobal.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qconfig-bootstrapped.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qconfig.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qtcore-config.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsystemdetection.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qprocessordetection.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qcompilerdetection.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qtypeinfo.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsysinfo.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qlogging.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qflags.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qatomic.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qbasicatomic.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qatomic_bootstrap.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qgenericatomic.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qatomic_cxx11.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qatomic_msvc.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qglobalstatic.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qmutex.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qnumeric.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qversiontagging.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtgui-config.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qtwidgets-config.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qframe.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qwidget.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qwindowdefs.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qobjectdefs.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qnamespace.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qobjectdefs_impl.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qwindowdefs_win.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qobject.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qstring.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qchar.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qbytearray.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qrefcount.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qarraydata.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qstringbuilder.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qlist.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qalgorithms.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qiterator.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qhashfunctions.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qpair.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qbytearraylist.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qstringlist.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qregexp.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qstringmatcher.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qcoreevent.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qscopedpointer.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qmetatype.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qvarlengtharray.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qcontainerfwd.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qobject_impl.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qmargins.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpaintdevice.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qrect.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsize.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qpoint.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpalette.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qcolor.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qrgb.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qrgba64.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qbrush.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qvector.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qmatrix.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpolygon.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qregion.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qdatastream.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qiodevice.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qline.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtransform.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpainterpath.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qimage.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpixelformat.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpixmap.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsharedpointer.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qshareddata.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qhash.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsharedpointer_impl.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qfont.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qfontmetrics.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qfontinfo.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qsizepolicy.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qcursor.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qkeysequence.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qevent.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qvariant.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qmap.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qdebug.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qtextstream.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qlocale.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qset.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qcontiguouscache.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qurl.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qurlquery.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qfile.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qfiledevice.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qvector2d.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtouchdevice.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtextdocument.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtextoption.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtextcursor.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtextformat.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpen.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QPushButton \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qpushbutton.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qicon.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QVBoxLayout \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qboxlayout.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qlayout.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qlayoutitem.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qgridlayout.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QHBoxLayout \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QString \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QWidget \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QDialog \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qdialog.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QByteArray \
+		../new/debuger.h \
+		release/moc_predefs.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/bin/moc.exe
+	C:\Qt\Qt5.9.2\5.9.2\mingw53_32\bin\moc.exe $(DEFINES) --include release/moc_predefs.h -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/mkspecs/win32-g++ -IC:/Users/16642/Documents/GitHub/shiny-guacamole/new -IC:/Users/16642/Documents/GitHub/shiny-guacamole/new -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCharts -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSerialPort -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSql -IC:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore -I. -IC:/Qt/Qt5.9.2/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.2/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.2/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.2/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.2/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.2/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\new\debuger.h -o release\moc_debuger.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -1514,6 +1795,7 @@ release/collectWindow.o: ../new/collectWindow.cpp ../new/collectWindow.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qmenu.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qaction.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qactiongroup.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QAction \
 		../new/data.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QDateTime \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qdatetime.h \
@@ -1594,6 +1876,7 @@ release/collectWindow.o: ../new/collectWindow.cpp ../new/collectWindow.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QByteArray \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSql/QSqlQuery \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSql/qsqlquery.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QRegExp \
 		../new/sqlWidget.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSql/QSqlTableModel \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSql/qsqltablemodel.h \
@@ -1610,7 +1893,23 @@ release/collectWindow.o: ../new/collectWindow.cpp ../new/collectWindow.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/QList \
 		../new/treeWidgetItem.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QTreeWidgetItem \
-		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QStringList
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QStringList \
+		../new/settingwindow.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QDialog \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qdialog.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QSpinBox \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qspinbox.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QLineEdit \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qlineedit.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtextcursor.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtextformat.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QMessageBox \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qmessagebox.h \
+		../new/sender.h \
+		../new/debuger.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QTextEdit \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qtextedit.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtextdocument.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\collectWindow.o ..\new\collectWindow.cpp
 
 release/data.o: ../new/data.cpp ../new/data.h \
@@ -1797,6 +2096,7 @@ release/main.o: ../new/main.cpp C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qmenu.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qaction.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qactiongroup.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QAction \
 		../new/data.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QDateTime \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qdatetime.h \
@@ -1877,6 +2177,7 @@ release/main.o: ../new/main.cpp C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QByteArray \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSql/QSqlQuery \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSql/qsqlquery.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QRegExp \
 		../new/sqlWidget.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSql/QSqlTableModel \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSql/qsqltablemodel.h \
@@ -1893,7 +2194,23 @@ release/main.o: ../new/main.cpp C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/QList \
 		../new/treeWidgetItem.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QTreeWidgetItem \
-		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QStringList
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QStringList \
+		../new/settingwindow.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QDialog \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qdialog.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QSpinBox \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qspinbox.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QLineEdit \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qlineedit.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtextcursor.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtextformat.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QMessageBox \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qmessagebox.h \
+		../new/sender.h \
+		../new/debuger.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QTextEdit \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qtextedit.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtextdocument.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o ..\new\main.cpp
 
 release/serial.o: ../new/serial.cpp ../new/serial.h \
@@ -1958,11 +2275,24 @@ release/serial.o: ../new/serial.cpp ../new/serial.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSql/qsqlquery.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSql/qtsqlglobal.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSql/qsqldatabase.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QRegExp \
 		../new/data.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QDateTime \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qdatetime.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qshareddata.h \
-		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qhash.h
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qhash.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QDebug \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qdebug.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qmap.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qtextstream.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qlocale.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qvariant.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qvector.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qpoint.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qset.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qcontiguouscache.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsharedpointer.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsharedpointer_impl.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\serial.o ..\new\serial.cpp
 
 release/sqlWidget.o: ../new/sqlWidget.cpp ../new/sqlWidget.h \
@@ -2246,6 +2576,8 @@ release/treeWidget.o: ../new/treeWidget.cpp ../new/treeWidget.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QDateTime \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qdatetime.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/QList \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QSettings \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsettings.h \
 		../new/treeWidgetItem.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QTreeWidgetItem \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QStringList \
@@ -2545,6 +2877,251 @@ release/settingWindow.o: ../new/settingWindow.cpp ../new/settingWindow.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qmessagebox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\settingWindow.o ..\new\settingWindow.cpp
 
+release/sernder.o: ../new/sernder.cpp ../new/sender.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QLabel \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qlabel.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qtwidgetsglobal.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtguiglobal.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qglobal.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qconfig-bootstrapped.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qconfig.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qtcore-config.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsystemdetection.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qprocessordetection.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qcompilerdetection.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qtypeinfo.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsysinfo.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qlogging.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qflags.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qatomic.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qbasicatomic.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qatomic_bootstrap.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qgenericatomic.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qatomic_cxx11.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qatomic_msvc.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qglobalstatic.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qmutex.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qnumeric.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qversiontagging.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtgui-config.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qtwidgets-config.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qframe.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qwidget.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qwindowdefs.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qobjectdefs.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qnamespace.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qobjectdefs_impl.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qwindowdefs_win.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qobject.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qstring.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qchar.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qbytearray.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qrefcount.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qarraydata.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qstringbuilder.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qlist.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qalgorithms.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qiterator.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qhashfunctions.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qpair.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qbytearraylist.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qstringlist.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qregexp.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qstringmatcher.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qcoreevent.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qscopedpointer.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qmetatype.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qvarlengtharray.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qcontainerfwd.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qobject_impl.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qmargins.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpaintdevice.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qrect.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsize.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qpoint.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpalette.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qcolor.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qrgb.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qrgba64.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qbrush.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qvector.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qmatrix.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpolygon.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qregion.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qdatastream.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qiodevice.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qline.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtransform.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpainterpath.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qimage.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpixelformat.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpixmap.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsharedpointer.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qshareddata.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qhash.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsharedpointer_impl.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qfont.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qfontmetrics.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qfontinfo.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qsizepolicy.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qcursor.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qkeysequence.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qevent.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qvariant.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qmap.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qdebug.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qtextstream.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qlocale.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qset.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qcontiguouscache.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qurl.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qurlquery.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qfile.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qfiledevice.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qvector2d.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtouchdevice.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QPushButton \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qpushbutton.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qicon.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QDialog \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qdialog.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QHBoxLayout \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qboxlayout.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qlayout.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qlayoutitem.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qgridlayout.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QVBoxLayout \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QVector \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QDebug
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\sernder.o ..\new\sernder.cpp
+
+release/debuger.o: ../new/debuger.cpp ../new/debuger.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QTextEdit \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qtextedit.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qtwidgetsglobal.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtguiglobal.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qglobal.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qconfig-bootstrapped.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qconfig.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qtcore-config.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsystemdetection.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qprocessordetection.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qcompilerdetection.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qtypeinfo.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsysinfo.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qlogging.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qflags.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qatomic.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qbasicatomic.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qatomic_bootstrap.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qgenericatomic.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qatomic_cxx11.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qatomic_msvc.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qglobalstatic.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qmutex.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qnumeric.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qversiontagging.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtgui-config.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qtwidgets-config.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qframe.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qwidget.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qwindowdefs.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qobjectdefs.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qnamespace.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qobjectdefs_impl.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qwindowdefs_win.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qobject.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qstring.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qchar.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qbytearray.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qrefcount.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qarraydata.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qstringbuilder.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qlist.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qalgorithms.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qiterator.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qhashfunctions.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qpair.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qbytearraylist.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qstringlist.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qregexp.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qstringmatcher.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qcoreevent.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qscopedpointer.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qmetatype.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qvarlengtharray.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qcontainerfwd.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qobject_impl.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qmargins.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpaintdevice.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qrect.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsize.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qpoint.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpalette.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qcolor.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qrgb.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qrgba64.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qbrush.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qvector.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qmatrix.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpolygon.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qregion.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qdatastream.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qiodevice.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qline.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtransform.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpainterpath.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qimage.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpixelformat.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpixmap.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsharedpointer.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qshareddata.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qhash.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsharedpointer_impl.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qfont.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qfontmetrics.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qfontinfo.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qsizepolicy.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qcursor.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qkeysequence.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qevent.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qvariant.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qmap.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qdebug.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qtextstream.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qlocale.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qset.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qcontiguouscache.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qurl.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qurlquery.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qfile.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qfiledevice.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qvector2d.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtouchdevice.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtextdocument.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtextoption.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtextcursor.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qtextformat.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qpen.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QPushButton \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qpushbutton.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qabstractbutton.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/qicon.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QVBoxLayout \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qboxlayout.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qlayout.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qlayoutitem.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qgridlayout.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QHBoxLayout \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QString \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QWidget \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QDialog \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qdialog.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QByteArray
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\debuger.o ..\new\debuger.cpp
+
 release/moc_chartWidget.o: release/moc_chartWidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_chartWidget.o release\moc_chartWidget.cpp
 
@@ -2565,6 +3142,12 @@ release/moc_treeWidgetItem.o: release/moc_treeWidgetItem.cpp
 
 release/moc_settingWindow.o: release/moc_settingWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_settingWindow.o release\moc_settingWindow.cpp
+
+release/moc_sender.o: release/moc_sender.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_sender.o release\moc_sender.cpp
+
+release/moc_debuger.o: release/moc_debuger.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_debuger.o release\moc_debuger.cpp
 
 ####### Install
 

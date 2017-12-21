@@ -25,7 +25,9 @@ HEADERS += chartWidget.h \
            sqlWidget.h \
            treeWidget.h \
            treeWidgetItem.h \
-    settingWindow.h
+    settingWindow.h \
+    sender.h \
+    debuger.h
 SOURCES += chartWidget.cpp \
            collectWindow.cpp \
            data.cpp \
@@ -34,7 +36,9 @@ SOURCES += chartWidget.cpp \
            sqlWidget.cpp \
            treeWidget.cpp \
            treeWidgetItem.cpp \
-    settingWindow.cpp
+    settingWindow.cpp \
+    sernder.cpp \
+    debuger.cpp
 
 QT+=core
 QT+=gui

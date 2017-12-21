@@ -12,6 +12,9 @@
 #include"sqlWidget.h"
 #include"treeWidget.h"
 #include"settingwindow.h"
+#include"sender.h"
+#include"debuger.h"
+
 
 class mainWindow:public QMainWindow{
     Q_OBJECT
@@ -33,6 +36,10 @@ private:
 
     QAction *settingAction;
     settingWindow *settingWidget=nullptr;
+    QAction *senderAction;
+    Sender *senderWidget=nullptr;
+    QAction *debugerAction;
+    debugWindow *debugeWidget=nullptr;
 
     bool is_connect = false;
 
@@ -51,5 +58,8 @@ public slots:
     void changeTable(QTreeWidgetItem* item,int cloum);
     void changeChart(QTreeWidgetItem* item,int cloum);
     void showSetting();
-    void insertToDb(Data *n);
+    void showSender();
+    void showDebuger();
+    //void insertToDb(Data *n);
+    void serialSend(unsigned data);
 };

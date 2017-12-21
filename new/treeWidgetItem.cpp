@@ -10,3 +10,5 @@ void treeWidgetItem::setData(QLineSeries *data){
 QLineSeries *treeWidgetItem::data(){
   return Data;
 }
+
+treeWidgetItem::treeWidgetItem(){}

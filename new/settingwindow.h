@@ -41,6 +41,22 @@ private:
         QPushButton *OK;
         QPushButton *Cancle;
 
+        QHBoxLayout *layout6;
+        QLabel *temper;
+        QSpinBox *temperClarm;
+
+        QHBoxLayout *layout7;
+        QLabel *humi;
+        QSpinBox *humiClarm;
+
+        QHBoxLayout *layout8;
+        QLabel *beam;
+        QSpinBox *beamClarm;
+
+        QHBoxLayout *layout9;
+        QLabel *smog;
+        QSpinBox *smogClarm;
+
         QVBoxLayout *mainLayout;
 
         void createWindow();

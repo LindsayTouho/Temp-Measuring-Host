@@ -2,7 +2,8 @@
 #include<QDebug>
 
 mainWindow::mainWindow(){
-    resize(1000,1000);
+    resize(1200,1000);
+    move(350,0);
     QCoreApplication::setOrganizationName("CSL");
     QCoreApplication::setApplicationName("Mysoft");
     dbconnect();
@@ -55,13 +56,20 @@ void mainWindow::createEvent(){
     connect(tree,SIGNAL(itemClicked(QTreeWidgetItem*,int)),this,SLOT(changeTable(QTreeWidgetItem*,int)));
     connect(tree,SIGNAL(itemClicked(QTreeWidgetItem*,int)),this,SLOT(changeChart(QTreeWidgetItem*,int)));
     connect(quitButton,SIGNAL(clicked(bool)),this,SLOT(close()));
+
 }
 
 void mainWindow::createMenu(){
     auto menu = menuBar();
     settingAction = new QAction(tr("设置"),this);
     connect(settingAction,SIGNAL(triggered(bool)),this,SLOT(showSetting()));
+    senderAction = new QAction(tr("发送"),this);
+    connect(senderAction,SIGNAL(triggered(bool)),this,SLOT(showSender()));
+    debugerAction = new QAction(tr("调试"),this);
+    connect(debugerAction,SIGNAL(triggered(bool)),this,SLOT(showDebuger()));
+    menu -> addAction(senderAction);
     menu -> addAction(settingAction);
+    menu -> addAction(debugerAction);
 }
 
 void mainWindow::refresh(Data *n){
@@ -112,12 +120,50 @@ void mainWindow::showSetting(){
     if(!settingWidget){
         settingWidget = new settingWindow(this);
     }
+    connect(settingWidget,SIGNAL(accepted()),this,SLOT(readSetting()));
     settingWidget-> show();
     settingWidget -> raise();
     settingWidget -> activateWindow();
 }
 
-void mainWindow::insertToDb(Data *n){
-    QSqlQuery query;
-    query.exec(tr("INSERT INTO data(name,timer,temperature,humili"))
+/*void mainWindow::insertToDb(Data *n){
+   QSqlQuery query;
+   query.exec(tr("INSERT INTO data(name,timer,temperature,humidity,beam,smog) "
+                 "values(\'%1\',\'%2\',%3,%4,%5,%6)")
+              .arg(n->terminal_name())
+              .arg(n->time().toString("yyyy-MM-dd hh:mm:ss"))
+              .arg(QString::number(n->temperature()))
+              .arg(QString::number(n->humidity()))
+              .arg(QString::number(n->beam()))
+              .arg(QString::number(n->smog()))
+              );
+}*/
+
+void mainWindow::showSender(){
+    if(!senderWidget){
+        senderWidget = new Sender(this);
+    }
+    connect(senderWidget,SIGNAL(sendding(uint)),this,SLOT(serialSend(uint)));
+    senderWidget -> show();
+    senderWidget -> raise();
+    senderWidget -> activateWindow();
+}
+
+void mainWindow::serialSend(unsigned data){
+
+    QByteArray byte;
+    byte.resize(4);
+    memcpy(byte.data(),&data,4);
+    if(S->isOpen())
+        S -> write(byte);
+}
+
+void mainWindow::showDebuger(){
+    if(!debugeWidget){
+        debugeWidget = new debugWindow;
+    }
+    connect(S,SIGNAL(originMessage(QByteArray)),debugeWidget,SLOT(showMessage(QByteArray)));
+    debugeWidget -> show();
+    debugeWidget -> raise();
+    debugeWidget -> activateWindow();
 }

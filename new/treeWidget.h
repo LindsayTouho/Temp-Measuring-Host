@@ -8,6 +8,7 @@
 #include<QDateTime>
 #include<QList>
 #include<QSettings>
+#include<QTreeWidgetItem>
 #include"treeWidgetItem.h"
 #include"data.h"
 using namespace QtCharts;

@@ -1,5 +1,6 @@
 #include"serial.h"
 #include<QDebug>
+#include<QSqlError>
 
 serial::serial(QString serial_name){
     S.setPortName(serial_name);
@@ -34,8 +35,7 @@ Data *serial::initData(QDataStream &in){
     }
     QSqlQuery query;
     query.exec(
-                QString("INSERT INTO data (name,timer,temperature,humidity,beam,smog） "
-                "VALUES('%1','%2',%3,%4,%5,%6")
+                QString("INSERT INTO data (name,timer,temperature,humidity,beam,smog) VALUES(\'%1\',\'%2\',%3,%4,%5,%6);")
                 .arg(temp->terminal_name())
                 .arg(temp->time().toString("yyyy-MM-dd hh:mm:ss"))
                 .arg(QString::number(temp->temperature()))
@@ -49,6 +49,7 @@ Data *serial::initData(QDataStream &in){
 void serial::on_serial_readyRead(){
     QByteArray b;
     b=S.readAll();
+    emit originMessage(b);
     Buffer.append(b);
     QDataStream temp(Buffer);
     Data *result = initData(temp);
@@ -56,4 +57,13 @@ void serial::on_serial_readyRead(){
         Buffer.clear();
         emit readed(result);
     }
+
+}
+
+qint64 serial::write(QByteArray data){
+    return S.write(data);
+}
+
+bool serial::isOpen(){
+    return S.isOpen();
 }

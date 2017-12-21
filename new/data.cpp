@@ -1,22 +1,23 @@
 #include"data.h"
+#include<QDebug>
 
 QDateTime Data::time(){
   return timer;
 }
 
-int Data::temperature(){
-  return ((double)Temperature) /16;
+double Data::temperature(){
+  return ((double)Temperature) /256;
 }
 
-int Data::humidity(){
-  return ((double)Humidity) /16;
+double Data::humidity(){
+  return ((double)Humidity) /256;
 }
 
-int Data::beam(){
+double Data::beam(){
   return Beam;
 }
 
-int Data::smog(){
+double Data::smog(){
     return Smog;
 }
 
@@ -54,7 +55,7 @@ Data::Data(QDataStream &in){
   }
   in>>temp16;
   timer=QDateTime::currentDateTime();
-  if(temp16%16==0x66)
+  if(temp16%256==0x66)
     Completed=true;
 }
 

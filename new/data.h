@@ -20,10 +20,10 @@ public:
   Data(QDataStream &in);
   QString terminal_name();
   int type();
-  int temperature();
-  int humidity();
-  int beam();
-  int smog();
+  double temperature();
+  double humidity();
+  double beam();
+  double smog();
   bool is_completed();
 
   qint16 terminalID();

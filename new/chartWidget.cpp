@@ -39,7 +39,7 @@ chartWidget::chartWidget(QWidget *parent):QWidget(parent){
 
   QTimer *refreshTimer = new QTimer;
   connect(refreshTimer,SIGNAL(timeout()),this,SLOT(refresh()));
-  refreshTimer -> start(1000);
+  refreshTimer -> start(500);
 }
 
 chartWidget::~chartWidget(){
@@ -55,9 +55,13 @@ chartWidget::~chartWidget(){
 
 
 void chartWidget::setRange(int min,int max){
-
+ // chart -> removeAxis(axisX);
+ // chart -> removeSeries(line);
   axisX -> setRange(min,max);
+ // chart -> createDefaultAxes();
+// chart -> setAxisX(axisX,line);
 
+  this->repaint();
   refresh();
 }
 
