@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'temper'
+    'temper',
+    'weixin',
 ]
 
 MIDDLEWARE = [
@@ -78,7 +79,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'temperature' ,
         'USER': 'root',
-        'PASSWORD': 'zhou0613',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306',
     }

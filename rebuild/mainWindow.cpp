@@ -58,7 +58,7 @@ void Window::createMainWindow(){
 	Quit=new QPushButton(this);
 	Quit->setText(tr("退出"));
 
-    fatherName = new QLabel(this);
+  fatherName = new QLabel(this);
 
 
 
@@ -96,7 +96,7 @@ void Window::createMainWindow(){
 
     clarmMessage = new QTextEdit(this);
     clarmMessage -> setReadOnly(true);
-    clarmMessage -> setFixedSize(150,300);
+    clarmMessage -> setFixedWidth(150);
 }
 
 void Window::setBuJu(){
@@ -115,7 +115,7 @@ void Window::setBuJu(){
 	layout3->addLayout(layout2);
 	layout3->addWidget(view);
     layout3 -> addWidget(clarmMessage);
-    layout3->setStretchFactor(layout2,1);
+    layout3->setStretchFactor(layout2,0);
     layout3->setStretchFactor(view,4);
 
 	layout4=new QHBoxLayout;               //下侧控制部分
@@ -243,7 +243,7 @@ bool Window::dbconnect(){
     db.setHostName(setting.value("hostName",QVariant("47.93.191.3")).toString());
     db.setDatabaseName(setting.value("databaseName",QVariant("temperature")).toString());
     db.setUserName(setting.value("userName",QVariant("public")).toString());
-    db.setPassword(setting.value("passWord",QVariant("Chagnli")).toString());
+    db.setPassword(setting.value("passWord",QVariant("Changli")).toString());
     if(!db.open()){
         return false;
     }
