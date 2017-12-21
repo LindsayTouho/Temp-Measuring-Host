@@ -6,6 +6,7 @@
 #include<QCoreApplication>
 #include<QMenuBar>
 #include<QAction>
+#include<QTextEdit>
 #include"data.h"
 #include"chartWidget.h"
 #include"serial.h"
@@ -37,9 +38,11 @@ private:
     QAction *settingAction;
     settingWindow *settingWidget=nullptr;
     QAction *senderAction;
-    Sender *senderWidget=nullptr;
+    Sender *senderWidget=new Sender;
     QAction *debugerAction;
     debugWindow *debugeWidget=nullptr;
+
+    QTextEdit *clarmWidget;
 
     bool is_connect = false;
 
@@ -52,7 +55,7 @@ public:
     mainWindow();
     ~mainWindow();
 public slots:
-    void refresh(Data *n);
+    //void refresh(Data *n);
     void open_close();
     void readSetting();
     void changeTable(QTreeWidgetItem* item,int cloum);
@@ -62,4 +65,5 @@ public slots:
     void showDebuger();
     //void insertToDb(Data *n);
     void serialSend(unsigned data);
+    void checkClarm(Data *n);
 };

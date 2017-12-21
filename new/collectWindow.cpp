@@ -9,9 +9,9 @@ mainWindow::mainWindow(){
     dbconnect();
     createWidget();
     createLayout();
-    createEvent();
     createMenu();
     readSetting();
+    createEvent();
 }
 
 bool mainWindow::dbconnect(){
@@ -29,6 +29,8 @@ void mainWindow::createWidget(){
     openCloseButton->setText(tr("&Open"));
     quitButton = new QPushButton(this);
     quitButton -> setText(tr("&Quit"));
+    clarmWidget = new QTextEdit;
+    clarmWidget -> setReadOnly(true);
 }
 
 void mainWindow::createLayout(){
@@ -40,6 +42,7 @@ void mainWindow::createLayout(){
     center -> addWidget(tree);
     center -> addWidget(right);
     center -> setStretchFactor(1,1);
+    center -> addWidget(clarmWidget);
     buttom = new QHBoxLayout;
     buttom -> addWidget(openCloseButton);
     buttom -> addWidget(quitButton);
@@ -56,7 +59,7 @@ void mainWindow::createEvent(){
     connect(tree,SIGNAL(itemClicked(QTreeWidgetItem*,int)),this,SLOT(changeTable(QTreeWidgetItem*,int)));
     connect(tree,SIGNAL(itemClicked(QTreeWidgetItem*,int)),this,SLOT(changeChart(QTreeWidgetItem*,int)));
     connect(quitButton,SIGNAL(clicked(bool)),this,SLOT(close()));
-
+    connect(S,SIGNAL(readed(Data*)),this,SLOT(checkClarm(Data*)));
 }
 
 void mainWindow::createMenu(){
@@ -72,9 +75,9 @@ void mainWindow::createMenu(){
     menu -> addAction(debugerAction);
 }
 
-void mainWindow::refresh(Data *n){
+/*void mainWindow::refresh(Data *n){
 
-}
+}*/
 
 void mainWindow::open_close(){
     if(openCloseButton->text()==tr("&Open")){
@@ -110,8 +113,8 @@ void mainWindow::changeTable(QTreeWidgetItem *item, int cloum){
 
 void mainWindow::changeChart(QTreeWidgetItem *item, int cloum){
     if(item->childCount()==0){
-        treeWidgetItem * treeItem = (treeWidgetItem *)item;
-        chart->setline(treeItem->data());
+        void * temp = item->data(0,Qt::UserRole).value<void *>();
+        chart->setline((QLineSeries *)temp);
         changeTable(item->parent(),cloum);
     }
 }
@@ -166,4 +169,28 @@ void mainWindow::showDebuger(){
     debugeWidget -> show();
     debugeWidget -> raise();
     debugeWidget -> activateWindow();
+}
+
+void mainWindow::checkClarm(Data *n){
+    QSettings setting;
+    if(n->temperature() > setting.value("temper_clarm").toInt()){
+        senderWidget->buttonEmit3();
+        clarmWidget -> insertPlainText(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+
+                               tr(" 温度：")+QString::number(n->temperature())+tr("\n"));
+    }
+    if(n->humidity() > setting.value("humi_clarm").toInt()){
+        senderWidget->buttonEmit3();
+        clarmWidget -> insertPlainText(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+
+                               tr(" 湿度：")+QString::number(n->humidity())+tr("\n"));
+    }
+    if(n->beam() > setting.value("beam_clarm").toInt()){
+        senderWidget->buttonEmit3();
+        clarmWidget -> insertPlainText(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+
+                               tr(" 光照：")+QString::number(n->beam())+tr("\n"));
+    }
+    if(n->smog() > setting.value("smog_clarm").toInt()){
+        senderWidget->buttonEmit3();
+        clarmWidget -> insertPlainText(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+
+                               tr(" 气体浓度：")+QString::number(n->smog())+tr("\n"));
+    }
 }

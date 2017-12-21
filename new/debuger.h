@@ -11,7 +11,7 @@
 #include<QByteArray>
 
 class debugWindow : public QDialog{
-    Q_OBJECT;
+    Q_OBJECT
 private:
     QTextEdit *showWidget;
     QPushButton *clearButton;

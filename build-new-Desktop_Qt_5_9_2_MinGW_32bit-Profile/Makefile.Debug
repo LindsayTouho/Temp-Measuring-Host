@@ -551,9 +551,11 @@ debug/moc_collectWindow.cpp: C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QM
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qtreeview.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qtreewidgetitemiterator.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/QList \
-		../new/treeWidgetItem.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QTreeWidgetItem \
+		../new/treeWidgetItem.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QStringList \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QItemDelegate \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qitemdelegate.h \
 		../new/settingwindow.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QDialog \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qdialog.h \
@@ -930,9 +932,11 @@ debug/moc_treeWidget.cpp: C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QTree
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/QList \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QSettings \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsettings.h \
-		../new/treeWidgetItem.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QTreeWidgetItem \
+		../new/treeWidgetItem.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QStringList \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QItemDelegate \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qitemdelegate.h \
 		../new/data.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QDataStream \
 		../new/treeWidget.h \
@@ -1078,6 +1082,8 @@ debug/moc_treeWidgetItem.cpp: C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/Q
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QObject \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/QBrush \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QStringList \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QItemDelegate \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qitemdelegate.h \
 		../new/treeWidgetItem.h \
 		debug/moc_predefs.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/bin/moc.exe
@@ -1348,6 +1354,7 @@ debug/moc_sender.cpp: C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QLabel \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qgridlayout.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QVBoxLayout \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QVector \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QDebug \
 		../new/sender.h \
 		debug/moc_predefs.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/bin/moc.exe
@@ -1891,9 +1898,11 @@ debug/collectWindow.o: ../new/collectWindow.cpp ../new/collectWindow.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qtreeview.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qtreewidgetitemiterator.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/QList \
-		../new/treeWidgetItem.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QTreeWidgetItem \
+		../new/treeWidgetItem.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QStringList \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QItemDelegate \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qitemdelegate.h \
 		../new/settingwindow.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QDialog \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qdialog.h \
@@ -1965,7 +1974,19 @@ debug/data.o: ../new/data.cpp ../new/data.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qmetatype.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qvarlengtharray.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qcontainerfwd.h \
-		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qobject_impl.h
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qobject_impl.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QDebug \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qdebug.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qmap.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qtextstream.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qlocale.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qvariant.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qvector.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qpoint.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qset.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qcontiguouscache.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsharedpointer.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsharedpointer_impl.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\data.o ..\new\data.cpp
 
 debug/main.o: ../new/main.cpp C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QApplication \
@@ -2192,9 +2213,11 @@ debug/main.o: ../new/main.cpp C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/Q
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qtreeview.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qtreewidgetitemiterator.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/QList \
-		../new/treeWidgetItem.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QTreeWidgetItem \
+		../new/treeWidgetItem.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QStringList \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QItemDelegate \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qitemdelegate.h \
 		../new/settingwindow.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QDialog \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qdialog.h \
@@ -2292,7 +2315,9 @@ debug/serial.o: ../new/serial.cpp ../new/serial.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qset.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qcontiguouscache.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsharedpointer.h \
-		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsharedpointer_impl.h
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsharedpointer_impl.h \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSql/QSqlError \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtSql/qsqlerror.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\serial.o ..\new\serial.cpp
 
 debug/sqlWidget.o: ../new/sqlWidget.cpp ../new/sqlWidget.h \
@@ -2578,9 +2603,11 @@ debug/treeWidget.o: ../new/treeWidget.cpp ../new/treeWidget.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/QList \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QSettings \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/qsettings.h \
-		../new/treeWidgetItem.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QTreeWidgetItem \
+		../new/treeWidgetItem.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QStringList \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QItemDelegate \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qitemdelegate.h \
 		../new/data.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QDataStream \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QDebug \
@@ -2726,7 +2753,9 @@ debug/treeWidgetItem.o: ../new/treeWidgetItem.cpp ../new/treeWidgetItem.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QVariant \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QObject \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtGui/QBrush \
-		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QStringList
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QStringList \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QItemDelegate \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qitemdelegate.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\treeWidgetItem.o ..\new\treeWidgetItem.cpp
 
 debug/settingWindow.o: ../new/settingWindow.cpp ../new/settingWindow.h \
@@ -3119,7 +3148,8 @@ debug/debuger.o: ../new/debuger.cpp ../new/debuger.h \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QWidget \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/QDialog \
 		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtWidgets/qdialog.h \
-		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QByteArray
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QByteArray \
+		C:/Qt/Qt5.9.2/5.9.2/mingw53_32/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\debuger.o ..\new\debuger.cpp
 
 debug/moc_chartWidget.o: debug/moc_chartWidget.cpp 

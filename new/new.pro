@@ -24,7 +24,6 @@ HEADERS += chartWidget.h \
            serial.h \
            sqlWidget.h \
            treeWidget.h \
-           treeWidgetItem.h \
     settingWindow.h \
     sender.h \
     debuger.h
@@ -35,7 +34,6 @@ SOURCES += chartWidget.cpp \
            serial.cpp \
            sqlWidget.cpp \
            treeWidget.cpp \
-           treeWidgetItem.cpp \
     settingWindow.cpp \
     sernder.cpp \
     debuger.cpp

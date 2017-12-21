@@ -22,7 +22,7 @@ chartWidget::chartWidget(QWidget *parent):QWidget(parent){
   axisX -> setTickCount(6);
   axisX -> setMinorTickCount(4);
   axisX -> setRange(-60,0);
-  axisX -> setTitleText(tr("XXX"));
+  axisX -> setTitleText(tr("time/minutes"));
   chart -> setAxisX(axisX,line);
   view = new QChartView(this);
   view -> setChart(chart);

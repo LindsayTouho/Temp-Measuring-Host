@@ -37,7 +37,7 @@ debugWindow::~debugWindow(){
 }
 void debugWindow::showMessage(QByteArray messages)
 {
-    unsigned long long a=0;
+    unsigned a=0;
     QDataStream *stream = new QDataStream(messages);
     while(!stream->atEnd()){
         (*stream)>>a;

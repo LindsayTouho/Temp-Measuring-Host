@@ -1,8 +1,7 @@
 #include"treeWidget.h"
 #include<QDebug>
-#include<QSqlError>
 treeWidget::treeWidget(QWidget * parent):QTreeWidget(parent){
-   setItemDelegate(new treeWidgetItem);
+    updateTime = QDateTime::currentDateTime();
    setHeaderHidden(true);
    QLineSeries *temp;;
    QSqlQuery query;
@@ -10,19 +9,19 @@ treeWidget::treeWidget(QWidget * parent):QTreeWidget(parent){
    while(query.next()){
 
      QString name = query.value(0).toString();
-     treeWidgetItem *n = new treeWidgetItem(QStringList()<<name);
-     treeWidgetItem *temperature = new treeWidgetItem(QStringList()<<"温度");
+     QTreeWidgetItem *n = new QTreeWidgetItem(QStringList()<<name);
+     QTreeWidgetItem *temperature = new QTreeWidgetItem(QStringList()<<"温度");
      temp = makeLine(name,2);
-     temperature -> setData(temp);
-     treeWidgetItem *humidity = new treeWidgetItem(QStringList()<<"湿度");
+     temperature -> setData(0,Qt::UserRole,QVariant::fromValue((void *)temp));
+     QTreeWidgetItem *humidity = new QTreeWidgetItem(QStringList()<<"湿度");
      temp = makeLine(name,3);
-     humidity -> setData(temp);
-     treeWidgetItem *beam = new treeWidgetItem(QStringList()<<"光照");
+     humidity -> setData(0,Qt::UserRole,QVariant::fromValue((void *)temp));
+     QTreeWidgetItem *beam = new QTreeWidgetItem(QStringList()<<"光照");
      temp = makeLine(name,4);
-     beam -> setData(temp);
-     treeWidgetItem *smog = new treeWidgetItem(QStringList()<<"烟雾");
+     beam -> setData(0,Qt::UserRole,QVariant::fromValue((void *)temp));
+     QTreeWidgetItem *smog = new QTreeWidgetItem(QStringList()<<"烟雾");
      temp = makeLine(name,5);
-     smog ->setData(temp);
+     smog ->setData(0,Qt::UserRole,QVariant::fromValue((void *)temp));
      n->addChild(temperature);
      n->addChild(humidity);
      n->addChild(beam);
@@ -56,7 +55,7 @@ QLineSeries *treeWidget::makeLine(QString terminal_name,int index){
   int i=0;
   while(query.next()&&i<max){
     QDateTime T = QDateTime::fromString(query.value(0).toString(),"yyyy-MM-dd hh:mm:ss");
-    line -> append(-(T.secsTo(QDateTime::currentDateTime()))/60,query.value(1).toDouble());
+    line -> append(-(T.secsTo(QDateTime::currentDateTime())),query.value(1).toDouble());
     ++i;
   }
   return line;
@@ -64,21 +63,21 @@ QLineSeries *treeWidget::makeLine(QString terminal_name,int index){
 
 void treeWidget::append(Data *n) {
   QString terminal_name = n->terminal_name();
-  if(!findChildren<treeWidgetItem*>(terminal_name).front()){     //虽然这里不用makekine函数效率更高，不过懒得写了
-    treeWidgetItem *n = new treeWidgetItem(QStringList()<<terminal_name);
+  if(findItems(terminal_name,0).isEmpty()){     //虽然这里不用makekine函数效率更高，不过懒得写了
+    QTreeWidgetItem *n = new QTreeWidgetItem(QStringList()<<terminal_name);
     QLineSeries *temp;
-    treeWidgetItem *temperature = new treeWidgetItem(QStringList()<<"温度");
+    QTreeWidgetItem *temperature = new QTreeWidgetItem(QStringList()<<"温度");
     temp = makeLine(terminal_name,2);
-    temperature -> setData(temp);
-    treeWidgetItem *humidity = new treeWidgetItem(QStringList()<<"湿度");
+    temperature -> setData(0,Qt::UserRole,QVariant::fromValue((void *)temp));
+    QTreeWidgetItem *humidity = new QTreeWidgetItem(QStringList()<<"湿度");
     temp = makeLine(terminal_name,3);
-    humidity -> setData(temp);
-    treeWidgetItem *beam = new treeWidgetItem(QStringList()<<"光照");
+    humidity -> setData(0,Qt::UserRole,QVariant::fromValue((void *)temp));
+    QTreeWidgetItem *beam = new QTreeWidgetItem(QStringList()<<"光照");
     temp = makeLine(terminal_name,4);
-    beam -> setData(temp);
-    treeWidgetItem *smog = new treeWidgetItem(QStringList()<<"烟雾");
+    beam -> setData(0,Qt::UserRole,QVariant::fromValue((void *)temp));
+    QTreeWidgetItem *smog = new QTreeWidgetItem(QStringList()<<"烟雾");
     temp = makeLine(terminal_name,5);
-    smog ->setData(temp);
+    smog ->setData(0,Qt::UserRole,QVariant::fromValue((void *)temp));
     n->addChild(temperature);
     n->addChild(humidity);
     n->addChild(beam);
@@ -87,36 +86,40 @@ void treeWidget::append(Data *n) {
     repaint();
   }
   else{
-    treeWidgetItem *const currentItem = findChildren<treeWidgetItem *>(terminal_name).front();
+    QTreeWidgetItem *const currentItem = findItems(terminal_name,0).front();
     QLineSeries *line ;
-    line = (dynamic_cast<treeWidgetItem *>(currentItem->child(0)))->data();
     QDateTime T = n->time();
     QSettings settings;
+    line = (QLineSeries *)((currentItem->child(0))->data(0,Qt::UserRole).value<void *>());
     if(line != nullptr){
+        updateLine(line);
       line -> append(-(T.secsTo(QDateTime::currentDateTime())),n->temperature());
       auto vec = line->pointsVector();
       if(vec.count()>(settings.value("ram_data_num",QVariant(1000)).toInt())){
           line->remove(vec.first().x(),vec.first().y());
       }
     }
-    line = ((treeWidgetItem*)currentItem->child(1))->data();
+    line = (QLineSeries *)((currentItem->child(1))->data(0,Qt::UserRole).value<void *>());
     if(line != nullptr){
+        updateLine(line);
       line -> append(-(T.secsTo(QDateTime::currentDateTime())),n->humidity());
       auto vec = line->pointsVector();
       if(vec.count()>(settings.value("ram_data_num",QVariant(1000)).toInt())){
           line->remove(vec.first().x(),vec.first().y());
       }
     }
-    line = ((treeWidgetItem*)currentItem->child(2))->data();
+    line =  (QLineSeries *)((currentItem->child(2))->data(0,Qt::UserRole).value<void *>());
     if(line != nullptr){
+        updateLine(line);
       line -> append(-(T.secsTo(QDateTime::currentDateTime())),n->beam());
       auto vec = line->pointsVector();
       if(vec.count()>(settings.value("ram_data_num",QVariant(1000)).toInt())){
           line->remove(vec.first().x(),vec.first().y());
       }
     }
-    line = ((treeWidgetItem*)currentItem->child(3))->data();
+    line =  (QLineSeries *)((currentItem->child(3))->data(0,Qt::UserRole).value<void *>());
     if(line != nullptr){
+        updateLine(line);
       line -> append(-(T.secsTo(QDateTime::currentDateTime())),n->smog());
       auto vec = line->pointsVector();
       if(vec.count()>(settings.value("ram_data_num",QVariant(1000)).toInt())){
@@ -129,4 +132,14 @@ void treeWidget::append(Data *n) {
 treeWidget::~treeWidget(){
 }
 
+void treeWidget::updateLine(QLineSeries *line){
+    auto vec = line-> pointsVector();
+    for(auto i= vec.begin();i!=vec.end();++i){
+          i->rx() -=(updateTime.secsTo(QDateTime::currentDateTime()));
+    }
+    line->clear();
+    for(auto i = vec.begin();i!=vec.end();++i){
+        line->append(*i);
+    }
+}
 //time = QDateTime::fromString(strBuffer, "yyyy-MM-dd hh:mm:ss");

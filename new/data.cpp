@@ -14,11 +14,17 @@ double Data::humidity(){
 }
 
 double Data::beam(){
-  return Beam;
+    if(Beam>=0)
+        return Beam;
+    else
+        return -Beam + 0x80;
 }
 
 double Data::smog(){
-    return Smog;
+    if(Smog>=0)
+        return Smog;
+    else
+        return -Smog + 0x80;
 }
 
 int Data::type(){
@@ -28,7 +34,7 @@ int Data::type(){
 Data::Data(QDataStream &in){
   qint8 temp8=0;
   qint16 temp16=0;
-  while (temp8!=0x55) {
+  while (temp8!=0x55&&!in.atEnd()) {
     in>>temp8;
   }
   in>>temp8;     //数据长度
@@ -50,7 +56,7 @@ Data::Data(QDataStream &in){
 
   temp16=0;
 
-  while(!temp16){   //之后的无用数据为0
+  while(!temp16&&!in.atEnd()){   //之后的无用数据为0
     in>>temp16;
   }
   in>>temp16;
