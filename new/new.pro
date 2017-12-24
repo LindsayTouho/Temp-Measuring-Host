@@ -35,8 +35,8 @@ SOURCES += chartWidget.cpp \
            sqlWidget.cpp \
            treeWidget.cpp \
     settingWindow.cpp \
-    sernder.cpp \
-    debuger.cpp
+    debuger.cpp \
+    sender.cpp
 
 QT+=core
 QT+=gui

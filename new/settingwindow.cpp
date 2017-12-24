@@ -52,25 +52,37 @@ void settingWindow::createWindow(){
         serialPort->setCurrentText(settings.value("serial_name",QVariant("COM1")).toString());
 
     temper = new QLabel(this);
-    temper -> setText(tr("警报温度"));
+    temper -> setText(tr("警报温度(下限/上限)    "));
+    temperClarmDown = new QSpinBox;
+    temperClarmDown -> setRange(0,0xFFFF);
+    temperClarmDown -> setValue(settings.value("temper_clarm_down",QVariant(50)).toInt());
     temperClarm = new QSpinBox;
     temperClarm -> setRange(0,0xFFFF);
     temperClarm-> setValue(settings.value("temper_clarm",QVariant(50)).toInt());
 
     humi = new QLabel(this);
-    humi -> setText(tr("警报湿度"));
+    humi -> setText(tr("警报湿度(下限/上限)    "));
+    humiClarmDown = new QSpinBox;
+    humiClarmDown -> setRange(0,0xFFFF);
+    humiClarmDown -> setValue(settings.value("humi_clarm_down",QVariant(50)).toInt());
     humiClarm = new QSpinBox;
     humiClarm -> setRange(0,0xFFFF);
     humiClarm-> setValue(settings.value("humi_clarm",QVariant(50)).toInt());
 
     beam = new QLabel(this);
-    beam -> setText(tr("警报光照"));
+    beam -> setText(tr("警报光照(下限/上限)    "));
+    beamClarmDown = new QSpinBox;
+    beamClarmDown -> setRange(0,0xFF);
+    beamClarmDown -> setValue(settings.value("beam_clarm_down",QVariant(10)).toInt());
     beamClarm = new QSpinBox;
     beamClarm -> setRange(0,0xFF);
     beamClarm-> setValue(settings.value("beam_clarm",QVariant(10)).toInt());
 
     smog = new QLabel(this);
-    smog -> setText(tr("警报气体浓度"));
+    smog -> setText(tr("警报烟雾浓度(下限/上限)"));
+    smogClarmDown = new QSpinBox;
+    smogClarmDown -> setRange(0,0xFF);
+    smogClarmDown-> setValue(settings.value("smog_clarm_down",QVariant(10)).toInt());
     smogClarm = new QSpinBox;
     smogClarm -> setRange(0,0xFF);
     smogClarm-> setValue(settings.value("smog_clarm",QVariant(10)).toInt());
@@ -97,18 +109,22 @@ void settingWindow::createLayout(){
 
     layout6 = new QHBoxLayout;
     layout6->addWidget(temper);
+    layout6->addWidget(temperClarmDown);
     layout6->addWidget(temperClarm);
 
     layout7 = new QHBoxLayout;
     layout7->addWidget(humi);
+    layout7->addWidget(humiClarmDown);
     layout7->addWidget(humiClarm);
 
     layout8 = new QHBoxLayout;
     layout8->addWidget(beam);
+    layout8->addWidget(beamClarmDown);
     layout8->addWidget(beamClarm);
 
     layout9 = new QHBoxLayout;
     layout9->addWidget(smog);
+    layout9->addWidget(smogClarmDown);
     layout9->addWidget(smogClarm);
 
     layout5 = new QHBoxLayout;
@@ -144,9 +160,13 @@ void settingWindow::Change(){
     setting.setValue("ram_data_num",numSlider->value());
     setting.setValue("serial_name",serialPort->currentText());
     setting.setValue("temper_clarm",temperClarm->value());
+    setting.setValue("temper_clarm_down",temperClarmDown->value());
     setting.setValue("humi_clarm",humiClarm->value());
+    setting.setValue("humi_clarm_down",humiClarmDown->value());
     setting.setValue("beam_clarm",beamClarm->value());
+    setting.setValue("beam_clarm_down",beamClarmDown->value());
     setting.setValue("smog_clarm",smogClarm->value());
+    setting.setValue("smog_clarm_down",smogClarmDown->value());
     emit this-> accept();
     this->close();
 }

@@ -31,6 +31,7 @@ void mainWindow::createWidget(){
     quitButton -> setText(tr("&Quit"));
     clarmWidget = new QTextEdit;
     clarmWidget -> setReadOnly(true);
+
 }
 
 void mainWindow::createLayout(){
@@ -59,7 +60,7 @@ void mainWindow::createEvent(){
     connect(tree,SIGNAL(itemClicked(QTreeWidgetItem*,int)),this,SLOT(changeTable(QTreeWidgetItem*,int)));
     connect(tree,SIGNAL(itemClicked(QTreeWidgetItem*,int)),this,SLOT(changeChart(QTreeWidgetItem*,int)));
     connect(quitButton,SIGNAL(clicked(bool)),this,SLOT(close()));
-    connect(S,SIGNAL(readed(Data*)),this,SLOT(checkClarm(Data*)));
+
 }
 
 void mainWindow::createMenu(){
@@ -97,6 +98,8 @@ void mainWindow::readSetting(){
     if(S)
         delete S;
     S = new serial(settings.value("serial_name",QVariant("COM!")).toString());
+    connect(S,SIGNAL(readed(Data*)),this,SLOT(checkClarm(Data*)));
+    S->open(QIODevice::ReadWrite);
     connect(S,SIGNAL(readed(Data*)),tree,SLOT(append(Data*)));
     connect(S,SIGNAL(readed(Data*)),sql,SLOT(refresh()));
 }
@@ -106,7 +109,7 @@ mainWindow::~mainWindow(){
 }
 
 void mainWindow::changeTable(QTreeWidgetItem *item, int cloum){
-    if(item->childCount()==4){
+    if(item->childCount()!=0){
         sql->changeTerminal(item->text(cloum));
     }
 }
@@ -129,18 +132,6 @@ void mainWindow::showSetting(){
     settingWidget -> activateWindow();
 }
 
-/*void mainWindow::insertToDb(Data *n){
-   QSqlQuery query;
-   query.exec(tr("INSERT INTO data(name,timer,temperature,humidity,beam,smog) "
-                 "values(\'%1\',\'%2\',%3,%4,%5,%6)")
-              .arg(n->terminal_name())
-              .arg(n->time().toString("yyyy-MM-dd hh:mm:ss"))
-              .arg(QString::number(n->temperature()))
-              .arg(QString::number(n->humidity()))
-              .arg(QString::number(n->beam()))
-              .arg(QString::number(n->smog()))
-              );
-}*/
 
 void mainWindow::showSender(){
     if(!senderWidget){
@@ -173,24 +164,60 @@ void mainWindow::showDebuger(){
 
 void mainWindow::checkClarm(Data *n){
     QSettings setting;
-    if(n->temperature() > setting.value("temper_clarm").toInt()){
-        senderWidget->buttonEmit3();
-        clarmWidget -> insertPlainText(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+
-                               tr(" 温度：")+QString::number(n->temperature())+tr("\n"));
+    if(n->type()==0x0600){
+        if(n->temperature() > setting.value("temper_clarm").toInt()){
+            serialSend(0x002900FE);
+            clarmWidget -> insertPlainText(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss ")+n->terminal_name()+
+                               tr(" 温度过高：")+QString::number(n->temperature())+tr("\n"));
+        }
+        if(n->temperature() < setting.value("temper_clarm_down").toInt()){
+            serialSend(0x002900FE);
+            clarmWidget -> insertPlainText(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss ")+n->terminal_name()+
+                               tr(" 温度过低：")+QString::number(n->temperature())+tr("\n"));
+        }
+        if(n->humidity() > setting.value("humi_clarm").toInt()){
+            serialSend(0x002900FE);
+            clarmWidget -> insertPlainText(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss ")+n->terminal_name()+
+                               tr(" 湿度过高：")+QString::number(n->humidity())+tr("\n"));
+        }
+        if(n->humidity() < setting.value("humi_clarm_down").toInt()){
+            serialSend(0x002900FE);
+            clarmWidget -> insertPlainText(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss ")+n->terminal_name()+
+                               tr(" 湿度过低：")+QString::number(n->humidity())+tr("\n"));
+        }
+        if(n->beam() > setting.value("beam_clarm").toInt()){
+            serialSend(0x002900FE);
+            clarmWidget -> insertPlainText(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss ")+n->terminal_name()+
+                               tr(" 光照过高：")+QString::number(n->beam())+tr("\n"));
+        }
+        if(n->beam() < setting.value("beam_clarm_down").toInt()){
+            serialSend(0x002900FE);
+            clarmWidget -> insertPlainText(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss ")+n->terminal_name()+
+                               tr(" 光照过低：")+QString::number(n->beam())+tr("\n"));
+        }
+        if(n->smog() > setting.value("smog_clarm").toInt()){
+            serialSend(0x002900FE);
+            clarmWidget -> insertPlainText(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss ")+n->terminal_name()+
+                               tr(" 气体浓度过高：")+QString::number(n->smog())+tr("\n"));
+        }
+        if(n->smog() < setting.value("smog_clarm_down").toInt()){
+            serialSend(0x002900FE);
+            clarmWidget -> insertPlainText(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss ")+n->terminal_name()+
+                               tr("烟雾浓度过低：")+QString::number(n->smog())+tr("\n"));
+        }
     }
-    if(n->humidity() > setting.value("humi_clarm").toInt()){
-        senderWidget->buttonEmit3();
-        clarmWidget -> insertPlainText(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+
-                               tr(" 湿度：")+QString::number(n->humidity())+tr("\n"));
-    }
-    if(n->beam() > setting.value("beam_clarm").toInt()){
-        senderWidget->buttonEmit3();
-        clarmWidget -> insertPlainText(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+
-                               tr(" 光照：")+QString::number(n->beam())+tr("\n"));
-    }
-    if(n->smog() > setting.value("smog_clarm").toInt()){
-        senderWidget->buttonEmit3();
-        clarmWidget -> insertPlainText(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+
-                               tr(" 气体浓度：")+QString::number(n->smog())+tr("\n"));
+    else if(n->type()==0x0200){
+        for(int i=0;i<8;i++){
+            if(n->temper(i)!=0&&((n->temper(i)) > (setting.value("temper_clarm").toInt()))){
+                clarmWidget -> insertPlainText(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss ")+n->terminal_name()+tr("-")+QString::number(i+1)+
+                                   tr(" 温度过高：")+QString::number(n->temper(i))+tr("\n"));
+                serialSend(0x002900FE);
+            }
+            if(n->temper(i)!=0&&n->temper(i)< setting.value("temper_clarm_down").toInt()){
+                clarmWidget -> insertPlainText(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss ")+n->terminal_name()+tr("-")+QString::number(i+1)+
+                                   tr(" 温度过低：")+QString::number(n->temper(i))+tr("\n"));
+                serialSend(0x002900FE);
+            }
+        }
     }
 }

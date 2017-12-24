@@ -43,18 +43,22 @@ private:
 
         QHBoxLayout *layout6;
         QLabel *temper;
+        QSpinBox *temperClarmDown;
         QSpinBox *temperClarm;
 
         QHBoxLayout *layout7;
         QLabel *humi;
+        QSpinBox *humiClarmDown;
         QSpinBox *humiClarm;
 
         QHBoxLayout *layout8;
         QLabel *beam;
+        QSpinBox *beamClarmDown;
         QSpinBox *beamClarm;
 
         QHBoxLayout *layout9;
         QLabel *smog;
+        QSpinBox *smogClarmDown;
         QSpinBox *smogClarm;
 
         QVBoxLayout *mainLayout;

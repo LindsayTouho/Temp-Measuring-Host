@@ -34,7 +34,8 @@ Data *serial::initData(QDataStream &in){
         return nullptr;
     }
     QSqlQuery query;
-    query.exec(
+    if(temp->type()==0x0600){
+        query.exec(
                 QString("INSERT INTO data (name,timer,temperature,humidity,beam,smog) VALUES(\'%1\',\'%2\',%3,%4,%5,%6);")
                 .arg(temp->terminal_name())
                 .arg(temp->time().toString("yyyy-MM-dd hh:mm:ss"))
@@ -43,6 +44,22 @@ Data *serial::initData(QDataStream &in){
                 .arg(QString::number(temp->beam()))
                 .arg(QString::number(temp->smog()))
                 );
+    }
+    else if(temp->type()==0x0200){
+        query.exec(
+                QString("INSERT INTO data2 (name,timer,T1,T2,T3,T4,T5,T6,T7,T8) VALUES(\'%1\',\'%2\',%3,%4,%5,%6,%7,%8,%9,%10);")
+                .arg(temp->terminal_name())
+                .arg(temp->time().toString("yyyy-MM-dd hh:mm:ss"))
+                .arg(QString::number(temp->temper(0)))
+                .arg(QString::number(temp->temper(1)))
+                .arg(QString::number(temp->temper(2)))
+                .arg(QString::number(temp->temper(3)))
+                .arg(QString::number(temp->temper(4)))
+                .arg(QString::number(temp->temper(5)))
+                .arg(QString::number(temp->temper(6)))
+                .arg(QString::number(temp->temper(7)))
+                );
+    }
     return temp;
 }
 
@@ -57,7 +74,6 @@ void serial::on_serial_readyRead(){
         Buffer.clear();
         emit readed(result);
     }
-
 }
 
 qint64 serial::write(QByteArray data){

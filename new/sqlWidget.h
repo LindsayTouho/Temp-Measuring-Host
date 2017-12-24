@@ -7,6 +7,9 @@
 #include<QSqlDatabase>
 #include<QString>
 #include<QHBoxLayout>
+#include<QSqlQuery>
+#include<QString>
+#include<QVariant>
 
 class sqlWidget : public QWidget{
     Q_OBJECT

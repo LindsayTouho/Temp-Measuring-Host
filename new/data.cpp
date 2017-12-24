@@ -6,37 +6,57 @@ QDateTime Data::time(){
 }
 
 double Data::temperature(){
-  return ((double)Temperature) /256;
+  if(Type==0x0600)
+      return (double)((value[0]*100)/256)/100;
+  else
+      return -1;
 }
 
 double Data::humidity(){
-  return ((double)Humidity) /256;
+    if(Type==0x0600)
+        return (double)((value[1]*100)/256)/100;
+    else
+        return -1;
 }
 
 double Data::beam(){
-    if(Beam>=0)
-        return Beam;
+    if(Type==0x0600){
+        return 256-value[2]/256;
+    }
     else
-        return -Beam + 0x80;
+        return -1;
 }
 
 double Data::smog(){
-    if(Smog>=0)
-        return Smog;
+    if(Type==0x0600){
+        return value[2]%256;
+    }
     else
-        return -Smog + 0x80;
+        return -1;
 }
 
 int Data::type(){
     return Type;
 }
 
+double Data::temper(int i){
+    if(Type != 0x0200)
+        return -1;
+    if(i<8)
+    {
+            return (double)((int)(value[i]*0.625))/10;
+    }
+    else return -1;
+}
+
 Data::Data(QDataStream &in){
-  qint8 temp8=0;
-  qint16 temp16=0;
+  quint8 temp8=0;
+  quint16 temp16=0;
   while (temp8!=0x55&&!in.atEnd()) {
     in>>temp8;
   }
+  if(in.atEnd())
+      return;
   in>>temp8;     //数据长度
   in>>temp16;     //反馈信号
 
@@ -48,24 +68,20 @@ Data::Data(QDataStream &in){
   in>>temp16;    //ds
   in>>temp8;
 
-
-  in>>Temperature;  //温度
-  in>>Humidity;   //湿度
-  in>>Beam ;     //光照
-  in>>Smog ;    //烟雾
-
-  temp16=0;
-
-  while(!temp16&&!in.atEnd()){   //之后的无用数据为0
-    in>>temp16;
+  for(int i=0;i<8&&!in.atEnd();++i){
+      in>>temp16;
+      value.push_back(temp16);
   }
   in>>temp16;
-  timer=QDateTime::currentDateTime();
-  if(temp16%256==0x66)
+  in>>temp8;
+  in>>temp8;
+  if(temp8==0x66){
     Completed=true;
+  }
+  timer=QDateTime::currentDateTime();
 }
 
-qint16 Data::terminalID(){
+quint16 Data::terminalID(){
   return ID;
 }
 

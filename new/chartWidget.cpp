@@ -74,6 +74,15 @@ void chartWidget::refresh(){
   setline(line);
   resentValue-> setText("<h3>最近的值："+QString::number(get_last())+"</h3>");
   currentTime -> setText("<h3>时间："+QDateTime::currentDateTime().toString("yyyy年MM月dd日 hh:mm:ss")+"</h3>");
+
+  auto vec = line-> pointsVector();
+  for(auto i= vec.begin();i!=vec.end();++i){
+        i->rx() -= 0.5/60;
+  }
+  line->clear();
+  for(auto i = vec.begin();i!=vec.end();++i){
+      line->append(*i);
+  }
 }
 
 
